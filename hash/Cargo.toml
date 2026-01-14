@@ -1,7 +1,7 @@
 [package]
-name = "solana-hash"
-description = "Solana wrapper for the 32-byte output of a hashing algorithm."
-documentation = "https://docs.rs/solana-hash"
+name = "trezoa-hash"
+description = "Trezoa wrapper for the 32-byte output of a hashing algorithm."
+documentation = "https://docs.rs/trezoa-hash"
 version = "4.0.1"
 rust-version = "1.81.0"
 authors = { workspace = true }
@@ -16,14 +16,14 @@ all-features = true
 rustdoc-args = ["--cfg=docsrs"]
 
 [features]
-atomic = ["dep:solana-atomic-u64"]
+atomic = ["dep:trezoa-atomic-u64"]
 borsh = ["dep:borsh"]
 bytemuck = ["copy", "dep:bytemuck", "dep:bytemuck_derive"]
 copy = []
 decode = ["dep:five8"]
 default = []
-frozen-abi = ["dep:solana-frozen-abi", "dep:solana-frozen-abi-macro", "std"]
-sanitize = ["dep:solana-sanitize"]
+frozen-abi = ["dep:trezoa-frozen-abi", "dep:trezoa-frozen-abi-macro", "std"]
+sanitize = ["dep:trezoa-sanitize"]
 serde = ["dep:serde", "dep:serde_derive"]
 std = ["borsh?/std", "serde?/std", "wincode?/std"]
 wincode = ["dep:wincode"]
@@ -35,15 +35,15 @@ bytemuck_derive = { workspace = true, optional = true }
 five8 = { workspace = true, optional = true }
 serde = { workspace = true, optional = true }
 serde_derive = { workspace = true, optional = true }
-solana-atomic-u64 = { workspace = true, optional = true }
-solana-frozen-abi = { workspace = true, optional = true, features = ["frozen-abi"] }
-solana-frozen-abi-macro = { workspace = true, optional = true, features = ["frozen-abi"] }
-solana-sanitize = { workspace = true, optional = true }
+trezoa-atomic-u64 = { workspace = true, optional = true }
+trezoa-frozen-abi = { workspace = true, optional = true, features = ["frozen-abi"] }
+trezoa-frozen-abi-macro = { workspace = true, optional = true, features = ["frozen-abi"] }
+trezoa-sanitize = { workspace = true, optional = true }
 wincode = { workspace = true, optional = true }
 
 [dev-dependencies]
 bs58 = { workspace = true, default-features = false, features = ["alloc"] }
-solana-hash = { path = ".", features = ["atomic", "copy", "decode"] }
+trezoa-hash = { path = ".", features = ["atomic", "copy", "decode"] }
 
 [lints]
 workspace = true

@@ -5,25 +5,25 @@
 //! sysvar is defined in its own crate. The [`clock`], [`epoch_schedule`],
 //! [`instructions`], and [`rent`] sysvars are most useful to on-chain programs.
 //!
-//! [`clock`]: https://docs.rs/solana-clock/latest
-//! [`epoch_schedule`]: https://docs.rs/solana-epoch-schedule/latest
-//! [`instructions`]: https://docs.rs/solana-program/latest/solana_program/sysvar/instructions
-//! [`rent`]: https://docs.rs/solana-rent/latest
+//! [`clock`]: https://docs.rs/trezoa-clock/latest
+//! [`epoch_schedule`]: https://docs.rs/trezoa-epoch-schedule/latest
+//! [`instructions`]: https://docs.rs/trezoa-program/latest/trezoa_program/sysvar/instructions
+//! [`rent`]: https://docs.rs/trezoa-rent/latest
 //!
-//! All sysvar accounts are owned by the account identified by [`solana_sysvar::ID`].
+//! All sysvar accounts are owned by the account identified by [`trezoa_sysvar::ID`].
 //!
-//! [`solana_sysvar::ID`]: crate::ID
+//! [`trezoa_sysvar::ID`]: crate::ID
 //!
-//! For more details see the Solana [documentation on sysvars][sysvardoc].
+//! For more details see the Trezoa [documentation on sysvars][sysvardoc].
 //!
-//! [sysvardoc]: https://docs.solanalabs.com/runtime/sysvars
+//! [sysvardoc]: https://docs.trezoalabs.com/runtime/sysvars
 #![cfg_attr(docsrs, feature(doc_cfg))]
 #![no_std]
 
 /// Re-export types required for macros
 pub use {
-    solana_address::{declare_deprecated_id, declare_id, Address},
-    solana_sdk_ids::sysvar::{check_id, id, ID},
+    trezoa_address::{declare_deprecated_id, declare_id, Address},
+    trezoa_sdk_ids::sysvar::{check_id, id, ID},
 };
 
 /// A type that holds sysvar data and has an associated sysvar `Address`.

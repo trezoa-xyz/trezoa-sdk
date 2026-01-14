@@ -62,7 +62,7 @@ or
   example:
   scripts/reserve-cratesio-package-name.sh \
     --token <CRATESIO_TOKEN> \
-    lib solana-new-lib-crate
+    lib trezoa-new-lib-crate
 
   see also: scripts/reserve-cratesio-package-name.sh --help
 "

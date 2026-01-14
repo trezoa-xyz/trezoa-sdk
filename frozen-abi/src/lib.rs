@@ -9,8 +9,8 @@
 #![warn(unsafe_attr_outside_unsafe)]
 #![warn(unsafe_op_in_unsafe_fn)]
 
-// Allows macro expansion of `use ::solana_frozen_abi::*` to work within this crate
-extern crate self as solana_frozen_abi;
+// Allows macro expansion of `use ::trezoa_frozen_abi::*` to work within this crate
+extern crate self as trezoa_frozen_abi;
 
 #[cfg(feature = "frozen-abi")]
 pub mod abi_digester;
@@ -19,12 +19,12 @@ pub mod abi_example;
 #[cfg(feature = "frozen-abi")]
 pub mod hash;
 
-#[cfg(all(feature = "frozen-abi", not(target_os = "solana")))]
+#[cfg(all(feature = "frozen-abi", not(target_os = "trezoa")))]
 pub mod stable_abi;
 
 #[cfg(feature = "frozen-abi")]
 #[macro_use]
-extern crate solana_frozen_abi_macro;
+extern crate trezoa_frozen_abi_macro;
 
-#[cfg(all(feature = "frozen-abi", not(target_os = "solana")))]
+#[cfg(all(feature = "frozen-abi", not(target_os = "trezoa")))]
 pub use {bincode, rand, rand_chacha};

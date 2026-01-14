@@ -358,11 +358,11 @@ jobs:
       - name: Determine Solana CLI version
         run: |
           source "./scripts/read-cargo-variable.sh"
-          solana_version=$(readCargoVariable solana "./Cargo.toml")
-          echo "SOLANA_VERSION=$solana_version" >> $GITHUB_ENV
+          trezoa_version=$(readCargoVariable trezoa "./Cargo.toml")
+          echo "SOLANA_VERSION=$trezoa_version" >> $GITHUB_ENV
 
       - name: Install Solana CLI
-        uses: solana-program/actions/install-solana@v1
+        uses: trezoa-program/actions/install-trezoa@v1
         with:
           version: ${{ env.SOLANA_VERSION }}
           cache: true

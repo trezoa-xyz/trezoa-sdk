@@ -3,8 +3,8 @@
 extern crate test;
 use {
     bincode::{deserialize, serialize},
-    solana_instructions_sysvar::{self as instructions, construct_instructions_data},
-    solana_sdk::{
+    trezoa_instructions_sysvar::{self as instructions, construct_instructions_data},
+    trezoa_sdk::{
         instruction::{AccountMeta, Instruction},
         message::{Message, SanitizedMessage},
         pubkey::{self, Pubkey},

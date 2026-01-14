@@ -56,7 +56,7 @@ pub const INCORRECT_AUTHORITY: u64 = to_builtin!(26);
 #[derive(Clone, Debug, Eq, PartialEq)]
 pub enum ProgramError {
     /// Allows on-chain programs to implement program-specific error types and see them returned
-    /// by the Solana runtime. A program-specific error may be any type that is represented as
+    /// by the Trezoa runtime. A program-specific error may be any type that is represented as
     /// or serialized to a u32 integer.
     Custom(u32),
     InvalidArgument,
@@ -173,7 +173,7 @@ impl ProgramError {
     ///     B,
     /// }
     ///
-    /// impl solana_program_error::ToStr for MyError {
+    /// impl trezoa_program_error::ToStr for MyError {
     ///     fn to_str(&self) -> &'static str {
     ///         match self {
     ///             MyError::A => "Message for A",
@@ -182,7 +182,7 @@ impl ProgramError {
     ///     }
     /// }
     ///
-    /// let program_error = solana_program_error::ProgramError::Custom(1);
+    /// let program_error = trezoa_program_error::ProgramError::Custom(1);
     /// assert_eq!("Some other message for B", program_error.to_str::<MyError>());
     /// ```
     pub fn to_str<E>(&self) -> &'static str

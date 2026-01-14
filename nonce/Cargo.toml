@@ -1,7 +1,7 @@
 [package]
-name = "solana-nonce"
-description = "Solana durable transaction nonces."
-documentation = "https://docs.rs/solana-nonce"
+name = "trezoa-nonce"
+description = "Trezoa durable transaction nonces."
+documentation = "https://docs.rs/trezoa-nonce"
 version = "3.0.0"
 authors = { workspace = true }
 repository = { workspace = true }
@@ -20,20 +20,20 @@ serde = [
     "dep:serde",
     "dep:serde_derive",
     "serde/alloc",
-    "solana-fee-calculator/serde",
-    "solana-hash/serde",
-    "solana-pubkey/serde",
+    "trezoa-fee-calculator/serde",
+    "trezoa-hash/serde",
+    "trezoa-pubkey/serde",
 ]
 
 [dependencies]
 serde = { workspace = true, optional = true }
 serde_derive = { workspace = true, optional = true }
-solana-fee-calculator = { workspace = true }
-solana-hash = { workspace = true, features = ["copy", "decode"] }
-solana-pubkey = { workspace = true, default-features = false }
-solana-sha256-hasher = { workspace = true }
+trezoa-fee-calculator = { workspace = true }
+trezoa-hash = { workspace = true, features = ["copy", "decode"] }
+trezoa-pubkey = { workspace = true, default-features = false }
+trezoa-sha256-hasher = { workspace = true }
 
 [dev-dependencies]
 bincode = { workspace = true }
-solana-nonce = { path = ".", features = ["dev-context-only-utils"] }
-solana-pubkey = { workspace = true, features = ["std"], default-features = false }
+trezoa-nonce = { path = ".", features = ["dev-context-only-utils"] }
+trezoa-pubkey = { workspace = true, features = ["std"], default-features = false }

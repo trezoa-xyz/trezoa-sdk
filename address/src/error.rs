@@ -1,4 +1,4 @@
-use {core::fmt, solana_program_error::ProgramError};
+use {core::fmt, trezoa_program_error::ProgramError};
 
 #[cfg_attr(feature = "serde", derive(serde_derive::Serialize))]
 #[derive(Debug, Clone, PartialEq, Eq)]

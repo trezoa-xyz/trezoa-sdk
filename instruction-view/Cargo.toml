@@ -1,7 +1,7 @@
 [package]
-name = "solana-instruction-view"
+name = "trezoa-instruction-view"
 description = "Lightweight instruction representation"
-documentation = "https://docs.rs/solana-instruction-view"
+documentation = "https://docs.rs/trezoa-instruction-view"
 version = "1.0.0"
 rust-version = "1.82.0"
 authors = { workspace = true }
@@ -16,16 +16,16 @@ all-features = true
 rustdoc-args = ["--cfg=docsrs"]
 
 [features]
-cpi = ["dep:solana-define-syscall", "dep:solana-program-error"]
+cpi = ["dep:trezoa-define-syscall", "dep:trezoa-program-error"]
 slice-cpi = ["cpi"]
 
 [dependencies]
-solana-account-view = { workspace = true }
-solana-address = { workspace = true }
-solana-program-error = { workspace = true, optional = true }
+trezoa-account-view = { workspace = true }
+trezoa-address = { workspace = true }
+trezoa-program-error = { workspace = true, optional = true }
 
-[target.'cfg(any(target_os = "solana", target_arch = "bpf"))'.dependencies]
-solana-define-syscall = { workspace = true, optional = true }
+[target.'cfg(any(target_os = "trezoa", target_arch = "bpf"))'.dependencies]
+trezoa-define-syscall = { workspace = true, optional = true }
 
 [lints]
 workspace = true

@@ -1,7 +1,7 @@
 [package]
-name = "solana-program-log-macro"
-description = "Macro for solana program log utility"
-documentation = "https://docs.rs/solana-program-log-macro"
+name = "trezoa-program-log-macro"
+description = "Macro for trezoa program log utility"
+documentation = "https://docs.rs/trezoa-program-log-macro"
 version = "1.0.0"
 authors = { workspace = true }
 repository = { workspace = true }

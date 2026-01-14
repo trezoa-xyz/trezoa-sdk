@@ -4,7 +4,7 @@
 #![allow(non_snake_case)]
 
 use {
-    crate::address::Address, js_sys::Uint8Array, solana_packet::PACKET_DATA_SIZE,
+    crate::address::Address, js_sys::Uint8Array, trezoa_packet::PACKET_DATA_SIZE,
     wasm_bindgen::prelude::*,
 };
 
@@ -16,17 +16,17 @@ const MAX_INSTRUCTION_DATA_LEN: usize = PACKET_DATA_SIZE;
 #[wasm_bindgen]
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub struct Instruction {
-    pub(crate) inner: solana_instruction::Instruction,
+    pub(crate) inner: trezoa_instruction::Instruction,
 }
 
-crate::conversion::impl_inner_conversion!(Instruction, solana_instruction::Instruction);
+crate::conversion::impl_inner_conversion!(Instruction, trezoa_instruction::Instruction);
 
 #[wasm_bindgen]
 impl Instruction {
     /// Create a new `Instruction`
     #[wasm_bindgen(constructor)]
     pub fn constructor(program_id: Address) -> Self {
-        solana_instruction::Instruction::new_with_bytes(program_id.inner, &[], std::vec::Vec::new())
+        trezoa_instruction::Instruction::new_with_bytes(program_id.inner, &[], std::vec::Vec::new())
             .into()
     }
 
@@ -52,20 +52,20 @@ impl Instruction {
 #[wasm_bindgen]
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub struct AccountMeta {
-    pub(crate) inner: solana_instruction::AccountMeta,
+    pub(crate) inner: trezoa_instruction::AccountMeta,
 }
 
-crate::conversion::impl_inner_conversion!(AccountMeta, solana_instruction::AccountMeta);
+crate::conversion::impl_inner_conversion!(AccountMeta, trezoa_instruction::AccountMeta);
 
 #[wasm_bindgen]
 impl AccountMeta {
     /// Create a new writable `AccountMeta`
     pub fn newWritable(address: Address, is_signer: bool) -> Self {
-        solana_instruction::AccountMeta::new(address.inner, is_signer).into()
+        trezoa_instruction::AccountMeta::new(address.inner, is_signer).into()
     }
 
     /// Create a new readonly `AccountMeta`
     pub fn newReadonly(address: Address, is_signer: bool) -> Self {
-        solana_instruction::AccountMeta::new_readonly(address.inner, is_signer).into()
+        trezoa_instruction::AccountMeta::new_readonly(address.inner, is_signer).into()
     }
 }

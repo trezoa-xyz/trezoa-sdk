@@ -2,10 +2,10 @@
 #![cfg_attr(docsrs, feature(doc_cfg))]
 use {
     num_enum::{IntoPrimitive, TryFromPrimitive},
-    solana_hash::Hash,
-    solana_sanitize::SanitizeError,
-    solana_signature::Signature,
-    solana_signer::Signer,
+    trezoa_hash::Hash,
+    trezoa_sanitize::SanitizeError,
+    trezoa_signature::Signature,
+    trezoa_signer::Signer,
 };
 
 #[cfg(test)]
@@ -42,10 +42,10 @@ pub enum MessageFormat {
 pub mod v0 {
     use {
         super::{is_printable_ascii, is_utf8, MessageFormat, OffchainMessage as Base},
-        solana_hash::Hash,
-        solana_packet::PACKET_DATA_SIZE,
-        solana_sanitize::SanitizeError,
-        solana_sha256_hasher::Hasher,
+        trezoa_hash::Hash,
+        trezoa_packet::PACKET_DATA_SIZE,
+        trezoa_sanitize::SanitizeError,
+        trezoa_sha256_hasher::Hasher,
     };
 
     /// OffchainMessage Version 0.
@@ -164,7 +164,7 @@ pub enum OffchainMessage {
 }
 
 impl OffchainMessage {
-    pub const SIGNING_DOMAIN: &'static [u8] = b"\xffsolana offchain";
+    pub const SIGNING_DOMAIN: &'static [u8] = b"\xfftrezoa offchain";
     // Header Length = Signing Domain (16) + Header Version (1)
     pub const HEADER_LEN: usize = Self::SIGNING_DOMAIN.len() + 1;
 
@@ -238,7 +238,7 @@ impl OffchainMessage {
     /// Verify that the message signature is valid for the given public key
     pub fn verify(
         &self,
-        signer: &solana_pubkey::Pubkey,
+        signer: &trezoa_pubkey::Pubkey,
         signature: &Signature,
     ) -> Result<bool, SanitizeError> {
         Ok(signature.verify(signer.as_ref(), &self.serialize()?))
@@ -247,7 +247,7 @@ impl OffchainMessage {
 
 #[cfg(test)]
 mod tests {
-    use {super::*, solana_keypair::Keypair, std::str::FromStr};
+    use {super::*, trezoa_keypair::Keypair, std::str::FromStr};
 
     #[test]
     fn test_offchain_message_ascii() {

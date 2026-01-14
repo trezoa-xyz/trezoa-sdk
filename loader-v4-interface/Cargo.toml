@@ -1,7 +1,7 @@
 [package]
-name = "solana-loader-v4-interface"
-description = "Solana loader V4 interface."
-documentation = "https://docs.rs/solana-loader-v4-interface"
+name = "trezoa-loader-v4-interface"
+description = "Trezoa loader V4 interface."
+documentation = "https://docs.rs/trezoa-loader-v4-interface"
 version = "3.1.0"
 authors = { workspace = true }
 repository = { workspace = true }
@@ -15,30 +15,30 @@ all-features = true
 rustdoc-args = ["--cfg=docsrs"]
 
 [features]
-bincode = ["dep:solana-system-interface", "serde", "solana-instruction/bincode"]
+bincode = ["dep:trezoa-system-interface", "serde", "trezoa-instruction/bincode"]
 dev-context-only-utils = ["bincode"]
-frozen-abi = ["dep:solana-frozen-abi", "dep:solana-frozen-abi-macro", "serde"]
-serde = ["dep:serde", "dep:serde_bytes", "dep:serde_derive", "solana-pubkey/serde"]
+frozen-abi = ["dep:trezoa-frozen-abi", "dep:trezoa-frozen-abi-macro", "serde"]
+serde = ["dep:serde", "dep:serde_bytes", "dep:serde_derive", "trezoa-pubkey/serde"]
 
 [dependencies]
 serde = { workspace = true, optional = true }
 serde_bytes = { workspace = true, optional = true }
 serde_derive = { workspace = true, optional = true }
-solana-frozen-abi = { workspace = true, features = [
+trezoa-frozen-abi = { workspace = true, features = [
     "frozen-abi",
 ], optional = true }
-solana-frozen-abi-macro = { workspace = true, features = [
+trezoa-frozen-abi-macro = { workspace = true, features = [
     "frozen-abi",
 ], optional = true }
-solana-instruction = { workspace = true, features = ["std"] }
-solana-pubkey = { workspace = true }
-solana-sdk-ids = { workspace = true }
-solana-system-interface = { workspace = true, features = ["bincode"], optional = true }
+trezoa-instruction = { workspace = true, features = ["std"] }
+trezoa-pubkey = { workspace = true }
+trezoa-sdk-ids = { workspace = true }
+trezoa-system-interface = { workspace = true, features = ["bincode"], optional = true }
 
 [dev-dependencies]
 memoffset = { workspace = true }
-solana-loader-v4-interface = { path = ".", features = ["dev-context-only-utils"] }
-solana-pubkey = { workspace = true, features = ["std"] }
+trezoa-loader-v4-interface = { path = ".", features = ["dev-context-only-utils"] }
+trezoa-pubkey = { workspace = true, features = ["std"] }
 
 [lints]
 workspace = true

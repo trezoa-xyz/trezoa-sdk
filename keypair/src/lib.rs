@@ -1,9 +1,9 @@
-//! Concrete implementation of a Solana `Signer` from raw bytes
+//! Concrete implementation of a Trezoa `Signer` from raw bytes
 #![cfg_attr(docsrs, feature(doc_cfg))]
 use {
     ed25519_dalek::Signer as DalekSigner,
-    solana_seed_phrase::generate_seed_from_seed_phrase_and_passphrase,
-    solana_signer::SignerError,
+    trezoa_seed_phrase::generate_seed_from_seed_phrase_and_passphrase,
+    trezoa_signer::SignerError,
     std::{
         error,
         io::{Read, Write},
@@ -11,9 +11,9 @@ use {
     },
 };
 pub use {
-    solana_address::Address,
-    solana_signature::{error::Error as SignatureError, Signature},
-    solana_signer::{EncodableKey, EncodableKeypair, Signer},
+    trezoa_address::Address,
+    trezoa_signature::{error::Error as SignatureError, Signature},
+    trezoa_signer::{EncodableKey, EncodableKeypair, Signer},
 };
 
 #[cfg(feature = "seed-derivable")]
@@ -259,7 +259,7 @@ mod tests {
     use {
         super::*,
         bip39::{Language, Mnemonic, MnemonicType, Seed},
-        solana_signer::unique_signers,
+        trezoa_signer::unique_signers,
         std::{
             fs::{self, File},
             mem,

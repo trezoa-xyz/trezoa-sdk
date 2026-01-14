@@ -22,7 +22,7 @@ use std::{
 /// Creating a `StableVec` from a `Vec`
 ///
 /// ```
-/// # use solana_stable_layout::stable_vec::StableVec;
+/// # use trezoa_stable_layout::stable_vec::StableVec;
 /// let vec = vec!["meow", "woof", "moo"];
 /// let vec = StableVec::from(vec);
 /// ```

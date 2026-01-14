@@ -25,7 +25,7 @@ macro_rules! impl_from_str {
 
 /// A macro to implement the standard set of conversions between BLS projective,
 /// affine (point), uncompressed (bytes), and compressed (bytes) representations.
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 macro_rules! impl_bls_conversions {
     (
         $projective:ident,       // e.g. PubkeyProjective
@@ -421,7 +421,7 @@ macro_rules! impl_bls_conversions {
     };
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 macro_rules! impl_add_to_accumulator {
     ($trait_name:ident, $accumulator_type:ident, $type:ty, affine) => {
         impl $trait_name for $type {

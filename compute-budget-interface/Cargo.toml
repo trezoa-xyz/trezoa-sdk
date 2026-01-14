@@ -1,7 +1,7 @@
 [package]
-name = "solana-compute-budget-interface"
-description = "Solana compute budget interface."
-documentation = "https://docs.rs/solana-compute-budget-interface"
+name = "trezoa-compute-budget-interface"
+description = "Trezoa compute budget interface."
+documentation = "https://docs.rs/trezoa-compute-budget-interface"
 version = "3.0.0"
 authors = { workspace = true }
 repository = { workspace = true }
@@ -17,21 +17,21 @@ rustdoc-args = ["--cfg=docsrs"]
 [features]
 borsh = ["dep:borsh"]
 dev-context-only-utils = ["borsh"]
-frozen-abi = ["dep:solana-frozen-abi", "dep:solana-frozen-abi-macro", "serde"]
+frozen-abi = ["dep:trezoa-frozen-abi", "dep:trezoa-frozen-abi-macro", "serde"]
 serde = ["dep:serde", "dep:serde_derive"]
 
 [dependencies]
 borsh = { workspace = true, optional = true }
 serde = { workspace = true, optional = true }
 serde_derive = { workspace = true, optional = true }
-solana-frozen-abi = { workspace = true, features = [
+trezoa-frozen-abi = { workspace = true, features = [
     "frozen-abi",
 ], optional = true }
-solana-frozen-abi-macro = { workspace = true, features = [
+trezoa-frozen-abi-macro = { workspace = true, features = [
     "frozen-abi",
 ], optional = true }
-solana-instruction = { workspace = true, features = ["std"] }
-solana-sdk-ids = { workspace = true }
+trezoa-instruction = { workspace = true, features = ["std"] }
+trezoa-sdk-ids = { workspace = true }
 
 [lints]
 workspace = true

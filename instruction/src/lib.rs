@@ -1,9 +1,9 @@
-//! Types for directing the execution of Solana programs.
+//! Types for directing the execution of Trezoa programs.
 //!
-//! Every invocation of a Solana program executes a single instruction, as
+//! Every invocation of a Trezoa program executes a single instruction, as
 //! defined by the [`Instruction`] type. An instruction is primarily a vector of
 //! bytes, the contents of which are program-specific, and not interpreted by
-//! the Solana runtime. This allows flexibility in how programs behave, how they
+//! the Trezoa runtime. This allows flexibility in how programs behave, how they
 //! are controlled by client software, and what data encodings they use.
 //!
 //! Besides the instruction data, every account a program may read or write
@@ -16,31 +16,31 @@
 
 #[cfg(feature = "std")]
 extern crate std;
-use solana_pubkey::Pubkey;
+use trezoa_pubkey::Pubkey;
 #[cfg(feature = "std")]
 use std::vec::Vec;
 pub mod account_meta;
 #[cfg(feature = "std")]
 pub use account_meta::AccountMeta;
-pub use solana_instruction_error as error;
-#[cfg(any(feature = "syscalls", target_os = "solana"))]
+pub use trezoa_instruction_error as error;
+#[cfg(any(feature = "syscalls", target_os = "trezoa"))]
 pub mod syscalls;
 
-/// A directive for a single invocation of a Solana program.
+/// A directive for a single invocation of a Trezoa program.
 ///
 /// An instruction specifies which program it is calling, which accounts it may
 /// read or modify, and additional data that serves as input to the program. One
-/// or more instructions are included in transactions submitted by Solana
+/// or more instructions are included in transactions submitted by Trezoa
 /// clients. Instructions are also used to describe [cross-program
 /// invocations][cpi].
 ///
-/// [cpi]: https://solana.com/docs/core/cpi
+/// [cpi]: https://trezoa.com/docs/core/cpi
 ///
 /// During execution, a program will receive a list of account data as one of
 /// its arguments, in the same order as specified during `Instruction`
 /// construction.
 ///
-/// While Solana is agnostic to the format of the instruction data, it has
+/// While Trezoa is agnostic to the format of the instruction data, it has
 /// built-in support for serialization via [`borsh`] and [`bincode`].
 ///
 /// [`borsh`]: https://docs.rs/borsh/latest/borsh/
@@ -68,7 +68,7 @@ pub mod syscalls;
 /// in an `Instruction`'s account list. These will affect scheduling of program
 /// execution by the runtime, but will otherwise be ignored.
 ///
-/// When building a transaction, the Solana runtime coalesces all accounts used
+/// When building a transaction, the Trezoa runtime coalesces all accounts used
 /// by all instructions in that transaction, along with accounts and permissions
 /// required by the runtime, into a single account list. Some accounts and
 /// account permissions required by the runtime to process a transaction are
@@ -80,7 +80,7 @@ pub mod syscalls;
 ///   construction. A program may still require the fee payer as part of the
 ///   account list if it directly references it.
 ///
-/// [`Message`]: https://docs.rs/solana-program/latest/solana_program/message/legacy/struct.Message.html
+/// [`Message`]: https://docs.rs/trezoa-program/latest/trezoa_program/message/legacy/struct.Message.html
 ///
 /// Programs may require signatures from some accounts, in which case they
 /// should be specified as signers during `Instruction` construction. The
@@ -120,8 +120,8 @@ impl Instruction {
     /// # Examples
     ///
     /// ```
-    /// # use solana_pubkey::Pubkey;
-    /// # use solana_instruction::{AccountMeta, Instruction};
+    /// # use trezoa_pubkey::Pubkey;
+    /// # use trezoa_instruction::{AccountMeta, Instruction};
     /// # use borsh::{BorshSerialize, BorshDeserialize};
     /// #
     /// #[derive(BorshSerialize, BorshDeserialize)]
@@ -172,8 +172,8 @@ impl Instruction {
     /// # Examples
     ///
     /// ```
-    /// # use solana_pubkey::Pubkey;
-    /// # use solana_instruction::{AccountMeta, Instruction};
+    /// # use trezoa_pubkey::Pubkey;
+    /// # use trezoa_instruction::{AccountMeta, Instruction};
     /// # use serde::{Serialize, Deserialize};
     /// #
     /// #[derive(Serialize, Deserialize)]
@@ -223,8 +223,8 @@ impl Instruction {
     /// # Examples
     ///
     /// ```
-    /// # use solana_pubkey::Pubkey;
-    /// # use solana_instruction::{AccountMeta, Instruction};
+    /// # use trezoa_pubkey::Pubkey;
+    /// # use trezoa_instruction::{AccountMeta, Instruction};
     /// #
     /// # use borsh::{io::Error, BorshSerialize, BorshDeserialize};
     /// #
@@ -281,7 +281,7 @@ pub struct ProcessedSiblingInstruction {
 /// Borrowed version of `AccountMeta`.
 ///
 /// This struct is used by the runtime when constructing the instructions sysvar. It is not
-/// useful to Solana programs.
+/// useful to Trezoa programs.
 pub struct BorrowedAccountMeta<'a> {
     pub pubkey: &'a Pubkey,
     pub is_signer: bool,
@@ -291,7 +291,7 @@ pub struct BorrowedAccountMeta<'a> {
 /// Borrowed version of `Instruction`.
 ///
 /// This struct is used by the runtime when constructing the instructions sysvar. It is not
-/// useful to Solana programs.
+/// useful to Trezoa programs.
 #[cfg(feature = "std")]
 pub struct BorrowedInstruction<'a> {
     pub program_id: &'a Pubkey,

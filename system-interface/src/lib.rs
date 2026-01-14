@@ -31,5 +31,5 @@ pub const MAX_PERMITTED_ACCOUNTS_DATA_ALLOCATIONS_PER_TRANSACTION: i64 =
     MAX_PERMITTED_DATA_LENGTH as i64 * 2;
 
 pub mod program {
-    solana_address::declare_id!("11111111111111111111111111111111");
+    trezoa_address::declare_id!("11111111111111111111111111111111");
 }

@@ -1,6 +1,6 @@
 //! Information about the network's clock, ticks, slots, etc.
 //!
-//! Time in Solana is marked primarily by _slots_, which occur approximately every
+//! Time in Trezoa is marked primarily by _slots_, which occur approximately every
 //! 400 milliseconds, and are numbered sequentially. For every slot, a leader is
 //! chosen from the validator set, and that leader is expected to produce a new
 //! block, though sometimes leaders may fail to do so. Blocks can be identified
@@ -18,7 +18,7 @@
 //! [`Clock::unix_timestamp`], which is produced by an [oracle derived from the
 //! validator set][oracle].
 //!
-//! [oracle]: https://docs.solanalabs.com/implemented-proposals/validator-timestamp-oracle
+//! [oracle]: https://docs.trezoalabs.com/implemented-proposals/validator-timestamp-oracle
 #![no_std]
 #![cfg_attr(docsrs, feature(doc_cfg))]
 
@@ -27,7 +27,7 @@ pub mod sysvar;
 
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
-use solana_sdk_macro::CloneZeroed;
+use trezoa_sdk_macro::CloneZeroed;
 
 /// The default tick rate that the cluster attempts to achieve (160 per second).
 ///
@@ -164,8 +164,8 @@ pub struct Clock {
     /// the [`timestamp_correction` and `timestamp_bounding`][tsc] features it
     /// is calculated using a [validator timestamp oracle][oracle].
     ///
-    /// [tsc]: https://docs.solanalabs.com/implemented-proposals/bank-timestamp-correction
-    /// [oracle]: https://docs.solanalabs.com/implemented-proposals/validator-timestamp-oracle
+    /// [tsc]: https://docs.trezoalabs.com/implemented-proposals/bank-timestamp-correction
+    /// [oracle]: https://docs.trezoalabs.com/implemented-proposals/validator-timestamp-oracle
     pub unix_timestamp: UnixTimestamp,
 }
 

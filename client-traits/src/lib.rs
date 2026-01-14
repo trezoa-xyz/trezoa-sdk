@@ -1,5 +1,5 @@
 //! Defines traits for blocking (synchronous) and non-blocking (asynchronous)
-//! communication with a Solana server as well as a trait that encompasses both.
+//! communication with a Trezoa server as well as a trait that encompasses both.
 //!
 //! //! Synchronous implementations are expected to create transactions, sign them, and send
 //! them with multiple retries, updating blockhashes and resigning as-needed.
@@ -9,19 +9,19 @@
 #![cfg_attr(docsrs, feature(doc_cfg))]
 
 use {
-    solana_account::Account,
-    solana_commitment_config::CommitmentConfig,
-    solana_epoch_info::EpochInfo,
-    solana_hash::Hash,
-    solana_instruction::Instruction,
-    solana_keypair::Keypair,
-    solana_message::Message,
-    solana_pubkey::Pubkey,
-    solana_signature::Signature,
-    solana_signer::{signers::Signers, Signer},
-    solana_system_interface::instruction::transfer,
-    solana_transaction::{versioned::VersionedTransaction, Transaction},
-    solana_transaction_error::{TransactionResult, TransportResult as Result},
+    trezoa_account::Account,
+    trezoa_commitment_config::CommitmentConfig,
+    trezoa_epoch_info::EpochInfo,
+    trezoa_hash::Hash,
+    trezoa_instruction::Instruction,
+    trezoa_keypair::Keypair,
+    trezoa_message::Message,
+    trezoa_pubkey::Pubkey,
+    trezoa_signature::Signature,
+    trezoa_signer::{signers::Signers, Signer},
+    trezoa_system_interface::instruction::transfer,
+    trezoa_transaction::{versioned::VersionedTransaction, Transaction},
+    trezoa_transaction_error::{TransactionResult, TransportResult as Result},
 };
 
 pub trait Client: SyncClient + AsyncClient {

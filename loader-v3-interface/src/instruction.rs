@@ -3,10 +3,10 @@
 #[cfg(feature = "bincode")]
 use {
     crate::{get_program_data_address, state::UpgradeableLoaderState},
-    solana_instruction::{error::InstructionError, AccountMeta, Instruction},
-    solana_pubkey::Pubkey,
-    solana_sdk_ids::{bpf_loader_upgradeable::id, loader_v4, sysvar},
-    solana_system_interface::instruction as system_instruction,
+    trezoa_instruction::{error::InstructionError, AccountMeta, Instruction},
+    trezoa_pubkey::Pubkey,
+    trezoa_sdk_ids::{bpf_loader_upgradeable::id, loader_v4, sysvar},
+    trezoa_system_interface::instruction as system_instruction,
 };
 
 #[repr(u8)]
@@ -60,8 +60,8 @@ pub enum UpgradeableLoaderInstruction {
     /// follows:
     ///
     /// ```
-    /// # use solana_pubkey::Pubkey;
-    /// # use solana_sdk_ids::bpf_loader_upgradeable;
+    /// # use trezoa_pubkey::Pubkey;
+    /// # use trezoa_sdk_ids::bpf_loader_upgradeable;
     /// # let program_address = &[];
     /// let (program_data_address, _) = Pubkey::find_program_address(
     ///      &[program_address],
@@ -85,7 +85,7 @@ pub enum UpgradeableLoaderInstruction {
     ///      authority
     ///   4. `[]` Rent sysvar.
     ///   5. `[]` Clock sysvar.
-    ///   6. `[]` System program (`solana_sdk_ids::system_program::id()`).
+    ///   6. `[]` System program (`trezoa_sdk_ids::system_program::id()`).
     ///   7. `[signer]` The program's authority
     DeployWithMaxDataLen {
         /// Maximum length that the program can be upgraded to.
@@ -150,7 +150,7 @@ pub enum UpgradeableLoaderInstruction {
     /// # Account references
     ///   0. `[writable]` The ProgramData account.
     ///   1. `[writable]` The ProgramData account's associated Program account.
-    ///   2. `[]` System program (`solana_sdk::system_program::id()`), optional, used to transfer
+    ///   2. `[]` System program (`trezoa_sdk::system_program::id()`), optional, used to transfer
     ///      lamports from the payer to the ProgramData account.
     ///   3. `[writable, signer]` The payer account, optional, that will pay
     ///      necessary rent exemption costs for the increased storage size.
@@ -190,7 +190,7 @@ pub enum UpgradeableLoaderInstruction {
     ///   0. `[writable]` The ProgramData account.
     ///   1. `[writable]` The ProgramData account's associated Program account.
     ///   2. `[signer]` The authority.
-    ///   3. `[]` System program (`solana_sdk::system_program::id()`), optional, used to transfer
+    ///   3. `[]` System program (`trezoa_sdk::system_program::id()`), optional, used to transfer
     ///      lamports from the payer to the ProgramData account.
     ///   4. `[signer]` The payer account, optional, that will pay necessary rent exemption costs
     ///      for the increased storage size.
@@ -279,7 +279,7 @@ pub fn deploy_with_max_program_len(
                 AccountMeta::new(*buffer_address, false),
                 AccountMeta::new_readonly(sysvar::rent::id(), false),
                 AccountMeta::new_readonly(sysvar::clock::id(), false),
-                AccountMeta::new_readonly(solana_sdk_ids::system_program::id(), false),
+                AccountMeta::new_readonly(trezoa_sdk_ids::system_program::id(), false),
                 AccountMeta::new_readonly(*upgrade_authority_address, true),
             ],
         ),
@@ -463,7 +463,7 @@ pub fn extend_program(
     ];
     if let Some(payer_address) = payer_address {
         metas.push(AccountMeta::new_readonly(
-            solana_sdk_ids::system_program::id(),
+            trezoa_sdk_ids::system_program::id(),
             false,
         ));
         metas.push(AccountMeta::new(*payer_address, true));
@@ -509,7 +509,7 @@ pub fn extend_program_checked(
     ];
     if let Some(payer_address) = payer_address {
         metas.push(AccountMeta::new_readonly(
-            solana_sdk_ids::system_program::id(),
+            trezoa_sdk_ids::system_program::id(),
             false,
         ));
         metas.push(AccountMeta::new(*payer_address, true));

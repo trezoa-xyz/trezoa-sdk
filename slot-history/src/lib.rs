@@ -1,10 +1,10 @@
 //! A type to hold data for the [`SlotHistory` sysvar][sv].
 //!
-//! [sv]: https://docs.solanalabs.com/runtime/sysvars#slothistory
+//! [sv]: https://docs.trezoalabs.com/runtime/sysvars#slothistory
 //!
 //! The sysvar ID is declared in [`sysvar::slot_history`].
 //!
-//! [`sysvar::slot_history`]: https://docs.rs/solana-program/latest/solana_program/sysvar/slot_history
+//! [`sysvar::slot_history`]: https://docs.rs/trezoa-program/latest/trezoa_program/sysvar/slot_history
 
 #![allow(clippy::arithmetic_side_effects)]
 #![cfg_attr(docsrs, feature(doc_cfg))]

@@ -26,7 +26,7 @@ cd "${PACKAGE_PATH}"
 # Get the old version, used with git-cliff
 old_version=$(readCargoVariable version "Cargo.toml")
 package_name=$(readCargoVariable name "Cargo.toml")
-tag_name="${package_name//solana-/}"
+tag_name="${package_name//trezoa-/}"
 
 # Publish the new version, commit the repo change, tag it, and push it all.
 if [[ -n ${DRY_RUN} ]]; then

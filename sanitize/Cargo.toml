@@ -1,7 +1,7 @@
 [package]
-name = "solana-sanitize"
-description = "Solana Message Sanitization"
-documentation = "https://docs.rs/solana-sanitize"
+name = "trezoa-sanitize"
+description = "Trezoa Message Sanitization"
+documentation = "https://docs.rs/trezoa-sanitize"
 rust-version = "1.81.0"
 version = "3.0.1"
 authors = { workspace = true }

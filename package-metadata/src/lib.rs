@@ -17,7 +17,7 @@
 ///
 /// You can fetch the copyright with the following:
 /// ```ignore
-/// use solana_package_metadata::package_metadata;
+/// use trezoa_package_metadata::package_metadata;
 ///
 /// pub fn main() {
 ///     let copyright = package_metadata!("copyright");
@@ -48,9 +48,9 @@
 ///
 /// It does *not* currently support accessing TOML array elements directly.
 /// TOML tables are not supported.
-pub use solana_package_metadata_macro::package_metadata;
-/// Re-export solana_pubkey::declare_id for easy usage within the macro
-pub use solana_pubkey::declare_id;
+pub use trezoa_package_metadata_macro::package_metadata;
+/// Re-export trezoa_pubkey::declare_id for easy usage within the macro
+pub use trezoa_pubkey::declare_id;
 
 /// Convenience macro for declaring a program id from Cargo.toml package metadata.
 ///
@@ -61,10 +61,10 @@ pub use solana_pubkey::declare_id;
 /// Given the following `Cargo.toml`:
 /// ```ignore
 /// [package]
-/// name = "my-solana-program"
+/// name = "my-trezoa-program"
 /// version = "0.1.0"
 ///
-/// [package.metadata.solana]
+/// [package.metadata.trezoa]
 /// program-id = "MyProgram1111111111111111111111111111111111"
 /// ```
 ///
@@ -72,13 +72,13 @@ pub use solana_pubkey::declare_id;
 /// id in code:
 ///
 /// ```ignore
-/// declare_id_with_package_metadata!("solana.program-id");
+/// declare_id_with_package_metadata!("trezoa.program-id");
 /// ```
 ///
 /// This program id behaves exactly as if the developer had written:
 ///
 /// ```
-/// solana_pubkey::declare_id!("MyProgram1111111111111111111111111111111111");
+/// trezoa_pubkey::declare_id!("MyProgram1111111111111111111111111111111111");
 /// ```
 ///
 /// Meaning that it's possible to refer to the program id using `crate::id()`,

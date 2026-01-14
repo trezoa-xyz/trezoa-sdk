@@ -1,9 +1,9 @@
 use {
-    solana_program::{pubkey, pubkey::Pubkey},
+    trezoa_program::{pubkey, pubkey::Pubkey},
     std::str::FromStr,
 };
 
-// solana_program::pubkey refers to both a module and a macro.
+// trezoa_program::pubkey refers to both a module and a macro.
 // This test demonstrates that both imports are working
 #[test]
 fn test_pubkey_import() {

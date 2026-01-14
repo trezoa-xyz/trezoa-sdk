@@ -1,6 +1,6 @@
 use {
     num_traits::{FromPrimitive, ToPrimitive},
-    solana_program_error::{ProgramError, ToStr},
+    trezoa_program_error::{ProgramError, ToStr},
 };
 
 // Use strum when testing to ensure our FromPrimitive

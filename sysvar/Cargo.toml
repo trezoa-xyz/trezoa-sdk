@@ -1,7 +1,7 @@
 [package]
-name = "solana-sysvar"
-description = "Solana sysvar account types"
-documentation = "https://docs.rs/solana-sysvar"
+name = "trezoa-sysvar"
+description = "Trezoa sysvar account types"
+documentation = "https://docs.rs/trezoa-sysvar"
 version = "3.1.1"
 authors = { workspace = true }
 repository = { workspace = true }
@@ -18,18 +18,18 @@ rustdoc-args = ["--cfg=docsrs"]
 bincode = ["dep:bincode", "serde"]
 bytemuck = ["dep:bytemuck", "dep:bytemuck_derive"]
 dev-context-only-utils = ["bincode", "bytemuck"]
-frozen-abi = ["dep:solana-frozen-abi", "dep:solana-frozen-abi-macro"]
+frozen-abi = ["dep:trezoa-frozen-abi", "dep:trezoa-frozen-abi-macro"]
 serde = [
     "dep:serde",
     "dep:serde_derive",
-    "solana-clock/serde",
-    "solana-epoch-rewards/serde",
-    "solana-epoch-schedule/serde",
-    "solana-fee-calculator/serde",
-    "solana-last-restart-slot/serde",
-    "solana-rent/serde",
-    "solana-slot-hashes/serde",
-    "solana-slot-history/serde",
+    "trezoa-clock/serde",
+    "trezoa-epoch-rewards/serde",
+    "trezoa-epoch-schedule/serde",
+    "trezoa-fee-calculator/serde",
+    "trezoa-last-restart-slot/serde",
+    "trezoa-rent/serde",
+    "trezoa-slot-hashes/serde",
+    "trezoa-slot-history/serde",
 ]
 
 [dependencies]
@@ -39,41 +39,41 @@ bytemuck_derive = { workspace = true, optional = true }
 lazy_static = { workspace = true }
 serde = { workspace = true, optional = true }
 serde_derive = { workspace = true, optional = true }
-solana-account-info = { workspace = true }
-solana-clock = { workspace = true, features = ["sysvar"] }
-solana-epoch-rewards = { workspace = true, features = ["sysvar"] }
-solana-epoch-schedule = { workspace = true, features = ["sysvar"] }
-solana-fee-calculator = { workspace = true }
-solana-frozen-abi = { workspace = true, optional = true }
-solana-frozen-abi-macro = { workspace = true, optional = true }
-solana-hash = { workspace = true, features = ["bytemuck"] }
-solana-last-restart-slot = { workspace = true, features = ["sysvar"] }
-solana-program-entrypoint = { workspace = true }
-solana-program-error = { workspace = true }
-solana-pubkey = { workspace = true }
-solana-rent = { workspace = true, features = ["sysvar"] }
-solana-sdk-ids = { workspace = true }
-solana-sdk-macro = { workspace = true }
-solana-slot-hashes = { workspace = true, features = ["sysvar"] }
-solana-slot-history = { workspace = true, features = ["sysvar"] }
-solana-sysvar-id = { workspace = true }
+trezoa-account-info = { workspace = true }
+trezoa-clock = { workspace = true, features = ["sysvar"] }
+trezoa-epoch-rewards = { workspace = true, features = ["sysvar"] }
+trezoa-epoch-schedule = { workspace = true, features = ["sysvar"] }
+trezoa-fee-calculator = { workspace = true }
+trezoa-frozen-abi = { workspace = true, optional = true }
+trezoa-frozen-abi-macro = { workspace = true, optional = true }
+trezoa-hash = { workspace = true, features = ["bytemuck"] }
+trezoa-last-restart-slot = { workspace = true, features = ["sysvar"] }
+trezoa-program-entrypoint = { workspace = true }
+trezoa-program-error = { workspace = true }
+trezoa-pubkey = { workspace = true }
+trezoa-rent = { workspace = true, features = ["sysvar"] }
+trezoa-sdk-ids = { workspace = true }
+trezoa-sdk-macro = { workspace = true }
+trezoa-slot-hashes = { workspace = true, features = ["sysvar"] }
+trezoa-slot-history = { workspace = true, features = ["sysvar"] }
+trezoa-sysvar-id = { workspace = true }
 
-[target.'cfg(not(target_os = "solana"))'.dependencies]
+[target.'cfg(not(target_os = "trezoa"))'.dependencies]
 base64 = { workspace = true }
-solana-instruction = { workspace = true, features = ["std"] }
-solana-program-memory = { workspace = true }
+trezoa-instruction = { workspace = true, features = ["std"] }
+trezoa-program-memory = { workspace = true }
 
-[target.'cfg(target_os = "solana")'.dependencies]
-solana-define-syscall = { workspace = true }
+[target.'cfg(target_os = "trezoa")'.dependencies]
+trezoa-define-syscall = { workspace = true }
 
 [dev-dependencies]
 anyhow = { workspace = true }
 serial_test = { workspace = true }
-solana-example-mocks = { path = "../example-mocks" }
-solana-hash = { workspace = true, features = ["atomic", "bytemuck"] }
-solana-msg = { workspace = true, features = ["std"] }
-solana-sha256-hasher = { workspace = true }
-solana-sysvar = { path = ".", features = ["dev-context-only-utils"] }
+trezoa-example-mocks = { path = "../example-mocks" }
+trezoa-hash = { workspace = true, features = ["atomic", "bytemuck"] }
+trezoa-msg = { workspace = true, features = ["std"] }
+trezoa-sha256-hasher = { workspace = true }
+trezoa-sysvar = { path = ".", features = ["dev-context-only-utils"] }
 test-case = { workspace = true }
 
 [lints]

@@ -123,7 +123,7 @@ mod tests {
     use {
         rand::Rng,
         serde_derive::{Deserialize, Serialize},
-        solana_short_vec::ShortU16,
+        trezoa_short_vec::ShortU16,
     };
 
     #[derive(Debug, Eq, PartialEq, Serialize, Deserialize)]

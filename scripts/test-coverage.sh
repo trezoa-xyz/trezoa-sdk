@@ -8,11 +8,11 @@
 #   $ ./scripts/test-coverage.sh
 #
 # Run for specific packages
-#   $ ./scripts/test-coverage.sh -p solana-pubkey
-#   $ ./scripts/test-coverage.sh -p solana-pubkey -p solana-sdk-ids [-p ...]
+#   $ ./scripts/test-coverage.sh -p trezoa-pubkey
+#   $ ./scripts/test-coverage.sh -p trezoa-pubkey -p trezoa-sdk-ids [-p ...]
 #
 # Custom folder name. (default: $(git rev-parse --short=9 HEAD))
-#   $ COMMIT_HASH=xxx ./script/coverage.sh -p solana-account-decoder
+#   $ COMMIT_HASH=xxx ./script/coverage.sh -p trezoa-account-decoder
 
 set -eo pipefail
 here="$(dirname "$0")"
@@ -58,10 +58,10 @@ else
   PACKAGES=("$@")
 fi
 
-# Most verbose log level (trace) is enabled for all solana code to make log!
+# Most verbose log level (trace) is enabled for all trezoa code to make log!
 # macro code green always. Also, forcibly discard the vast amount of log by
 # redirecting the stderr.
-RUST_LOG="solana=trace,$RUST_LOG" \
+RUST_LOG="trezoa=trace,$RUST_LOG" \
   ./cargo nightly test --all-features --target-dir "./target/cov" "${PACKAGES[@]}" 2>/dev/null
 
 # Generate test reports

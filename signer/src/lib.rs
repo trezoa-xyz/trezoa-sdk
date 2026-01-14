@@ -2,9 +2,9 @@
 #![cfg_attr(docsrs, feature(doc_cfg))]
 use {
     core::fmt,
-    solana_pubkey::Pubkey,
-    solana_signature::Signature,
-    solana_transaction_error::TransactionError,
+    trezoa_pubkey::Pubkey,
+    trezoa_signature::Signature,
+    trezoa_transaction_error::TransactionError,
     std::{
         error,
         fs::{self, File, OpenOptions},

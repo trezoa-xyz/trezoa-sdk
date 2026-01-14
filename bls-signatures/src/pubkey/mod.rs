@@ -6,7 +6,7 @@ pub use bytes::{
     Pubkey, PubkeyCompressed, BLS_PUBLIC_KEY_AFFINE_BASE64_SIZE, BLS_PUBLIC_KEY_AFFINE_SIZE,
     BLS_PUBLIC_KEY_COMPRESSED_BASE64_SIZE, BLS_PUBLIC_KEY_COMPRESSED_SIZE,
 };
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 pub use points::{
     AddToPubkeyProjective, AsPubkeyAffine, AsPubkeyProjective, PubkeyAffine, PubkeyProjective,
     VerifiablePubkey,

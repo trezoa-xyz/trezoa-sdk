@@ -8,7 +8,7 @@ farf/
 
 # intellij files
 .idea/
-/solana.iml
+/trezoa.iml
 /.vscode/
 
 .DS_Store

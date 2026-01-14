@@ -1,1 +1,1 @@
-pub use solana_program::log::*;
+pub use trezoa_program::log::*;

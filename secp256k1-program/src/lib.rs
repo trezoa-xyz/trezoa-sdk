@@ -1,7 +1,7 @@
 #![cfg_attr(docsrs, feature(doc_cfg))]
 //! Instructions for the [secp256k1 native program][np].
 //!
-//! [np]: https://docs.solanalabs.com/runtime/programs#secp256k1-program
+//! [np]: https://docs.trezoalabs.com/runtime/programs#secp256k1-program
 //!
 //! _This module provides low-level cryptographic building blocks that must be
 //! used carefully to ensure proper security. Read this documentation and
@@ -21,15 +21,15 @@
 //! secp256k1 key recovery algorithm. Ethereum address can be created for
 //! secp256k1 public keys with the [`eth_address_from_pubkey`] function.
 //!
-//! [`keccak`]: https://docs.rs/solana-sdk/latest/solana_sdk/keccak/index.html
+//! [`keccak`]: https://docs.rs/trezoa-sdk/latest/trezoa_sdk/keccak/index.html
 //!
 //! This instruction does not directly allow for key recovery as in Ethereum's
-//! [`ecrecover`] precompile. For that Solana provides the [`secp256k1_recover`]
+//! [`ecrecover`] precompile. For that Trezoa provides the [`secp256k1_recover`]
 //! syscall.
 //!
 //! [secp256k1]: https://en.bitcoin.it/wiki/Secp256k1
-//! [`secp256k1_program`]: https://docs.rs/solana-program/latest/solana_program/secp256k1_program/index.html
-//! [`secp256k1_recover`]: https://docs.rs/solana-secp256k1-recover
+//! [`secp256k1_program`]: https://docs.rs/trezoa-program/latest/trezoa_program/secp256k1_program/index.html
+//! [`secp256k1_recover`]: https://docs.rs/trezoa-secp256k1-recover
 //! [`ecrecover`]: https://docs.soliditylang.org/en/v0.8.14/units-and-global-variables.html?highlight=ecrecover#mathematical-and-cryptographic-functions
 //!
 //! Use cases for the secp256k1 instruction include:
@@ -59,8 +59,8 @@
 //! of one or more additional instructions, as long as those instructions are in
 //! the same transaction.
 //!
-//! [`load_instruction_at_checked`]: https://docs.rs/solana-program/latest/solana_program/sysvar/instructions/fn.load_instruction_at_checked.html
-//! [`get_instruction_relative`]: https://docs.rs/solana-program/latest/solana_program/sysvar/instructions/fn.get_instruction_relative.html
+//! [`load_instruction_at_checked`]: https://docs.rs/trezoa-program/latest/trezoa_program/sysvar/instructions/fn.load_instruction_at_checked.html
+//! [`get_instruction_relative`]: https://docs.rs/trezoa-program/latest/trezoa_program/sysvar/instructions/fn.get_instruction_relative.html
 //!
 //! Correct use of this program involves multiple steps, in client code and
 //! program code:
@@ -86,7 +86,7 @@
 //!   - Check that the public keys and messages are the expected values per
 //!     the program's requirements.
 //!
-//! [`secp256k1_program::ID`]: https://docs.rs/solana-program/latest/solana_program/secp256k1_program/constant.ID.html
+//! [`secp256k1_program::ID`]: https://docs.rs/trezoa-program/latest/trezoa_program/secp256k1_program/constant.ID.html
 //!
 //! The signature, message, or Ethereum addresses may reside in the secp256k1
 //! instruction data itself as additional data, their bytes following the bytes
@@ -94,11 +94,11 @@
 //! signature, message, and Ethereum address data. This is the technique used by
 //! `new_secp256k1_instruction_with_signature` for simple signature verification.
 //!
-//! The `solana_secp256k1_program` crate provides few APIs for building the
+//! The `trezoa_secp256k1_program` crate provides few APIs for building the
 //! instructions and transactions necessary for properly using the secp256k1
 //! native program. Many steps must be done manually.
 //!
-//! The `solana_program` crate provides no APIs to assist in interpreting
+//! The `trezoa_program` crate provides no APIs to assist in interpreting
 //! the secp256k1 instruction data. It must be done manually.
 //!
 //! The secp256k1 program is implemented with the [`libsecp256k1`] crate,
@@ -120,8 +120,8 @@
 //! The signature offset structure is defined by [`SecpSignatureOffsets`],
 //! and can be serialized to the correct format with [`bincode::serialize_into`].
 //! Note that the bincode format may not be stable,
-//! and callers should ensure they use the same version of `bincode` as the Solana SDK.
-//! This data structure is not provided to Solana programs,
+//! and callers should ensure they use the same version of `bincode` as the Trezoa SDK.
+//! This data structure is not provided to Trezoa programs,
 //! which are expected to interpret the signature offsets manually.
 //!
 //! [`bincode::serialize_into`]: https://docs.rs/bincode/1.3.3/bincode/fn.serialize_into.html
@@ -148,9 +148,9 @@
 //! a unique representation this can be the source of bugs, potentially with
 //! security implications.
 //!
-//! **The solana `secp256k1_recover` function does not prevent signature
+//! **The trezoa `secp256k1_recover` function does not prevent signature
 //! malleability**. This is in contrast to the Bitcoin secp256k1 library, which
-//! does prevent malleability by default. Solana accepts signatures with `S`
+//! does prevent malleability by default. Trezoa accepts signatures with `S`
 //! values that are either in the _high order_ or in the _low order_, and it
 //! is trivial to produce one from the other.
 //!
@@ -176,13 +176,13 @@
 //! [`get_instruction_relative`] functions. Both of these functions check their
 //! sysvar argument to ensure it is the known instruction sysvar.
 //!
-//! [is]: https://docs.rs/solana-program/latest/solana_program/sysvar/instructions/index.html
+//! [is]: https://docs.rs/trezoa-program/latest/trezoa_program/sysvar/instructions/index.html
 //!
 //! Programs should _always_ verify that the secp256k1 program ID loaded through
 //! the instructions sysvar has the same value as in the [`secp256k1_program`]
 //! module. Again this prevents imposter programs.
 //!
-//! [`secp256k1_program`]: https://docs.rs/solana-program/latest/solana_program/secp256k1_program/index.html
+//! [`secp256k1_program`]: https://docs.rs/trezoa-program/latest/trezoa_program/secp256k1_program/index.html
 //!
 //! # Errors
 //!
@@ -205,11 +205,11 @@
 //! # Examples
 //!
 //! Both of the following examples make use of the following module definition
-//! to parse the secp256k1 instruction data from within a Solana program.
+//! to parse the secp256k1 instruction data from within a Trezoa program.
 //!
 //! ```no_run
 //! mod secp256k1_defs {
-//!     use solana_program_error::ProgramError;
+//!     use trezoa_program_error::ProgramError;
 //!     use std::iter::Iterator;
 //!
 //!     pub const HASHED_PUBKEY_SERIALIZED_SIZE: usize = 20;
@@ -265,17 +265,17 @@
 //! calling [`new_secp256k1_instruction_with_signature`] to sign a single message
 //! and build the corresponding secp256k1 instruction.
 //!
-//! This example has two components: a Solana program, and an RPC client that
+//! This example has two components: a Trezoa program, and an RPC client that
 //! sends a transaction to call it. The RPC client will sign a single message,
-//! and the Solana program will introspect the secp256k1 instruction to verify
+//! and the Trezoa program will introspect the secp256k1 instruction to verify
 //! that the signer matches a known authorized public key.
 //!
-//! The Solana program. Note that it uses `k256` version 0.13.0 to parse the
+//! The Trezoa program. Note that it uses `k256` version 0.13.0 to parse the
 //! secp256k1 signature to prevent malleability.
 //!
 //! ```no_run
 //! # mod secp256k1_defs {
-//! #     use solana_program_error::ProgramError;
+//! #     use trezoa_program_error::ProgramError;
 //! #     use std::iter::Iterator;
 //! #
 //! #     pub const HASHED_PUBKEY_SERIALIZED_SIZE: usize = 20;
@@ -324,11 +324,11 @@
 //! #     }
 //! # }
 //! use k256::elliptic_curve::scalar::IsHigh;
-//! use solana_account_info::{next_account_info, AccountInfo};
-//! use solana_msg::msg;
-//! use solana_program_error::{ProgramError, ProgramResult};
-//! use solana_sdk_ids::secp256k1_program;
-//! use solana_instructions_sysvar::load_instruction_at_checked;
+//! use trezoa_account_info::{next_account_info, AccountInfo};
+//! use trezoa_msg::msg;
+//! use trezoa_program_error::{ProgramError, ProgramResult};
+//! use trezoa_sdk_ids::secp256k1_program;
+//! use trezoa_instructions_sysvar::load_instruction_at_checked;
 //!
 //! /// An Ethereum address corresponding to a secp256k1 secret key that is
 //! /// authorized to sign our messages.
@@ -349,7 +349,7 @@
 //!
 //!     // The instructions sysvar gives access to the instructions in the transaction.
 //!     let instructions_sysvar_account = next_account_info(account_info_iter)?;
-//!     assert!(solana_sdk_ids::sysvar::instructions::check_id(
+//!     assert!(trezoa_sdk_ids::sysvar::instructions::check_id(
 //!         instructions_sysvar_account.key
 //!     ));
 //!
@@ -357,7 +357,7 @@
 //!     // `new_secp256k1_instruction_with_signature` generates an instruction
 //!     // that must be at index 0.
 //!     let secp256k1_instr =
-//!         solana_instructions_sysvar::load_instruction_at_checked(0, instructions_sysvar_account)?;
+//!         trezoa_instructions_sysvar::load_instruction_at_checked(0, instructions_sysvar_account)?;
 //!
 //!     // Verify it is a secp256k1 instruction.
 //!     // This is security-critical - what if the transaction uses an imposter secp256k1 program?
@@ -385,7 +385,7 @@
 //!     assert_eq!(0, offsets.message_instruction_index);
 //!
 //!     // Reject high-s value signatures to prevent malleability.
-//!     // Solana does not do this itself.
+//!     // Trezoa does not do this itself.
 //!     // This may or may not be necessary depending on use case.
 //!     {
 //!         let signature = &secp256k1_instr.data[offsets.signature_offset as usize
@@ -420,14 +420,14 @@
 //! The client program:
 //!
 //! ```no_run
-//! # use solana_example_mocks::{solana_keypair, solana_rpc_client, solana_signer, solana_transaction};
+//! # use trezoa_example_mocks::{trezoa_keypair, trezoa_rpc_client, trezoa_signer, trezoa_transaction};
 //! use anyhow::Result;
-//! use solana_instruction::{AccountMeta, Instruction};
-//! use solana_keypair::Keypair;
-//! use solana_rpc_client::rpc_client::RpcClient;
-//! use solana_signer::Signer;
-//! use solana_transaction::Transaction;
-//! use solana_secp256k1_program::{
+//! use trezoa_instruction::{AccountMeta, Instruction};
+//! use trezoa_keypair::Keypair;
+//! use trezoa_rpc_client::rpc_client::RpcClient;
+//! use trezoa_signer::Signer;
+//! use trezoa_transaction::Transaction;
+//! use trezoa_secp256k1_program::{
 //!     eth_address_from_pubkey, new_secp256k1_instruction_with_signature,
 //!     sign_message,
 //! };
@@ -450,7 +450,7 @@
 //!         program_keypair.pubkey(),
 //!         &[],
 //!         vec![
-//!             AccountMeta::new_readonly(solana_sdk_ids::sysvar::instructions::ID, false)
+//!             AccountMeta::new_readonly(trezoa_sdk_ids::sysvar::instructions::ID, false)
 //!         ],
 //!     );
 //!
@@ -471,28 +471,28 @@
 //! ## Example: Verifying multiple signatures in one instruction
 //!
 //! This example demonstrates manually creating a secp256k1 instruction
-//! containing many signatures, and a Solana program that parses them all. This
+//! containing many signatures, and a Trezoa program that parses them all. This
 //! example on its own has no practical purpose. It simply demonstrates advanced
 //! use of the secp256k1 program.
 //!
 //! Recall that the secp256k1 program will accept signatures, messages, and
 //! Ethereum addresses that reside in any instruction contained in the same
-//! transaction. In the _previous_ example, the Solana program asserted that all
+//! transaction. In the _previous_ example, the Trezoa program asserted that all
 //! signatures, messages, and addresses were stored in the instruction at 0. In
-//! this next example the Solana program supports signatures, messages, and
+//! this next example the Trezoa program supports signatures, messages, and
 //! addresses stored in any instruction. For simplicity the client still only
 //! stores signatures, messages, and addresses in a single instruction, the
 //! secp256k1 instruction. The code for storing this data across multiple
 //! instructions would be complex, and may not be necessary in practice.
 //!
-//! This example has two components: a Solana program, and an RPC client that
+//! This example has two components: a Trezoa program, and an RPC client that
 //! sends a transaction to call it.
 //!
-//! The Solana program:
+//! The Trezoa program:
 //!
 //! ```no_run
 //! # mod secp256k1_defs {
-//! #     use solana_program_error::ProgramError;
+//! #     use trezoa_program_error::ProgramError;
 //! #     use std::iter::Iterator;
 //! #
 //! #     pub const HASHED_PUBKEY_SERIALIZED_SIZE: usize = 20;
@@ -540,11 +540,11 @@
 //! #             }))
 //! #     }
 //! # }
-//! use solana_account_info::{next_account_info, AccountInfo};
-//! use solana_program_error::{ProgramError, ProgramResult};
-//! use solana_msg::msg;
-//! use solana_sdk_ids::secp256k1_program;
-//! use solana_instructions_sysvar::{get_instruction_relative, load_instruction_at_checked};
+//! use trezoa_account_info::{next_account_info, AccountInfo};
+//! use trezoa_program_error::{ProgramError, ProgramResult};
+//! use trezoa_msg::msg;
+//! use trezoa_sdk_ids::secp256k1_program;
+//! use trezoa_instructions_sysvar::{get_instruction_relative, load_instruction_at_checked};
 //!
 //! /// A struct to hold the values specified in the `SecpSignatureOffsets` struct.
 //! struct SecpSignature {
@@ -609,12 +609,12 @@
 //!     let account_info_iter = &mut accounts.iter();
 //!
 //!     let instructions_sysvar_account = next_account_info(account_info_iter)?;
-//!     assert!(solana_sdk_ids::sysvar::instructions::check_id(
+//!     assert!(trezoa_sdk_ids::sysvar::instructions::check_id(
 //!         instructions_sysvar_account.key
 //!     ));
 //!
 //!     let secp256k1_instr =
-//!         solana_instructions_sysvar::get_instruction_relative(-1, instructions_sysvar_account)?;
+//!         trezoa_instructions_sysvar::get_instruction_relative(-1, instructions_sysvar_account)?;
 //!
 //!     assert!(secp256k1_program::check_id(&secp256k1_instr.program_id));
 //!
@@ -636,17 +636,17 @@
 //! The client program:
 //!
 //! ```no_run
-//! # use solana_example_mocks::{solana_keypair, solana_rpc_client, solana_signer, solana_transaction};
+//! # use trezoa_example_mocks::{trezoa_keypair, trezoa_rpc_client, trezoa_signer, trezoa_transaction};
 //! use anyhow::Result;
-//! use solana_instruction::{AccountMeta, Instruction};
-//! use solana_rpc_client::rpc_client::RpcClient;
-//! use solana_secp256k1_program::{
+//! use trezoa_instruction::{AccountMeta, Instruction};
+//! use trezoa_rpc_client::rpc_client::RpcClient;
+//! use trezoa_secp256k1_program::{
 //!     eth_address_from_pubkey, SecpSignatureOffsets, HASHED_PUBKEY_SERIALIZED_SIZE,
 //!     SIGNATURE_OFFSETS_SERIALIZED_SIZE, SIGNATURE_SERIALIZED_SIZE,
 //! };
-//! use solana_signer::Signer;
-//! use solana_keypair::Keypair;
-//! use solana_transaction::Transaction;
+//! use trezoa_signer::Signer;
+//! use trezoa_keypair::Keypair;
+//! use trezoa_transaction::Transaction;
 //!
 //! /// A struct to hold the values specified in the `SecpSignatureOffsets` struct.
 //! struct SecpSignature {
@@ -736,7 +736,7 @@
 //!         let secret_key = k256::ecdsa::SigningKey::random(&mut rand::thread_rng());
 //!         let message = format!("hello world {}", idx).into_bytes();
 //!         let message_hash = {
-//!             let mut hasher = solana_keccak_hasher::Hasher::default();
+//!             let mut hasher = trezoa_keccak_hasher::Hasher::default();
 //!             hasher.hash(&message);
 //!             hasher.result()
 //!         };
@@ -759,7 +759,7 @@
 //!
 //!     let secp256k1_instr_data = make_secp256k1_instruction_data(&signatures, 0)?;
 //!     let secp256k1_instr = Instruction::new_with_bytes(
-//!         solana_sdk_ids::secp256k1_program::ID,
+//!         trezoa_sdk_ids::secp256k1_program::ID,
 //!         &secp256k1_instr_data,
 //!         vec![],
 //!     );
@@ -768,7 +768,7 @@
 //!         program_keypair.pubkey(),
 //!         &[],
 //!         vec![
-//!             AccountMeta::new_readonly(solana_sdk_ids::sysvar::instructions::ID, false)
+//!             AccountMeta::new_readonly(trezoa_sdk_ids::sysvar::instructions::ID, false)
 //!         ],
 //!     );
 //!
@@ -789,8 +789,8 @@
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
 #[cfg(feature = "bincode")]
-use solana_instruction::Instruction;
-use {digest::Digest, solana_signature::error::Error};
+use trezoa_instruction::Instruction;
+use {digest::Digest, trezoa_signature::error::Error};
 
 pub const SECP256K1_PUBKEY_SIZE: usize = 64;
 pub const SECP256K1_PRIVATE_KEY_SIZE: usize = 32;
@@ -886,7 +886,7 @@ pub fn new_secp256k1_instruction_with_signature(
     bincode::serialize_into(writer, &offsets).unwrap();
 
     Instruction {
-        program_id: solana_sdk_ids::secp256k1_program::id(),
+        program_id: trezoa_sdk_ids::secp256k1_program::id(),
         accounts: vec![],
         data: instruction_data,
     }

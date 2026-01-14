@@ -1,9 +1,9 @@
 //! Calculation of [shred] versions.
 //!
-//! [shred]: https://solana.com/docs/terminology#shred
+//! [shred]: https://trezoa.com/docs/terminology#shred
 #![cfg_attr(docsrs, feature(doc_cfg))]
 
-use {solana_hard_forks::HardForks, solana_hash::Hash, solana_sha256_hasher::hashv};
+use {trezoa_hard_forks::HardForks, trezoa_hash::Hash, trezoa_sha256_hasher::hashv};
 
 pub fn version_from_hash(hash: &Hash) -> u16 {
     let hash = hash.as_ref();

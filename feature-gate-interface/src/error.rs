@@ -1,6 +1,6 @@
 //! Program error types.
 
-use solana_program_error::{ProgramError, ToStr};
+use trezoa_program_error::{ProgramError, ToStr};
 
 /// Program error types.
 #[cfg_attr(test, derive(strum_macros::FromRepr, strum_macros::EnumIter))]

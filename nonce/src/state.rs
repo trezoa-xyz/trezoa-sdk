@@ -1,8 +1,8 @@
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
 use {
-    solana_fee_calculator::FeeCalculator, solana_hash::Hash, solana_pubkey::Pubkey,
-    solana_sha256_hasher::hashv,
+    trezoa_fee_calculator::FeeCalculator, trezoa_hash::Hash, trezoa_pubkey::Pubkey,
+    trezoa_sha256_hasher::hashv,
 };
 
 const DURABLE_NONCE_HASH_PREFIX: &[u8] = "DURABLE_NONCE".as_bytes();

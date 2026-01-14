@@ -1,7 +1,7 @@
 [package]
-name = "solana-sha256-hasher"
-description = "Solana SHA256 hashing"
-documentation = "https://docs.rs/solana-sha256-hasher"
+name = "trezoa-sha256-hasher"
+description = "Trezoa SHA256 hashing"
+documentation = "https://docs.rs/trezoa-sha256-hasher"
 version = "3.1.0"
 authors = { workspace = true }
 repository = { workspace = true }
@@ -16,16 +16,16 @@ targets = ["x86_64-unknown-linux-gnu"]
 sha2 = ["dep:sha2"]
 
 [dependencies]
-solana-hash = { workspace = true }
+trezoa-hash = { workspace = true }
 
-[target.'cfg(any(target_os = "solana", target_arch = "bpf"))'.dependencies]
-solana-define-syscall = { workspace = true }
+[target.'cfg(any(target_os = "trezoa", target_arch = "bpf"))'.dependencies]
+trezoa-define-syscall = { workspace = true }
 
-[target.'cfg(not(any(target_os = "solana", target_arch = "bpf")))'.dependencies]
+[target.'cfg(not(any(target_os = "trezoa", target_arch = "bpf")))'.dependencies]
 sha2 = { workspace = true, optional = true }
 
 [dev-dependencies]
-solana-sha256-hasher = { path = ".", features = ["sha2"] }
+trezoa-sha256-hasher = { path = ".", features = ["sha2"] }
 
 [lints]
 workspace = true

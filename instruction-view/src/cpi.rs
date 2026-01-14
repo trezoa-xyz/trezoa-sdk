@@ -5,17 +5,17 @@ extern crate alloc;
 
 #[cfg(feature = "slice-cpi")]
 use alloc::boxed::Box;
-#[cfg(any(target_os = "solana", target_arch = "bpf"))]
-pub use solana_define_syscall::{
+#[cfg(any(target_os = "trezoa", target_arch = "bpf"))]
+pub use trezoa_define_syscall::{
     define_syscall,
     definitions::{sol_get_return_data, sol_invoke_signed_c, sol_set_return_data},
 };
 use {
     crate::InstructionView,
     core::{marker::PhantomData, mem::MaybeUninit, ops::Deref, slice::from_raw_parts},
-    solana_account_view::AccountView,
-    solana_address::Address,
-    solana_program_error::{ProgramError, ProgramResult},
+    trezoa_account_view::AccountView,
+    trezoa_address::Address,
+    trezoa_program_error::{ProgramError, ProgramResult},
 };
 
 /// Maximum number of accounts allowed in `invoke` and `invoke_with_bounds`
@@ -144,7 +144,7 @@ impl Deref for Seed<'_> {
 /// Represents a [program derived address][pda] (PDA) signer controlled by the
 /// calling program.
 ///
-/// [pda]: https://solana.com/docs/core/cpi#program-derived-addresses
+/// [pda]: https://trezoa.com/docs/core/cpi#program-derived-addresses
 #[repr(C)]
 #[derive(Debug, Clone)]
 pub struct Signer<'a, 'b> {
@@ -188,8 +188,8 @@ impl<'a, 'b, const SIZE: usize> From<&'b [Seed<'a>; SIZE]> for Signer<'a, 'b> {
 ///
 /// Creating seeds array and signer for a PDA with a single seed and bump value:
 /// ```
-/// use solana_address::Address;
-/// use solana_instruction_view::{cpi::Signer, seeds};
+/// use trezoa_address::Address;
+/// use trezoa_instruction_view::{cpi::Signer, seeds};
 ///
 /// let pda_bump = 0xffu8;
 /// let pda_ref = &[pda_bump];
@@ -580,7 +580,7 @@ pub unsafe fn invoke_signed_unchecked(
     accounts: &[CpiAccount],
     signers_seeds: &[Signer],
 ) {
-    #[cfg(any(target_os = "solana", target_arch = "bpf"))]
+    #[cfg(any(target_os = "trezoa", target_arch = "bpf"))]
     {
         use crate::InstructionAccount;
 
@@ -628,7 +628,7 @@ pub unsafe fn invoke_signed_unchecked(
         };
     }
 
-    #[cfg(not(any(target_os = "solana", target_arch = "bpf")))]
+    #[cfg(not(any(target_os = "trezoa", target_arch = "bpf")))]
     core::hint::black_box((instruction, accounts, signers_seeds));
 }
 
@@ -644,12 +644,12 @@ pub const MAX_RETURN_DATA: usize = 1024;
 /// retrieved by the caller with [`get_return_data`].
 #[inline(always)]
 pub fn set_return_data(data: &[u8]) {
-    #[cfg(any(target_os = "solana", target_arch = "bpf"))]
+    #[cfg(any(target_os = "trezoa", target_arch = "bpf"))]
     unsafe {
         sol_set_return_data(data.as_ptr(), data.len() as u64)
     };
 
-    #[cfg(not(any(target_os = "solana", target_arch = "bpf")))]
+    #[cfg(not(any(target_os = "trezoa", target_arch = "bpf")))]
     core::hint::black_box(data);
 }
 
@@ -681,10 +681,10 @@ pub fn set_return_data(data: &[u8]) {
 ///
 /// For more about return data see the [documentation for the return data proposal][rdp].
 ///
-/// [rdp]: https://docs.solanalabs.com/proposals/return-data
+/// [rdp]: https://docs.trezoalabs.com/proposals/return-data
 #[inline]
 pub fn get_return_data() -> Option<ReturnData> {
-    #[cfg(any(target_os = "solana", target_arch = "bpf"))]
+    #[cfg(any(target_os = "trezoa", target_arch = "bpf"))]
     {
         const UNINIT_BYTE: MaybeUninit<u8> = MaybeUninit::<u8>::uninit();
         let mut data = [UNINIT_BYTE; MAX_RETURN_DATA];
@@ -709,7 +709,7 @@ pub fn get_return_data() -> Option<ReturnData> {
         }
     }
 
-    #[cfg(not(any(target_os = "solana", target_arch = "bpf")))]
+    #[cfg(not(any(target_os = "trezoa", target_arch = "bpf")))]
     core::hint::black_box(None)
 }
 

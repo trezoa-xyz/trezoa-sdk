@@ -7,21 +7,21 @@
 //! [`Clock`] implements [`Sysvar::get`] and can be loaded efficiently without
 //! passing the sysvar account ID to the program.
 //!
-//! See also the Solana [documentation on the clock sysvar][sdoc].
+//! See also the Trezoa [documentation on the clock sysvar][sdoc].
 //!
-//! [sdoc]: https://docs.solanalabs.com/runtime/sysvars#clock
+//! [sdoc]: https://docs.trezoalabs.com/runtime/sysvars#clock
 //!
 //! # Examples
 //!
 //! Accessing via on-chain program directly:
 //!
 //! ```no_run
-//! # use solana_account_info::AccountInfo;
-//! # use solana_clock::Clock;
-//! # use solana_msg::msg;
-//! # use solana_program_error::{ProgramError, ProgramResult};
-//! # use solana_pubkey::Pubkey;
-//! # use solana_sysvar::Sysvar;
+//! # use trezoa_account_info::AccountInfo;
+//! # use trezoa_clock::Clock;
+//! # use trezoa_msg::msg;
+//! # use trezoa_program_error::{ProgramError, ProgramResult};
+//! # use trezoa_pubkey::Pubkey;
+//! # use trezoa_sysvar::Sysvar;
 //! #
 //! fn process_instruction(
 //!     program_id: &Pubkey,
@@ -35,7 +35,7 @@
 //!     Ok(())
 //! }
 //! #
-//! # use solana_sysvar_id::SysvarId;
+//! # use trezoa_sysvar_id::SysvarId;
 //! # let p = Clock::id();
 //! # let l = &mut 1169280;
 //! # let d = &mut vec![240, 153, 233, 7, 0, 0, 0, 0, 11, 115, 118, 98, 0, 0, 0, 0, 51, 1, 0, 0, 0, 0, 0, 0, 52, 1, 0, 0, 0, 0, 0, 0, 121, 50, 119, 98, 0, 0, 0, 0];
@@ -52,13 +52,13 @@
 //! Accessing via on-chain program's account parameters:
 //!
 //! ```
-//! # use solana_account_info::{AccountInfo, next_account_info};
-//! # use solana_clock::Clock;
-//! # use solana_msg::msg;
-//! # use solana_program_error::{ProgramError, ProgramResult};
-//! # use solana_pubkey::Pubkey;
-//! # use solana_sysvar::{Sysvar, SysvarSerialize};
-//! # use solana_sdk_ids::sysvar::clock;
+//! # use trezoa_account_info::{AccountInfo, next_account_info};
+//! # use trezoa_clock::Clock;
+//! # use trezoa_msg::msg;
+//! # use trezoa_program_error::{ProgramError, ProgramResult};
+//! # use trezoa_pubkey::Pubkey;
+//! # use trezoa_sysvar::{Sysvar, SysvarSerialize};
+//! # use trezoa_sdk_ids::sysvar::clock;
 //! #
 //! fn process_instruction(
 //!     program_id: &Pubkey,
@@ -76,7 +76,7 @@
 //!     Ok(())
 //! }
 //! #
-//! # use solana_sysvar_id::SysvarId;
+//! # use trezoa_sysvar_id::SysvarId;
 //! # let p = Clock::id();
 //! # let l = &mut 1169280;
 //! # let d = &mut vec![240, 153, 233, 7, 0, 0, 0, 0, 11, 115, 118, 98, 0, 0, 0, 0, 51, 1, 0, 0, 0, 0, 0, 0, 52, 1, 0, 0, 0, 0, 0, 0, 121, 50, 119, 98, 0, 0, 0, 0];
@@ -93,19 +93,19 @@
 //! Accessing via the RPC client:
 //!
 //! ```
-//! # use solana_clock::Clock;
-//! # use solana_example_mocks::solana_account;
-//! # use solana_example_mocks::solana_rpc_client;
-//! # use solana_rpc_client::rpc_client::RpcClient;
-//! # use solana_account::Account;
-//! # use solana_sdk_ids::sysvar::clock;
+//! # use trezoa_clock::Clock;
+//! # use trezoa_example_mocks::trezoa_account;
+//! # use trezoa_example_mocks::trezoa_rpc_client;
+//! # use trezoa_rpc_client::rpc_client::RpcClient;
+//! # use trezoa_account::Account;
+//! # use trezoa_sdk_ids::sysvar::clock;
 //! # use anyhow::Result;
 //! #
 //! fn print_sysvar_clock(client: &RpcClient) -> Result<()> {
 //! #   client.set_get_account_response(clock::ID, Account {
 //! #       lamports: 1169280,
 //! #       data: vec![240, 153, 233, 7, 0, 0, 0, 0, 11, 115, 118, 98, 0, 0, 0, 0, 51, 1, 0, 0, 0, 0, 0, 0, 52, 1, 0, 0, 0, 0, 0, 0, 121, 50, 119, 98, 0, 0, 0, 0],
-//! #       owner: solana_sdk_ids::system_program::ID,
+//! #       owner: trezoa_sdk_ids::system_program::ID,
 //! #       executable: false,
 //! #   });
 //! #
@@ -125,8 +125,8 @@
 use crate::SysvarSerialize;
 use crate::{impl_sysvar_get, Sysvar};
 pub use {
-    solana_clock::Clock,
-    solana_sdk_ids::sysvar::clock::{check_id, id, ID},
+    trezoa_clock::Clock,
+    trezoa_sdk_ids::sysvar::clock::{check_id, id, ID},
 };
 
 impl Sysvar for Clock {

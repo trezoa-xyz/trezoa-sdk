@@ -4,7 +4,7 @@
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
 
-#[cfg_attr(feature = "frozen-abi", derive(solana_frozen_abi_macro::AbiExample))]
+#[cfg_attr(feature = "frozen-abi", derive(trezoa_frozen_abi_macro::AbiExample))]
 #[cfg_attr(feature = "serde", derive(Deserialize, Serialize))]
 #[derive(PartialEq, Clone, Debug, Copy)]
 #[cfg_attr(feature = "serde", serde(rename_all = "camelCase"))]

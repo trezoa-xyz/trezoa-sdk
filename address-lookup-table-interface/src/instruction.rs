@@ -1,10 +1,10 @@
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
-use {solana_clock::Slot, solana_pubkey::Pubkey, solana_sdk_ids::address_lookup_table::id};
+use {trezoa_clock::Slot, trezoa_pubkey::Pubkey, trezoa_sdk_ids::address_lookup_table::id};
 #[cfg(feature = "bincode")]
 use {
-    solana_instruction::{AccountMeta, Instruction},
-    solana_sdk_ids::system_program,
+    trezoa_instruction::{AccountMeta, Instruction},
+    trezoa_sdk_ids::system_program,
 };
 
 #[cfg_attr(feature = "serde", derive(Deserialize, Serialize))]

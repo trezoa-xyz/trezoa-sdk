@@ -5,21 +5,21 @@ use {
         v0::{self, LoadedAddresses},
         AccountKeys, AddressLoader, MessageHeader, SanitizedVersionedMessage, VersionedMessage,
     },
-    solana_address::Address,
-    solana_hash::Hash,
-    solana_instruction::{BorrowedAccountMeta, BorrowedInstruction},
-    solana_sanitize::Sanitize,
-    solana_sdk_ids::{ed25519_program, secp256k1_program, secp256r1_program},
-    solana_transaction_error::SanitizeMessageError,
+    trezoa_address::Address,
+    trezoa_hash::Hash,
+    trezoa_instruction::{BorrowedAccountMeta, BorrowedInstruction},
+    trezoa_sanitize::Sanitize,
+    trezoa_sdk_ids::{ed25519_program, secp256k1_program, secp256r1_program},
+    trezoa_transaction_error::SanitizeMessageError,
     std::{borrow::Cow, collections::HashSet, convert::TryFrom},
 };
 
-// inlined to avoid solana_nonce dep
+// inlined to avoid trezoa_nonce dep
 const NONCED_TX_MARKER_IX_INDEX: u8 = 0;
 #[cfg(test)]
 static_assertions::const_assert_eq!(
     NONCED_TX_MARKER_IX_INDEX,
-    solana_nonce::NONCED_TX_MARKER_IX_INDEX
+    trezoa_nonce::NONCED_TX_MARKER_IX_INDEX
 );
 
 #[derive(Debug, Clone, Eq, PartialEq)]
@@ -318,7 +318,7 @@ impl SanitizedMessage {
             .get(NONCED_TX_MARKER_IX_INDEX as usize)
             .filter(
                 |ix| match self.account_keys().get(ix.program_id_index as usize) {
-                    Some(program_id) => solana_sdk_ids::system_program::check_id(program_id),
+                    Some(program_id) => trezoa_sdk_ids::system_program::check_id(program_id),
                     _ => false,
                 },
             )

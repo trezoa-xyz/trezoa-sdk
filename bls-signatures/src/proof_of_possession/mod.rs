@@ -7,7 +7,7 @@ pub use bytes::{
     BLS_PROOF_OF_POSSESSION_AFFINE_SIZE, BLS_PROOF_OF_POSSESSION_COMPRESSED_BASE64_SIZE,
     BLS_PROOF_OF_POSSESSION_COMPRESSED_SIZE,
 };
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 pub use points::{
     AsProofOfPossessionAffine, AsProofOfPossessionProjective, ProofOfPossessionAffine,
     ProofOfPossessionProjective, VerifiableProofOfPossession,

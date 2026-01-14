@@ -5,8 +5,8 @@
 //! `light_poseidon_0_2`.
 
 use crate::{Endianness, Parameters, PoseidonHash, PoseidonSyscallError};
-#[cfg(target_os = "solana")]
-use {crate::HASH_BYTES, solana_define_syscall::definitions::sol_poseidon};
+#[cfg(target_os = "trezoa")]
+use {crate::HASH_BYTES, trezoa_define_syscall::definitions::sol_poseidon};
 
 /// Return a Poseidon hash for the given data with the given elliptic curve and
 /// endianness.
@@ -14,7 +14,7 @@ use {crate::HASH_BYTES, solana_define_syscall::definitions::sol_poseidon};
 /// # Examples
 ///
 /// ```rust
-/// use solana_poseidon::{hashv, Endianness, Parameters};
+/// use trezoa_poseidon::{hashv, Endianness, Parameters};
 ///
 /// # fn test() {
 /// let input1 = [1u8; 32];
@@ -34,7 +34,7 @@ pub fn hashv(
 ) -> Result<PoseidonHash, PoseidonSyscallError> {
     // Perform the calculation inline, calling this from within a program is
     // not supported.
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "trezoa"))]
     {
         use {
             ark_bn254_0_4::Fr,
@@ -78,7 +78,7 @@ pub fn hashv(
 
         Ok(PoseidonHash(res))
     }
-    #[cfg(target_os = "solana")]
+    #[cfg(target_os = "trezoa")]
     {
         let mut hash_result = [0; HASH_BYTES];
         let result = unsafe {
@@ -104,7 +104,7 @@ pub fn hashv(
 /// # Examples
 ///
 /// ```rust
-/// use solana_poseidon::{hash, Endianness, Parameters};
+/// use trezoa_poseidon::{hash, Endianness, Parameters};
 ///
 /// # fn test() {
 /// let input = [1u8; 32];

@@ -5,7 +5,7 @@ use {
         address::Address, hash::Hash, instruction::Instruction, keypair::Keypair, message::Message,
     },
     js_sys::Uint8Array,
-    solana_packet::PACKET_DATA_SIZE,
+    trezoa_packet::PACKET_DATA_SIZE,
     wasm_bindgen::prelude::{wasm_bindgen, JsValue},
 };
 
@@ -17,10 +17,10 @@ const MAX_TRANSACTION_SIZE: usize = PACKET_DATA_SIZE;
 #[wasm_bindgen]
 #[derive(Debug, PartialEq, Default, Eq, Clone)]
 pub struct Transaction {
-    pub(crate) inner: solana_transaction::Transaction,
+    pub(crate) inner: trezoa_transaction::Transaction,
 }
 
-crate::conversion::impl_inner_conversion!(Transaction, solana_transaction::Transaction);
+crate::conversion::impl_inner_conversion!(Transaction, trezoa_transaction::Transaction);
 
 #[wasm_bindgen]
 impl Transaction {
@@ -31,7 +31,7 @@ impl Transaction {
             .into_iter()
             .map(|x| x.inner)
             .collect::<Vec<_>>();
-        solana_transaction::Transaction::new_with_payer(
+        trezoa_transaction::Transaction::new_with_payer(
             &instructions,
             payer.map(|x| x.inner).as_ref(),
         )
@@ -82,7 +82,7 @@ impl Transaction {
 
         let bytes_vec = uint8_array.to_vec();
 
-        bincode::deserialize::<solana_transaction::Transaction>(&bytes_vec)
+        bincode::deserialize::<trezoa_transaction::Transaction>(&bytes_vec)
             .map(Into::into)
             .map_err(|x| std::string::ToString::to_string(&x).into())
     }

@@ -1,4 +1,4 @@
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 use crate::{
     v0::{LoadedAddresses, MessageAddressTableLookup},
     AddressLookupTableAccount,
@@ -6,9 +6,9 @@ use crate::{
 use {
     crate::{inline_nonce::is_advance_nonce_instruction_data, MessageHeader},
     core::fmt,
-    solana_address::Address,
-    solana_instruction::Instruction,
-    solana_sdk_ids::system_program,
+    trezoa_address::Address,
+    trezoa_instruction::Instruction,
+    trezoa_sdk_ids::system_program,
     std::collections::BTreeMap,
 };
 
@@ -19,7 +19,7 @@ pub(crate) struct CompiledKeys {
     key_meta_map: BTreeMap<Address, CompiledKeyMeta>,
 }
 
-#[cfg_attr(target_os = "solana", allow(dead_code))]
+#[cfg_attr(target_os = "trezoa", allow(dead_code))]
 #[derive(PartialEq, Debug, Eq, Clone)]
 pub enum CompileError {
     AccountIndexOverflow,
@@ -139,7 +139,7 @@ impl CompiledKeys {
         Ok((header, static_account_keys))
     }
 
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "trezoa"))]
     pub(crate) fn try_extract_table_lookup(
         &mut self,
         lookup_table_account: &AddressLookupTableAccount,
@@ -171,7 +171,7 @@ impl CompiledKeys {
         )))
     }
 
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "trezoa"))]
     fn try_drain_keys_found_in_lookup_table(
         &mut self,
         lookup_table_addresses: &[Address],
@@ -205,7 +205,7 @@ impl CompiledKeys {
     }
 }
 
-// inlined to avoid solana_nonce dep
+// inlined to avoid trezoa_nonce dep
 const NONCED_TX_MARKER_IX_INDEX: usize = 0;
 
 fn get_nonce_pubkey(instructions: &[Instruction]) -> Option<&Address> {
@@ -224,14 +224,14 @@ fn get_nonce_pubkey(instructions: &[Instruction]) -> Option<&Address> {
 #[cfg(test)]
 mod tests {
     use {
-        super::*, bitflags::bitflags, solana_instruction::AccountMeta,
-        solana_sdk_ids::sysvar::recent_blockhashes,
-        solana_system_interface::instruction::advance_nonce_account,
+        super::*, bitflags::bitflags, trezoa_instruction::AccountMeta,
+        trezoa_sdk_ids::sysvar::recent_blockhashes,
+        trezoa_system_interface::instruction::advance_nonce_account,
     };
 
     static_assertions::const_assert_eq!(
         NONCED_TX_MARKER_IX_INDEX,
-        solana_nonce::NONCED_TX_MARKER_IX_INDEX as usize
+        trezoa_nonce::NONCED_TX_MARKER_IX_INDEX as usize
     );
 
     bitflags! {

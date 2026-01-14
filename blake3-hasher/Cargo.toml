@@ -1,7 +1,7 @@
 [package]
-name = "solana-blake3-hasher"
-description = "Solana BLAKE3 hashing"
-documentation = "https://docs.rs/solana-blake3-hasher"
+name = "trezoa-blake3-hasher"
+description = "Trezoa BLAKE3 hashing"
+documentation = "https://docs.rs/trezoa-blake3-hasher"
 version = "3.1.0"
 authors = { workspace = true }
 repository = { workspace = true }
@@ -18,16 +18,16 @@ rustdoc-args = ["--cfg=docsrs"]
 blake3 = ["dep:blake3"]
 
 [dependencies]
-solana-hash = { workspace = true, features = ["decode"] }
+trezoa-hash = { workspace = true, features = ["decode"] }
 
-[target.'cfg(any(target_os = "solana", target_arch = "bpf"))'.dependencies]
-solana-define-syscall = { workspace = true }
+[target.'cfg(any(target_os = "trezoa", target_arch = "bpf"))'.dependencies]
+trezoa-define-syscall = { workspace = true }
 
-[target.'cfg(not(any(target_os = "solana", target_arch = "bpf")))'.dependencies]
+[target.'cfg(not(any(target_os = "trezoa", target_arch = "bpf")))'.dependencies]
 blake3 = { workspace = true, optional = true }
 
 [dev-dependencies]
-solana-blake3-hasher = { path = ".", features = ["blake3"] }
+trezoa-blake3-hasher = { path = ".", features = ["blake3"] }
 
 [lints]
 workspace = true

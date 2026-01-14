@@ -2,8 +2,8 @@
 
 use {
     crate::stable_vec::StableVec,
-    solana_instruction::{AccountMeta, Instruction},
-    solana_pubkey::Pubkey,
+    trezoa_instruction::{AccountMeta, Instruction},
+    trezoa_pubkey::Pubkey,
     std::fmt::Debug,
 };
 
@@ -19,9 +19,9 @@ use {
 /// Creating a `StableInstruction` from an `Instruction`
 ///
 /// ```
-/// # use solana_instruction::Instruction;
-/// # use solana_pubkey::Pubkey;
-/// # use solana_stable_layout::stable_instruction::StableInstruction;
+/// # use trezoa_instruction::Instruction;
+/// # use trezoa_pubkey::Pubkey;
+/// # use trezoa_stable_layout::stable_instruction::StableInstruction;
 /// # let program_id = Pubkey::default();
 /// # let accounts = Vec::default();
 /// # let data = Vec::default();

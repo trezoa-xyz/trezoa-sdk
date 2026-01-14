@@ -1,7 +1,7 @@
 [package]
-name = "solana-file-download"
-description = "Solana File Download Utility"
-documentation = "https://docs.rs/solana-file-download"
+name = "trezoa-file-download"
+description = "Trezoa File Download Utility"
+documentation = "https://docs.rs/trezoa-file-download"
 version = "3.1.0"
 authors = { workspace = true }
 repository = { workspace = true }

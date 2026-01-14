@@ -1,7 +1,7 @@
 [package]
-name = "solana-secp256r1-program"
+name = "trezoa-secp256r1-program"
 description = "Precompile implementation for the secp256r1 elliptic curve."
-documentation = "https://docs.rs/solana-secp256r1"
+documentation = "https://docs.rs/trezoa-secp256r1"
 version = "3.0.0"
 rust-version = "1.81.0"
 authors = { workspace = true }
@@ -21,11 +21,11 @@ openssl-vendored = ["openssl/vendored"]
 
 [dependencies]
 bytemuck = { workspace = true, features = ["derive"] }
-solana-sdk-ids = { workspace = true }
+trezoa-sdk-ids = { workspace = true }
 
-[target.'cfg(all(not(target_arch = "wasm32"), not(target_os = "solana")))'.dependencies]
+[target.'cfg(all(not(target_arch = "wasm32"), not(target_os = "trezoa")))'.dependencies]
 openssl = { workspace = true }
-solana-instruction = { workspace = true, features = ["std"] }
+trezoa-instruction = { workspace = true, features = ["std"] }
 
 [lints]
 workspace = true

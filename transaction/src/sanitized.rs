@@ -1,19 +1,19 @@
 use {
     crate::versioned::{sanitized::SanitizedVersionedTransaction, VersionedTransaction},
-    solana_address::Address,
-    solana_hash::Hash,
-    solana_message::{
+    trezoa_address::Address,
+    trezoa_hash::Hash,
+    trezoa_message::{
         legacy,
         v0::{self, LoadedAddresses},
         AddressLoader, LegacyMessage, SanitizedMessage, SanitizedVersionedMessage,
         VersionedMessage,
     },
-    solana_signature::Signature,
-    solana_transaction_error::{TransactionError, TransactionResult},
+    trezoa_signature::Signature,
+    trezoa_transaction_error::{TransactionError, TransactionResult},
     std::collections::HashSet,
 };
 #[cfg(feature = "blake3")]
-use {crate::Transaction, solana_sanitize::Sanitize};
+use {crate::Transaction, trezoa_sanitize::Sanitize};
 
 /// Maximum number of accounts that a transaction may lock.
 /// 128 was chosen because it is the minimum number of accounts
@@ -318,10 +318,10 @@ impl SanitizedTransaction {
 mod tests {
     use {
         super::*,
-        solana_keypair::Keypair,
-        solana_message::{MessageHeader, SimpleAddressLoader},
-        solana_signer::Signer,
-        solana_vote_interface::{instruction, state::Vote},
+        trezoa_keypair::Keypair,
+        trezoa_message::{MessageHeader, SimpleAddressLoader},
+        trezoa_signer::Signer,
+        trezoa_vote_interface::{instruction, state::Vote},
     };
 
     #[test]

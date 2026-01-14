@@ -11,12 +11,12 @@
 //! method. For additional context see the [Comprehensive Compute Fees
 //! proposal][ccf].
 //!
-//! [`getFeeForMessage`]: https://solana.com/docs/rpc/http/getfeeformessage
-//! [ccf]: https://docs.solanalabs.com/proposals/comprehensive-compute-fees
+//! [`getFeeForMessage`]: https://trezoa.com/docs/rpc/http/getfeeformessage
+//! [ccf]: https://docs.trezoalabs.com/proposals/comprehensive-compute-fees
 //!
-//! See also the Solana [documentation on the fees sysvar][sdoc].
+//! See also the Trezoa [documentation on the fees sysvar][sdoc].
 //!
-//! [sdoc]: https://docs.solanalabs.com/runtime/sysvars#fees
+//! [sdoc]: https://docs.trezoalabs.com/runtime/sysvars#fees
 
 #![allow(deprecated)]
 
@@ -24,12 +24,12 @@
 use crate::SysvarSerialize;
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
-pub use solana_sdk_ids::sysvar::fees::{check_id, id, ID};
+pub use trezoa_sdk_ids::sysvar::fees::{check_id, id, ID};
 use {
     crate::{impl_sysvar_get, Sysvar},
-    solana_fee_calculator::FeeCalculator,
-    solana_sdk_macro::CloneZeroed,
-    solana_sysvar_id::impl_deprecated_sysvar_id,
+    trezoa_fee_calculator::FeeCalculator,
+    trezoa_sdk_macro::CloneZeroed,
+    trezoa_sysvar_id::impl_deprecated_sysvar_id,
 };
 
 impl_deprecated_sysvar_id!(Fees);
@@ -92,7 +92,7 @@ mod tests {
                     core::mem::size_of::<Fees>(),
                 );
             }
-            solana_program_entrypoint::SUCCESS
+            trezoa_program_entrypoint::SUCCESS
         }
     }
 
@@ -118,7 +118,7 @@ mod tests {
         let got = Fees::get();
         assert_eq!(
             got,
-            Err(solana_program_error::ProgramError::UnsupportedSysvar)
+            Err(trezoa_program_error::ProgramError::UnsupportedSysvar)
         );
         let _ = crate::program_stubs::set_syscall_stubs(prev);
     }

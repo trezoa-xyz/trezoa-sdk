@@ -1,4 +1,4 @@
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 use {
     crate::pubkey::{
         bytes::{
@@ -9,7 +9,7 @@ use {
     blstrs::{G1Affine, G1Projective},
 };
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 impl_bls_conversions!(
     PubkeyProjective,
     PubkeyAffine,

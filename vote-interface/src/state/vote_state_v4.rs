@@ -7,14 +7,14 @@ use serde_derive::{Deserialize, Serialize};
 #[cfg(feature = "serde")]
 use serde_with::serde_as;
 #[cfg(feature = "frozen-abi")]
-use solana_frozen_abi_macro::{frozen_abi, AbiExample};
-#[cfg(any(target_os = "solana", feature = "bincode"))]
-use solana_instruction::error::InstructionError;
+use trezoa_frozen_abi_macro::{frozen_abi, AbiExample};
+#[cfg(any(target_os = "trezoa", feature = "bincode"))]
+use trezoa_instruction::error::InstructionError;
 use {
     super::{BlockTimestamp, LandedVote, VoteInit, VoteInitV2, BLS_PUBLIC_KEY_COMPRESSED_SIZE},
     crate::authorized_voters::AuthorizedVoters,
-    solana_clock::{Clock, Epoch, Slot},
-    solana_pubkey::Pubkey,
+    trezoa_clock::{Clock, Epoch, Slot},
+    trezoa_pubkey::Pubkey,
     std::{collections::VecDeque, fmt::Debug},
 };
 
@@ -106,7 +106,7 @@ impl VoteStateV4 {
         }
     }
 
-    #[cfg(any(target_os = "solana", feature = "bincode"))]
+    #[cfg(any(target_os = "trezoa", feature = "bincode"))]
     pub fn deserialize(input: &[u8], vote_pubkey: &Pubkey) -> Result<Self, InstructionError> {
         let mut vote_state = Self::default();
         Self::deserialize_into(input, &mut vote_state, vote_pubkey)?;
@@ -120,7 +120,7 @@ impl VoteStateV4 {
     ///
     /// On success, `vote_state` reflects the state of the input data. On failure, `vote_state` is
     /// reset to `VoteStateV4::default()`.
-    #[cfg(any(target_os = "solana", feature = "bincode"))]
+    #[cfg(any(target_os = "trezoa", feature = "bincode"))]
     pub fn deserialize_into(
         input: &[u8],
         vote_state: &mut VoteStateV4,
@@ -143,7 +143,7 @@ impl VoteStateV4 {
     /// [`MaybeUninit::assume_init`](https://doc.rust-lang.org/std/mem/union.MaybeUninit.html#method.assume_init).
     /// On failure, `vote_state` may still be uninitialized and must not be
     /// converted to `VoteStateV4`.
-    #[cfg(any(target_os = "solana", feature = "bincode"))]
+    #[cfg(any(target_os = "trezoa", feature = "bincode"))]
     pub fn deserialize_into_uninit(
         input: &[u8],
         vote_state: &mut std::mem::MaybeUninit<VoteStateV4>,
@@ -152,7 +152,7 @@ impl VoteStateV4 {
         Self::deserialize_into_ptr(input, vote_state.as_mut_ptr(), vote_pubkey)
     }
 
-    #[cfg(any(target_os = "solana", feature = "bincode"))]
+    #[cfg(any(target_os = "trezoa", feature = "bincode"))]
     fn deserialize_into_ptr(
         input: &[u8],
         vote_state: *mut VoteStateV4,
@@ -162,7 +162,7 @@ impl VoteStateV4 {
 
         let mut cursor = std::io::Cursor::new(input);
 
-        let variant = solana_serialize_utils::cursor::read_u32(&mut cursor)?;
+        let variant = trezoa_serialize_utils::cursor::read_u32(&mut cursor)?;
         match variant {
             // Variant 0 is not a valid vote state.
             0 => Err(InstructionError::InvalidAccountData),

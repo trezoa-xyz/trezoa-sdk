@@ -1,7 +1,7 @@
 [package]
-name = "solana-serde-varint"
-description = "Solana definitions for integers that serialize to variable size"
-documentation = "https://docs.rs/solana-serde-varint"
+name = "trezoa-serde-varint"
+description = "Trezoa definitions for integers that serialize to variable size"
+documentation = "https://docs.rs/trezoa-serde-varint"
 version = "3.0.0"
 authors = { workspace = true }
 repository = { workspace = true }
@@ -19,4 +19,4 @@ serde = { workspace = true }
 bincode = { workspace = true }
 rand = { workspace = true }
 serde_derive = { workspace = true }
-solana-short-vec = { workspace = true, features = ["serde"] }
+trezoa-short-vec = { workspace = true, features = ["serde"] }

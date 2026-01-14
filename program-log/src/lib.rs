@@ -1,11 +1,11 @@
-//! Lightweight log utility for Solana programs.
+//! Lightweight log utility for Trezoa programs.
 //!
 //! Logging is the main mechanism for getting debugging information out of
-//! running Solana programs, and there are several functions available for doing
+//! running Trezoa programs, and there are several functions available for doing
 //! so efficiently, depending on the type of data being logged.
 //!
 //! This crate provides a `Logger` struct and a collection of helper functions that
-//! can be used to efficiently log messages in a Solana program.
+//! can be used to efficiently log messages in a Trezoa program.
 //!
 //! The `Logger` struct is a wrapper around a fixed-size buffer. Types that
 //! implement the `Log` trait can be appended to this buffer. The struct is
@@ -19,7 +19,7 @@
 //! `u64` value:
 //!
 //! ```
-//! use solana_program_log::Logger;
+//! use trezoa_program_log::Logger;
 //!
 //! let mut logger = Logger::<100>::default();
 //! logger.append("balance=");
@@ -36,7 +36,7 @@
 //! It also support adding precision to numeric types:
 //!
 //! ```
-//! use solana_program_log::{Argument, Logger};
+//! use trezoa_program_log::{Argument, Logger};
 //!
 //! let mut logger = Logger::<100>::default();
 //!
@@ -55,15 +55,15 @@ pub mod logger;
 mod wrapper;
 
 #[cfg(feature = "macro")]
-pub use solana_program_log_macro::*;
+pub use trezoa_program_log_macro::*;
 pub use {
     logger::{Argument, Logger},
     wrapper::*,
 };
 
-// Enabling the "std" feature when `target_os = "solana"` or
+// Enabling the "std" feature when `target_os = "trezoa"` or
 // `target_arch = "bpf"` has no effect.
-#[cfg(all(not(any(target_os = "solana", target_arch = "bpf")), feature = "std"))]
+#[cfg(all(not(any(target_os = "trezoa", target_arch = "bpf")), feature = "std"))]
 extern crate std;
 
 #[cfg(test)]

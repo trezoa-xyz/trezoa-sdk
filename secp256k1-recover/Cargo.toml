@@ -1,7 +1,7 @@
 [package]
-name = "solana-secp256k1-recover"
-description = "Solana SECP256K1 Recover"
-documentation = "https://docs.rs/solana-secp256k1-recover"
+name = "trezoa-secp256k1-recover"
+description = "Trezoa SECP256K1 Recover"
+documentation = "https://docs.rs/trezoa-secp256k1-recover"
 version = "3.1.0"
 authors = { workspace = true }
 repository = { workspace = true }
@@ -14,31 +14,31 @@ targets = ["x86_64-unknown-linux-gnu"]
 
 [features]
 borsh = ["dep:borsh"]
-frozen-abi = ["dep:solana-frozen-abi", "dep:solana-frozen-abi-macro"]
+frozen-abi = ["dep:trezoa-frozen-abi", "dep:trezoa-frozen-abi-macro"]
 
 [dependencies]
 borsh = { workspace = true, optional = true }
-solana-frozen-abi = { workspace = true, optional = true, features = [
+trezoa-frozen-abi = { workspace = true, optional = true, features = [
     "frozen-abi",
 ] }
-solana-frozen-abi-macro = { workspace = true, optional = true, features = [
+trezoa-frozen-abi-macro = { workspace = true, optional = true, features = [
     "frozen-abi",
 ] }
 thiserror = { workspace = true }
 
-[target.'cfg(any(target_os = "solana", target_arch = "bpf"))'.dependencies]
-solana-define-syscall = { workspace = true }
+[target.'cfg(any(target_os = "trezoa", target_arch = "bpf"))'.dependencies]
+trezoa-define-syscall = { workspace = true }
 
-[target.'cfg(not(any(target_os = "solana", target_arch = "bpf")))'.dependencies]
+[target.'cfg(not(any(target_os = "trezoa", target_arch = "bpf")))'.dependencies]
 k256 = { workspace = true }
 
 [dev-dependencies]
 anyhow = { workspace = true }
 borsh = { workspace = true }
 rand = "0.8" # k256 still uses rand_core v0.6
-solana-program = { path = "../program" }
+trezoa-program = { path = "../program" }
 
-[target.'cfg(not(target_os = "solana"))'.dev-dependencies]
+[target.'cfg(not(target_os = "trezoa"))'.dev-dependencies]
 k256 = { workspace = true, features = ["ecdsa-core"] }
 
 [lints]

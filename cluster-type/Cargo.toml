@@ -1,7 +1,7 @@
 [package]
-name = "solana-cluster-type"
-description = "Solana ClusterType enum"
-documentation = "https://docs.rs/solana-cluster-type"
+name = "trezoa-cluster-type"
+description = "Trezoa ClusterType enum"
+documentation = "https://docs.rs/trezoa-cluster-type"
 version = "3.0.0"
 authors = { workspace = true }
 repository = { workspace = true }
@@ -15,12 +15,12 @@ all-features = true
 rustdoc-args = ["--cfg=docsrs"]
 
 [features]
-frozen-abi = ["dep:solana-frozen-abi", "dep:solana-frozen-abi-macro"]
+frozen-abi = ["dep:trezoa-frozen-abi", "dep:trezoa-frozen-abi-macro"]
 serde = ["dep:serde", "dep:serde_derive"]
 
 [dependencies]
 serde = { workspace = true, optional = true }
 serde_derive = { workspace = true, optional = true }
-solana-frozen-abi = { workspace = true, optional = true }
-solana-frozen-abi-macro = { workspace = true, optional = true }
-solana-hash = { workspace = true, features = ["decode"] }
+trezoa-frozen-abi = { workspace = true, optional = true }
+trezoa-frozen-abi-macro = { workspace = true, optional = true }
+trezoa-hash = { workspace = true, features = ["decode"] }

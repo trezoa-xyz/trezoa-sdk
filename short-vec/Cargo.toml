@@ -1,7 +1,7 @@
 [package]
-name = "solana-short-vec"
-description = "Solana compact serde-encoding of vectors with small length."
-documentation = "https://docs.rs/solana-short-vec"
+name = "trezoa-short-vec"
+description = "Trezoa compact serde-encoding of vectors with small length."
+documentation = "https://docs.rs/trezoa-short-vec"
 version = "3.1.0"
 authors = { workspace = true }
 repository = { workspace = true }
@@ -15,14 +15,14 @@ targets = ["x86_64-unknown-linux-gnu"]
 [features]
 default = ["serde"]
 serde = ["dep:serde_core"]
-frozen-abi = ["dep:solana-frozen-abi", "dep:solana-frozen-abi-macro"]
+frozen-abi = ["dep:trezoa-frozen-abi", "dep:trezoa-frozen-abi-macro"]
 
 [dependencies]
 serde_core = { workspace = true, optional = true }
-solana-frozen-abi = { workspace = true, optional = true, features = [
+trezoa-frozen-abi = { workspace = true, optional = true, features = [
     "frozen-abi",
 ] }
-solana-frozen-abi-macro = { workspace = true, optional = true, features = [
+trezoa-frozen-abi-macro = { workspace = true, optional = true, features = [
     "frozen-abi",
 ] }
 
@@ -30,7 +30,7 @@ solana-frozen-abi-macro = { workspace = true, optional = true, features = [
 assert_matches = { workspace = true }
 bincode = { workspace = true }
 serde_json = { workspace = true }
-solana-short-vec = { path = ".", features = ["serde"] }
+trezoa-short-vec = { path = ".", features = ["serde"] }
 
 [lints]
 workspace = true

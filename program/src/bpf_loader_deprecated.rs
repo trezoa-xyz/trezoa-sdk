@@ -1,4 +1,4 @@
-//! The original and now deprecated Solana BPF loader.
+//! The original and now deprecated Trezoa BPF loader.
 //!
 //! The BPF loader is responsible for loading, finalizing, and executing BPF
 //! programs.
@@ -10,4 +10,4 @@
 //! your program against the proper entrypoint semantics.  All programs being
 //! deployed to this BPF loader must build against the deprecated entrypoint
 //! version located in `entrypoint_deprecated.rs`.
-pub use solana_sdk_ids::bpf_loader_deprecated::{check_id, id, ID};
+pub use trezoa_sdk_ids::bpf_loader_deprecated::{check_id, id, ID};

@@ -24,10 +24,10 @@ sed -i'' "s/members.*/members = [\"$dir\"]/" ${cargo_toml}
 sed -i'' "s/ path = .*, v/ v/" ${cargo_toml}
 
 # Remove patches
-sed -i'' "s/solana-.* path.*}//" ${cargo_toml}
+sed -i'' "s/trezoa-.* path.*}//" ${cargo_toml}
 
 # Add it back for the one to test
-sed -i'' "s/solana-$dir = {/solana-$dir = { path = \"$dir\",/" ${cargo_toml}
+sed -i'' "s/trezoa-$dir = {/trezoa-$dir = { path = \"$dir\",/" ${cargo_toml}
 
 # Run test
 set +e

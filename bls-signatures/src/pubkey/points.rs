@@ -1,8 +1,8 @@
-#[cfg(all(feature = "parallel", not(target_os = "solana")))]
+#[cfg(all(feature = "parallel", not(target_os = "trezoa")))]
 use rayon::prelude::*;
-#[cfg(all(not(target_os = "solana"), feature = "std"))]
+#[cfg(all(not(target_os = "trezoa"), feature = "std"))]
 use std::sync::LazyLock;
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 use {
     crate::{
         error::BlsError,
@@ -17,12 +17,12 @@ use {
     pairing::{MillerLoopResult, MultiMillerLoop},
 };
 
-#[cfg(all(not(target_os = "solana"), feature = "std"))]
+#[cfg(all(not(target_os = "trezoa"), feature = "std"))]
 pub(crate) static NEG_G1_GENERATOR_AFFINE: LazyLock<G1Affine> =
     LazyLock::new(|| (-G1Projective::generator()).into());
 
 /// A trait for types that can be converted into a `PubkeyProjective`.
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 pub trait AsPubkeyProjective {
     /// Attempt to convert the type into a `PubkeyProjective`.
     fn try_as_projective(&self) -> Result<PubkeyProjective, BlsError>;
@@ -31,11 +31,11 @@ pub trait AsPubkeyProjective {
 /// A BLS public key in a projective point representation.
 ///
 /// This type wraps `G1Projective` and is optimal for aggregation.
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub struct PubkeyProjective(pub(crate) G1Projective);
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 impl PubkeyProjective {
     /// Creates the identity element, which is the starting point for aggregation
     ///
@@ -119,14 +119,14 @@ impl PubkeyProjective {
 }
 
 /// A trait for types that can be converted into a `PubkeyAffine`.
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 pub trait AsPubkeyAffine {
     /// Attempt to convert the type into a `PubkeyAffine`.
     fn try_as_affine(&self) -> Result<PubkeyAffine, BlsError>;
 }
 
 /// A trait that provides verification methods to any convertible public key type.
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 pub trait VerifiablePubkey: AsPubkeyAffine {
     /// Uses this public key to verify any convertible signature type.
     fn verify_signature<S: AsSignatureAffine>(
@@ -161,12 +161,12 @@ pub trait VerifiablePubkey: AsPubkeyAffine {
 ///
 /// This type wraps `G1Affine` and is optimal for verification operations
 /// (pairing inputs) as it avoids the cost of converting from projective coordinates.
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(transparent)]
 pub struct PubkeyAffine(pub(crate) G1Affine);
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 impl PubkeyAffine {
     /// Verify a signature and a message against a public key
     pub(crate) fn _verify_signature(&self, signature: &SignatureAffine, message: &[u8]) -> bool {
@@ -227,18 +227,18 @@ impl PubkeyAffine {
     }
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 impl<T: AsPubkeyAffine> VerifiablePubkey for T {}
 
 /// A trait for types that can be efficiently added to a PubkeyProjective accumulator.
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 pub trait AddToPubkeyProjective {
     /// Adds itself to the accumulator
     fn add_to_accumulator(&self, acc: &mut PubkeyProjective) -> Result<(), BlsError>;
 }
 
 // Fallback for trait objects to support `dyn` types
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 impl AddToPubkeyProjective for dyn AsPubkeyProjective {
     #[allow(clippy::arithmetic_side_effects)]
     fn add_to_accumulator(&self, acc: &mut PubkeyProjective) -> Result<(), BlsError> {
@@ -248,23 +248,23 @@ impl AddToPubkeyProjective for dyn AsPubkeyProjective {
     }
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 impl_add_to_accumulator!(
     AddToPubkeyProjective,
     PubkeyProjective,
     PubkeyAffine,
     affine
 );
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 impl_add_to_accumulator!(
     AddToPubkeyProjective,
     PubkeyProjective,
     PubkeyProjective,
     projective
 );
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 impl_add_to_accumulator!(AddToPubkeyProjective, PubkeyProjective, Pubkey, convert);
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 impl_add_to_accumulator!(
     AddToPubkeyProjective,
     PubkeyProjective,

@@ -1,8 +1,8 @@
 use {
     crate::Keypair,
-    solana_address::Address,
-    solana_signature::Signature,
-    solana_signer::Signer,
+    trezoa_address::Address,
+    trezoa_signature::Signature,
+    trezoa_signer::Signer,
     std::borrow::{Borrow, Cow},
 };
 

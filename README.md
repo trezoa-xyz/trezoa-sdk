@@ -1,9 +1,9 @@
-[![Solana crate](https://img.shields.io/crates/v/solana-sdk.svg)](https://crates.io/crates/solana-sdk)
-[![Solana documentation](https://docs.rs/solana-sdk/badge.svg)](https://docs.rs/solana-sdk)
+[![Trezoa crate](https://img.shields.io/crates/v/trezoa-sdk.svg)](https://crates.io/crates/trezoa-sdk)
+[![Trezoa documentation](https://docs.rs/trezoa-sdk/badge.svg)](https://docs.rs/trezoa-sdk)
 
-# solana-sdk
+# trezoa-sdk
 
-Rust SDK for the Solana blockchain, used by on-chain programs and the Agave
+Rust SDK for the Trezoa blockchain, used by on-chain programs and the Trezoa-team
 validator.
 
 ## Upgrading from v2 to v3
@@ -16,73 +16,73 @@ The easiest way to upgrade to v3 is:
 * upgrade to v3-compatible crates
 * (optional) upgrade SPL interface crates to v2
 
-### solana-sdk
+### trezoa-sdk
 
 The following modules have been removed, please use their component crates
 directly:
 
-* [`address_lookup_table`](https://docs.rs/solana-sdk/latest/solana_sdk/address_lookup_table) -> [`solana_address_lookup_table_interface`](https://docs.rs/solana-address-lookup-table-interface/latest/solana_address_lookup_table_interface/)
-* [`alt_bn128`](https://docs.rs/solana-sdk/latest/solana_sdk/alt_bn128) -> [`solana_bn254`](https://docs.rs/solana-bn254/latest/solana_bn254)
-* [`bpf_loader_upgradeable`](https://docs.rs/solana-sdk/latest/solana_sdk/bpf_loader_upgradeable) -> [`solana_loader_v3_interface`](https://docs.rs/solana-loader-v3-interface/latest/solana_loader_v3_interface)
-* [`client`](https://docs.rs/solana-sdk/latest/solana_sdk/client) -> [`solana_client_traits`](https://docs.rs/solana-client-traits/latest/solana_client_traits)
-* [`commitment_config`](https://docs.rs/solana-sdk/latest/solana_sdk/commitment_config) -> [`solana_commitment_config`](https://docs.rs/solana-commitment-config/latest/solana_commitment_config)
-* [`compute_budget`](https://docs.rs/solana-sdk/latest/solana_sdk/compute_budget) -> [`solana_compute_budget_interface`](https://docs.rs/solana-compute-budget-interface/latest/solana_compute_budget_interface)
-* [`decode_error`](https://docs.rs/solana-sdk/latest/solana_sdk/decode_error) -> [`solana_decode_error`](https://docs.rs/solana-decode-error/latest/solana_decode_error)
-* [`derivation_path`](https://docs.rs/solana-sdk/latest/solana_sdk/derivation_path) -> [`solana_derivation_path`](https://docs.rs/solana-derivation-path/latest/solana_derivation_path)
-* [`ed25519_instruction`](https://docs.rs/solana-sdk/latest/solana_sdk/ed25519_instruction) -> [`solana_ed25519_program`](https://docs.rs/solana-ed25519-program/latest/solana_ed25519_program)
-* [`exit`](https://docs.rs/solana-sdk/latest/solana_sdk/exit) -> [`solana_validator_exit`](https://docs.rs/solana-validator-exit/latest/solana_validator_exit)
-* [`feature_set`](https://docs.rs/solana-sdk/latest/solana_sdk/feature_set) -> [`agave_feature_set`](https://docs.rs/agave-feature-set/latest/agave_feature_set)
-* [`feature`](https://docs.rs/solana-sdk/latest/solana_sdk/feature) -> [`solana_feature_gate_interface`](https://docs.rs/solana-feature-gate-interface/latest/solana_feature_gate_interface)
-* [`genesis_config`](https://docs.rs/solana-sdk/latest/solana_sdk/genesis_config) -> [`solana_genesis_config`](https://docs.rs/solana-genesis-config/latest/solana_genesis_config)
-* [`hard_forks`](https://docs.rs/solana-sdk/latest/solana_sdk/hard_forks) -> [`solana_hard_forks`](https://docs.rs/solana-hard-forks/latest/solana_hard_forks)
-* [`loader_instruction`](https://docs.rs/solana-sdk/latest/solana_sdk/loader_instruction) -> [`solana_loader_v2_interface`](https://docs.rs/solana-loader-v2-interface/latest/solana_loader_v2_interface)
-* [`loader_upgradeable_instruction`](https://docs.rs/solana-sdk/latest/solana_sdk/loader_upgradeable_instruction) -> [`solana_loader_v3_interface::instruction`](https://docs.rs/solana-loader-v3-interface/latest/solana_loader_v3_interface/instruction)
-* [`loader_v4`](https://docs.rs/solana-sdk/latest/solana_sdk/loader_v4) -> [`solana_loader_v4_interface`](https://docs.rs/solana-loader-v4-interface/latest/solana_loader_v4_interface)
-* [`loader_v4_instruction`](https://docs.rs/solana-sdk/latest/solana_sdk/loader_v4_instruction) -> [`solana_loader_v4_interface::instruction`](https://docs.rs/solana-loader-v4-interface/latest/solana_loader_v4_interface/instruction)
-* [`nonce`](https://docs.rs/solana-sdk/latest/solana_sdk/nonce) -> [`solana_nonce`](https://docs.rs/solana-nonce/latest/solana_nonce)
-* [`nonce_account`](https://docs.rs/solana-sdk/latest/solana_sdk/nonce_account) -> [`solana_nonce_account`](https://docs.rs/solana-nonce-account/latest/solana_nonce_account)
-* [`packet`](https://docs.rs/solana-sdk/latest/solana_sdk/packet) -> [`solana_packet`](https://docs.rs/solana-packet/latest/solana_packet)
-* [`poh_config`](https://docs.rs/solana-sdk/latest/solana_sdk/poh_config) -> [`solana_poh_config`](https://docs.rs/solana-poh-config/latest/solana_poh_config)
-* [`precompiles`](https://docs.rs/solana-sdk/latest/solana_sdk/precompiles) -> [`agave_precompiles`](https://docs.rs/agave-precompiles/latest/agave_precompiles)
-* [`program_utils`](https://docs.rs/solana-sdk/latest/solana_sdk/program_utils) -> [`solana_bincode::limited_deserialize`](https://docs.rs/solana-bincode/latest/solana_bincode)
-* [`quic`](https://docs.rs/solana-sdk/latest/solana_sdk/quic) -> [`solana_quic_definitions`](https://docs.rs/solana-quic-definitions/latest/solana_quic_definitions)
-* [`reserved_account_keys`](https://docs.rs/solana-sdk/latest/solana_sdk/reserved_account_keys) -> [`agave_reserved_account_keys`](https://docs.rs/agave-reserved-account-keys/latest/agave_reserved_account_keys)
-* [`reward_info`](https://docs.rs/solana-sdk/latest/solana_sdk/reward_info) -> [`solana_reward_info`](https://docs.rs/solana-reward-info/latest/solana_reward_info)
-* [`reward_type`](https://docs.rs/solana-sdk/latest/solana_sdk/reward_type) -> [`solana_reward_info`](https://docs.rs/solana-reward-info/latest/solana_reward_info)
-* [`sdk_ids`](https://docs.rs/solana-sdk/latest/solana_sdk/sdk_ids) -> [`solana_sdk_ids`](https://docs.rs/solana-sdk-ids/latest/solana_sdk_ids)
-* [`secp256k1_instruction`](https://docs.rs/solana-sdk/latest/solana_sdk/secp256k1_instruction) -> [`solana_secp256k1_program`](https://docs.rs/solana-secp256k1-program/latest/solana_secp256k1_program)
-* [`secp256k1_recover`](https://docs.rs/solana-sdk/latest/solana_sdk/secp256k1_recover) -> [`solana_secp256k1_recover`](https://docs.rs/solana-secp256k1-recover/latest/solana_secp256k1_recover)
-* [`stake`](https://docs.rs/solana-sdk/latest/solana_sdk/stake) -> [`solana_stake_interface`](https://docs.rs/solana-stake-interface/latest/solana_stake_interface)
-* [`stake_history`](https://docs.rs/solana-sdk/latest/solana_sdk/stake_history) -> [`solana_stake_interface::stake_history`](https://docs.rs/solana-stake-interface/latest/solana_stake_interface/stake_history)
-* [`system_instruction`](https://docs.rs/solana-sdk/latest/solana_sdk/system_instruction) -> [`solana_system_interface::instruction`](https://docs.rs/solana-system-interface/latest/solana_system_interface/instruction)
-* [`system_program`](https://docs.rs/solana-sdk/latest/solana_sdk/system_program) -> [`solana_system_interface::program`](https://docs.rs/solana-system-interface/latest/solana_system_interface/program)
-* [`system_transaction`](https://docs.rs/solana-sdk/latest/solana_sdk/system_transaction) -> [`solana_system_transaction`](https://docs.rs/solana-system-transaction/latest/solana_system_transaction)
-* [`transaction_context`](https://docs.rs/solana-sdk/latest/solana_sdk/transaction_context) -> [`solana_transaction_context`](https://docs.rs/solana-transaction-context/latest/solana_transaction_context)
-* [`vote`](https://docs.rs/solana-sdk/latest/solana_sdk/vote) -> [`solana_vote_interface`](https://docs.rs/solana-vote-interface/latest/solana_vote_interface)
+* [`address_lookup_table`](https://docs.rs/trezoa-sdk/latest/trezoa_sdk/address_lookup_table) -> [`trezoa_address_lookup_table_interface`](https://docs.rs/trezoa-address-lookup-table-interface/latest/trezoa_address_lookup_table_interface/)
+* [`alt_bn128`](https://docs.rs/trezoa-sdk/latest/trezoa_sdk/alt_bn128) -> [`trezoa_bn254`](https://docs.rs/trezoa-bn254/latest/trezoa_bn254)
+* [`bpf_loader_upgradeable`](https://docs.rs/trezoa-sdk/latest/trezoa_sdk/bpf_loader_upgradeable) -> [`trezoa_loader_v3_interface`](https://docs.rs/trezoa-loader-v3-interface/latest/trezoa_loader_v3_interface)
+* [`client`](https://docs.rs/trezoa-sdk/latest/trezoa_sdk/client) -> [`trezoa_client_traits`](https://docs.rs/trezoa-client-traits/latest/trezoa_client_traits)
+* [`commitment_config`](https://docs.rs/trezoa-sdk/latest/trezoa_sdk/commitment_config) -> [`trezoa_commitment_config`](https://docs.rs/trezoa-commitment-config/latest/trezoa_commitment_config)
+* [`compute_budget`](https://docs.rs/trezoa-sdk/latest/trezoa_sdk/compute_budget) -> [`trezoa_compute_budget_interface`](https://docs.rs/trezoa-compute-budget-interface/latest/trezoa_compute_budget_interface)
+* [`decode_error`](https://docs.rs/trezoa-sdk/latest/trezoa_sdk/decode_error) -> [`trezoa_decode_error`](https://docs.rs/trezoa-decode-error/latest/trezoa_decode_error)
+* [`derivation_path`](https://docs.rs/trezoa-sdk/latest/trezoa_sdk/derivation_path) -> [`trezoa_derivation_path`](https://docs.rs/trezoa-derivation-path/latest/trezoa_derivation_path)
+* [`ed25519_instruction`](https://docs.rs/trezoa-sdk/latest/trezoa_sdk/ed25519_instruction) -> [`trezoa_ed25519_program`](https://docs.rs/trezoa-ed25519-program/latest/trezoa_ed25519_program)
+* [`exit`](https://docs.rs/trezoa-sdk/latest/trezoa_sdk/exit) -> [`trezoa_validator_exit`](https://docs.rs/trezoa-validator-exit/latest/trezoa_validator_exit)
+* [`feature_set`](https://docs.rs/trezoa-sdk/latest/trezoa_sdk/feature_set) -> [`trezoa_feature_set`](https://docs.rs/trezoa-feature-set/latest/trezoa_feature_set)
+* [`feature`](https://docs.rs/trezoa-sdk/latest/trezoa_sdk/feature) -> [`trezoa_feature_gate_interface`](https://docs.rs/trezoa-feature-gate-interface/latest/trezoa_feature_gate_interface)
+* [`genesis_config`](https://docs.rs/trezoa-sdk/latest/trezoa_sdk/genesis_config) -> [`trezoa_genesis_config`](https://docs.rs/trezoa-genesis-config/latest/trezoa_genesis_config)
+* [`hard_forks`](https://docs.rs/trezoa-sdk/latest/trezoa_sdk/hard_forks) -> [`trezoa_hard_forks`](https://docs.rs/trezoa-hard-forks/latest/trezoa_hard_forks)
+* [`loader_instruction`](https://docs.rs/trezoa-sdk/latest/trezoa_sdk/loader_instruction) -> [`trezoa_loader_v2_interface`](https://docs.rs/trezoa-loader-v2-interface/latest/trezoa_loader_v2_interface)
+* [`loader_upgradeable_instruction`](https://docs.rs/trezoa-sdk/latest/trezoa_sdk/loader_upgradeable_instruction) -> [`trezoa_loader_v3_interface::instruction`](https://docs.rs/trezoa-loader-v3-interface/latest/trezoa_loader_v3_interface/instruction)
+* [`loader_v4`](https://docs.rs/trezoa-sdk/latest/trezoa_sdk/loader_v4) -> [`trezoa_loader_v4_interface`](https://docs.rs/trezoa-loader-v4-interface/latest/trezoa_loader_v4_interface)
+* [`loader_v4_instruction`](https://docs.rs/trezoa-sdk/latest/trezoa_sdk/loader_v4_instruction) -> [`trezoa_loader_v4_interface::instruction`](https://docs.rs/trezoa-loader-v4-interface/latest/trezoa_loader_v4_interface/instruction)
+* [`nonce`](https://docs.rs/trezoa-sdk/latest/trezoa_sdk/nonce) -> [`trezoa_nonce`](https://docs.rs/trezoa-nonce/latest/trezoa_nonce)
+* [`nonce_account`](https://docs.rs/trezoa-sdk/latest/trezoa_sdk/nonce_account) -> [`trezoa_nonce_account`](https://docs.rs/trezoa-nonce-account/latest/trezoa_nonce_account)
+* [`packet`](https://docs.rs/trezoa-sdk/latest/trezoa_sdk/packet) -> [`trezoa_packet`](https://docs.rs/trezoa-packet/latest/trezoa_packet)
+* [`poh_config`](https://docs.rs/trezoa-sdk/latest/trezoa_sdk/poh_config) -> [`trezoa_poh_config`](https://docs.rs/trezoa-poh-config/latest/trezoa_poh_config)
+* [`precompiles`](https://docs.rs/trezoa-sdk/latest/trezoa_sdk/precompiles) -> [`trezoa_precompiles`](https://docs.rs/trezoa-precompiles/latest/trezoa_precompiles)
+* [`program_utils`](https://docs.rs/trezoa-sdk/latest/trezoa_sdk/program_utils) -> [`trezoa_bincode::limited_deserialize`](https://docs.rs/trezoa-bincode/latest/trezoa_bincode)
+* [`quic`](https://docs.rs/trezoa-sdk/latest/trezoa_sdk/quic) -> [`trezoa_quic_definitions`](https://docs.rs/trezoa-quic-definitions/latest/trezoa_quic_definitions)
+* [`reserved_account_keys`](https://docs.rs/trezoa-sdk/latest/trezoa_sdk/reserved_account_keys) -> [`trezoa_reserved_account_keys`](https://docs.rs/trezoa-reserved-account-keys/latest/trezoa_reserved_account_keys)
+* [`reward_info`](https://docs.rs/trezoa-sdk/latest/trezoa_sdk/reward_info) -> [`trezoa_reward_info`](https://docs.rs/trezoa-reward-info/latest/trezoa_reward_info)
+* [`reward_type`](https://docs.rs/trezoa-sdk/latest/trezoa_sdk/reward_type) -> [`trezoa_reward_info`](https://docs.rs/trezoa-reward-info/latest/trezoa_reward_info)
+* [`sdk_ids`](https://docs.rs/trezoa-sdk/latest/trezoa_sdk/sdk_ids) -> [`trezoa_sdk_ids`](https://docs.rs/trezoa-sdk-ids/latest/trezoa_sdk_ids)
+* [`secp256k1_instruction`](https://docs.rs/trezoa-sdk/latest/trezoa_sdk/secp256k1_instruction) -> [`trezoa_secp256k1_program`](https://docs.rs/trezoa-secp256k1-program/latest/trezoa_secp256k1_program)
+* [`secp256k1_recover`](https://docs.rs/trezoa-sdk/latest/trezoa_sdk/secp256k1_recover) -> [`trezoa_secp256k1_recover`](https://docs.rs/trezoa-secp256k1-recover/latest/trezoa_secp256k1_recover)
+* [`stake`](https://docs.rs/trezoa-sdk/latest/trezoa_sdk/stake) -> [`trezoa_stake_interface`](https://docs.rs/trezoa-stake-interface/latest/trezoa_stake_interface)
+* [`stake_history`](https://docs.rs/trezoa-sdk/latest/trezoa_sdk/stake_history) -> [`trezoa_stake_interface::stake_history`](https://docs.rs/trezoa-stake-interface/latest/trezoa_stake_interface/stake_history)
+* [`system_instruction`](https://docs.rs/trezoa-sdk/latest/trezoa_sdk/system_instruction) -> [`trezoa_system_interface::instruction`](https://docs.rs/trezoa-system-interface/latest/trezoa_system_interface/instruction)
+* [`system_program`](https://docs.rs/trezoa-sdk/latest/trezoa_sdk/system_program) -> [`trezoa_system_interface::program`](https://docs.rs/trezoa-system-interface/latest/trezoa_system_interface/program)
+* [`system_transaction`](https://docs.rs/trezoa-sdk/latest/trezoa_sdk/system_transaction) -> [`trezoa_system_transaction`](https://docs.rs/trezoa-system-transaction/latest/trezoa_system_transaction)
+* [`transaction_context`](https://docs.rs/trezoa-sdk/latest/trezoa_sdk/transaction_context) -> [`trezoa_transaction_context`](https://docs.rs/trezoa-transaction-context/latest/trezoa_transaction_context)
+* [`vote`](https://docs.rs/trezoa-sdk/latest/trezoa_sdk/vote) -> [`trezoa_vote_interface`](https://docs.rs/trezoa-vote-interface/latest/trezoa_vote_interface)
 
-### solana-program
+### trezoa-program
 
 The following modules have been removed, please use their component crates
 directly:
 
-* [`address_lookup_table`](https://docs.rs/solana-program/latest/solana_program/address_lookup_table) -> [`solana_address_lookup_table_interface`](https://docs.rs/solana-address-lookup-table-interface/latest/solana_address_lookup_table_interface/)
-* [`bpf_loader_upgradeable`](https://docs.rs/solana-program/latest/solana_program/bpf_loader_upgradeable) -> [`solana_loader_v3_interface`](https://docs.rs/solana-loader-v3-interface/latest/solana_loader_v3_interface)
-* [`decode_error`](https://docs.rs/solana-program/latest/solana_program/decode_error) -> [`solana_decode_error`](https://docs.rs/solana-decode-error/latest/solana_decode_error)
-* [`feature`](https://docs.rs/solana-program/latest/solana_program/feature) -> [`solana_feature_gate_interface`](https://docs.rs/solana-feature-gate-interface/latest/solana_feature_gate_interface)
-* [`loader_instruction`](https://docs.rs/solana-program/latest/solana_program/loader_instruction) -> [`solana_loader_v2_interface`](https://docs.rs/solana-loader-v2-interface/latest/solana_loader_v2_interface)
-* [`loader_upgradeable_instruction`](https://docs.rs/solana-program/latest/solana_program/loader_upgradeable_instruction) -> [`solana_loader_v3_interface::instruction`](https://docs.rs/solana-loader-v3-interface/latest/solana_loader_v3_interface/instruction)
-* [`loader_v4`](https://docs.rs/solana-program/latest/solana_program/loader_v4) -> [`solana_loader_v4_interface`](https://docs.rs/solana-loader-v4-interface/latest/solana_loader_v4_interface)
-* [`loader_v4_instruction`](https://docs.rs/solana-program/latest/solana_program/loader_v4_instruction) -> [`solana_loader_v4_interface::instruction`](https://docs.rs/solana-loader-v4-interface/latest/solana_loader_v4_interface/instruction)
-* [`message`](https://docs.rs/solana-program/latest/solana_program/message) -> [`solana_message`](https://docs.rs/solana-message/latest/solana_message)
-* [`nonce`](https://docs.rs/solana-program/latest/solana_program/nonce) -> [`solana_nonce`](https://docs.rs/solana-nonce/latest/solana_nonce)
-* [`program_utils`](https://docs.rs/solana-program/latest/solana_program/program_utils) -> [`solana_bincode::limited_deserialize`](https://docs.rs/solana-bincode/latest/solana_bincode)
-* [`sanitize`](https://docs.rs/solana-program/latest/solana_program/sanitize) -> [`solana_sanitize`](https://docs.rs/solana-sanitize/latest/solana_sanitize)
-* [`sdk_ids`](https://docs.rs/solana-program/latest/solana_program/sdk_ids) -> [`solana_sdk_ids`](https://docs.rs/solana-sdk-ids/latest/solana_sdk_ids)
-* [`stake`](https://docs.rs/solana-program/latest/solana_program/stake) -> [`solana_stake_interface`](https://docs.rs/solana-stake-interface/latest/solana_stake_interface)
-* [`stake_history`](https://docs.rs/solana-program/latest/solana_program/stake_history) -> [`solana_stake_interface::stake_history`](https://docs.rs/solana-stake-interface/latest/solana_stake_interface/stake_history)
-* [`system_instruction`](https://docs.rs/solana-program/latest/solana_program/system_instruction) -> [`solana_system_interface::instruction`](https://docs.rs/solana-system-interface/latest/solana_system_interface/instruction)
-* [`system_program`](https://docs.rs/solana-program/latest/solana_program/system_program) -> [`solana_system_interface::program`](https://docs.rs/solana-system-interface/latest/solana_system_interface/program)
-* [`vote`](https://docs.rs/solana-program/latest/solana_program/vote) -> [`solana_vote_interface`](https://docs.rs/solana-vote-interface/latest/solana_vote_interface)
+* [`address_lookup_table`](https://docs.rs/trezoa-program/latest/trezoa_program/address_lookup_table) -> [`trezoa_address_lookup_table_interface`](https://docs.rs/trezoa-address-lookup-table-interface/latest/trezoa_address_lookup_table_interface/)
+* [`bpf_loader_upgradeable`](https://docs.rs/trezoa-program/latest/trezoa_program/bpf_loader_upgradeable) -> [`trezoa_loader_v3_interface`](https://docs.rs/trezoa-loader-v3-interface/latest/trezoa_loader_v3_interface)
+* [`decode_error`](https://docs.rs/trezoa-program/latest/trezoa_program/decode_error) -> [`trezoa_decode_error`](https://docs.rs/trezoa-decode-error/latest/trezoa_decode_error)
+* [`feature`](https://docs.rs/trezoa-program/latest/trezoa_program/feature) -> [`trezoa_feature_gate_interface`](https://docs.rs/trezoa-feature-gate-interface/latest/trezoa_feature_gate_interface)
+* [`loader_instruction`](https://docs.rs/trezoa-program/latest/trezoa_program/loader_instruction) -> [`trezoa_loader_v2_interface`](https://docs.rs/trezoa-loader-v2-interface/latest/trezoa_loader_v2_interface)
+* [`loader_upgradeable_instruction`](https://docs.rs/trezoa-program/latest/trezoa_program/loader_upgradeable_instruction) -> [`trezoa_loader_v3_interface::instruction`](https://docs.rs/trezoa-loader-v3-interface/latest/trezoa_loader_v3_interface/instruction)
+* [`loader_v4`](https://docs.rs/trezoa-program/latest/trezoa_program/loader_v4) -> [`trezoa_loader_v4_interface`](https://docs.rs/trezoa-loader-v4-interface/latest/trezoa_loader_v4_interface)
+* [`loader_v4_instruction`](https://docs.rs/trezoa-program/latest/trezoa_program/loader_v4_instruction) -> [`trezoa_loader_v4_interface::instruction`](https://docs.rs/trezoa-loader-v4-interface/latest/trezoa_loader_v4_interface/instruction)
+* [`message`](https://docs.rs/trezoa-program/latest/trezoa_program/message) -> [`trezoa_message`](https://docs.rs/trezoa-message/latest/trezoa_message)
+* [`nonce`](https://docs.rs/trezoa-program/latest/trezoa_program/nonce) -> [`trezoa_nonce`](https://docs.rs/trezoa-nonce/latest/trezoa_nonce)
+* [`program_utils`](https://docs.rs/trezoa-program/latest/trezoa_program/program_utils) -> [`trezoa_bincode::limited_deserialize`](https://docs.rs/trezoa-bincode/latest/trezoa_bincode)
+* [`sanitize`](https://docs.rs/trezoa-program/latest/trezoa_program/sanitize) -> [`trezoa_sanitize`](https://docs.rs/trezoa-sanitize/latest/trezoa_sanitize)
+* [`sdk_ids`](https://docs.rs/trezoa-program/latest/trezoa_program/sdk_ids) -> [`trezoa_sdk_ids`](https://docs.rs/trezoa-sdk-ids/latest/trezoa_sdk_ids)
+* [`stake`](https://docs.rs/trezoa-program/latest/trezoa_program/stake) -> [`trezoa_stake_interface`](https://docs.rs/trezoa-stake-interface/latest/trezoa_stake_interface)
+* [`stake_history`](https://docs.rs/trezoa-program/latest/trezoa_program/stake_history) -> [`trezoa_stake_interface::stake_history`](https://docs.rs/trezoa-stake-interface/latest/trezoa_stake_interface/stake_history)
+* [`system_instruction`](https://docs.rs/trezoa-program/latest/trezoa_program/system_instruction) -> [`trezoa_system_interface::instruction`](https://docs.rs/trezoa-system-interface/latest/trezoa_system_interface/instruction)
+* [`system_program`](https://docs.rs/trezoa-program/latest/trezoa_program/system_program) -> [`trezoa_system_interface::program`](https://docs.rs/trezoa-system-interface/latest/trezoa_system_interface/program)
+* [`vote`](https://docs.rs/trezoa-program/latest/trezoa_program/vote) -> [`trezoa_vote_interface`](https://docs.rs/trezoa-vote-interface/latest/trezoa_vote_interface)
 
 ### Breaking Changes
 
@@ -104,7 +104,7 @@ The inner bytes were made private, so use `Hash::as_bytes()` to access them.
 
 #### Genesis
 
-Moved `ClusterType` to `solana-cluster-type`.
+Moved `ClusterType` to `trezoa-cluster-type`.
 
 #### Keypair
 
@@ -123,11 +123,11 @@ operations need to be in an `unsafe` block.
 #### Sysvar
 
 If you're using `Sysvar::from_account_info`, you'll need to also import
-`solana_sysvar::SysvarSerialize`.
+`trezoa_sysvar::SysvarSerialize`.
 
 #### Stake
 
-`StakeHistory` now lives in `solana_stake_interface` instead of `solana_sysvar`.
+`StakeHistory` now lives in `trezoa_stake_interface` instead of `trezoa_sysvar`.
 
 #### Vote Interface
 
@@ -143,16 +143,16 @@ lighter dependency management and to allow LTO on builds.
 When upgrading to SDK v3 crates, replace the following with v2 of the corresponding
 interface crate:
 
-* `spl-token` -> `spl-token-interface`
-* `spl-token-2022` -> `spl-token-2022-interface`
+* `tpl-token` -> `tpl-token-interface`
+* `tpl-token-2022` -> `tpl-token-2022-interface`
 * `spl-associated-token-account` -> `spl-associated-token-account-interface`
 * `spl-memo` -> `spl-memo-interface`
 
-For example, if you're using `spl-token` v8, you should switch to
-`spl-token-interface` v2 when upgrading to SDK v3. The state, instruction, and
+For example, if you're using `tpl-token` v8, you should switch to
+`tpl-token-interface` v2 when upgrading to SDK v3. The state, instruction, and
 error modules mimic the program crates, so no other changes should be required.
 
-Program crates, like `spl-token`, contain a `cdylib` target, so the Rust
+Program crates, like `tpl-token`, contain a `cdylib` target, so the Rust
 compiler cannot run LTO. Interface crates only declare a `lib` target, and
 contain fewer dependencies. You can run LTO with `cargo build-sbf --lto`.
 
@@ -172,8 +172,8 @@ rustup component add rustfmt
 ### **2. Download the source code.**
 
 ```console
-git clone https://github.com/anza-xyz/solana-sdk.git
-cd solana-sdk
+git clone https://github.com/trezoa-xyz/trezoa-sdk.git
+cd trezoa-sdk
 ```
 
 When building the master branch, please make sure you are using the version
@@ -191,29 +191,29 @@ This command will download the toolchain if it is missing in the system.
 cargo test
 ```
 
-## For Agave Developers
+## For Trezoa-team Developers
 
-### Patching a local solana-sdk repository
+### Patching a local trezoa-sdk repository
 
-If your change to Agave also entails changes to the SDK, you will need to patch
-your Agave repo to use a local checkout of solana-sdk crates.
+If your change to Trezoa-team also entails changes to the SDK, you will need to patch
+your Trezoa-team repo to use a local checkout of trezoa-sdk crates.
 
-To patch all of the crates in this repo for Agave, just run:
+To patch all of the crates in this repo for Trezoa-team, just run:
 
 ```console
-./scripts/patch-crates-no-header.sh <AGAVE_PATH> <SOLANA_SDK_PATH>
+./scripts/patch-crates-no-header.sh <TREZOA_PATH> <TREZOA_SDK_PATH>
 ```
 
 To patch just one crate, specify its path:
 
 ```console
-./scripts/patch-crates-no-header.sh <AGAVE_PATH> <SOLANA_SDK_PATH> <RELATIVE_PATH>
+./scripts/patch-crates-no-header.sh <TREZOA_PATH> <TREZOA_SDK_PATH> <RELATIVE_PATH>
 ```
 
-For example, to patch `solana-bn254`, run:
+For example, to patch `trezoa-bn254`, run:
 
 ```console
-./scripts/patch-crates-no-header.sh ../agave . bn254
+./scripts/patch-crates-no-header.sh ../trezoa . bn254
 ```
 
 It's possible to run the script multiple times for different crates.
@@ -223,7 +223,7 @@ It's possible to run the script multiple times for different crates.
 NOTE: The repo currently contains unpublished breaking changes, so please
 double-check before publishing any crates!
 
-Unlike Agave, the solana-sdk crates are versioned independently, and published
+Unlike Trezoa-team, the trezoa-sdk crates are versioned independently, and published
 as needed.
 
 If you need to publish a crate, you can use the "Publish Crate" GitHub Action.

@@ -1,6 +1,6 @@
 import { expect } from "chai";
-import { solana_program_init, Address } from "crate";
-solana_program_init();
+import { trezoa_program_init, Address } from "crate";
+trezoa_program_init();
 
 // TODO: wasm_bindgen doesn't currently support exporting constants
 const MAX_SEED_LEN = 32;

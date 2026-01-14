@@ -2,13 +2,13 @@
 #![cfg_attr(docsrs, feature(doc_cfg))]
 
 use {
-    solana_account::{state_traits::StateMut, AccountSharedData, ReadableAccount},
-    solana_hash::Hash,
-    solana_nonce::{
+    trezoa_account::{state_traits::StateMut, AccountSharedData, ReadableAccount},
+    trezoa_hash::Hash,
+    trezoa_nonce::{
         state::{Data, State},
         versions::Versions,
     },
-    solana_sdk_ids::system_program,
+    trezoa_sdk_ids::system_program,
     std::cell::RefCell,
 };
 
@@ -75,9 +75,9 @@ pub fn get_system_account_kind(account: &AccountSharedData) -> Option<SystemAcco
 mod tests {
     use {
         super::*,
-        solana_fee_calculator::FeeCalculator,
-        solana_nonce::state::{Data, DurableNonce},
-        solana_pubkey::Pubkey,
+        trezoa_fee_calculator::FeeCalculator,
+        trezoa_nonce::state::{Data, DurableNonce},
+        trezoa_pubkey::Pubkey,
     };
 
     #[test]

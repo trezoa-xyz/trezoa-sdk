@@ -1,6 +1,6 @@
 use {
-    solana_instruction_error::InstructionError,
-    solana_pubkey::{Pubkey, PUBKEY_BYTES},
+    trezoa_instruction_error::InstructionError,
+    trezoa_pubkey::{Pubkey, PUBKEY_BYTES},
     std::{
         io::{BufRead as _, Cursor, Read},
         ptr,

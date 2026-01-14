@@ -1,8 +1,8 @@
 use core::{
     cmp::min, mem::MaybeUninit, ops::Deref, ptr::copy_nonoverlapping, slice::from_raw_parts,
 };
-#[cfg(any(target_os = "solana", target_arch = "bpf"))]
-use solana_define_syscall::definitions::{
+#[cfg(any(target_os = "trezoa", target_arch = "bpf"))]
+use trezoa_define_syscall::definitions::{
     sol_log_, sol_memcpy_, sol_memset_, sol_remaining_compute_units,
 };
 
@@ -112,20 +112,20 @@ impl<const BUFFER: usize> Logger<BUFFER> {
 /// Log a message.
 #[inline(always)]
 pub fn log_message(message: &[u8]) {
-    #[cfg(any(target_os = "solana", target_arch = "bpf"))]
+    #[cfg(any(target_os = "trezoa", target_arch = "bpf"))]
     // SAFETY: the message is always a valid pointer to a slice of bytes
     // and `sol_log_` is a syscall.
     unsafe {
         sol_log_(message.as_ptr(), message.len() as u64);
     }
-    #[cfg(all(not(any(target_os = "solana", target_arch = "bpf")), feature = "std"))]
+    #[cfg(all(not(any(target_os = "trezoa", target_arch = "bpf")), feature = "std"))]
     {
         let message = core::str::from_utf8(message).unwrap();
         std::println!("{message}");
     }
 
     #[cfg(all(
-        not(any(target_os = "solana", target_arch = "bpf")),
+        not(any(target_os = "trezoa", target_arch = "bpf")),
         not(feature = "std")
     ))]
     core::hint::black_box(message);
@@ -134,12 +134,12 @@ pub fn log_message(message: &[u8]) {
 /// Remaining CUs.
 #[inline(always)]
 pub fn remaining_compute_units() -> u64 {
-    #[cfg(any(target_os = "solana", target_arch = "bpf"))]
+    #[cfg(any(target_os = "trezoa", target_arch = "bpf"))]
     // SAFETY: `sol_remaining_compute_units` is a syscall that returns the remaining compute units.
     unsafe {
         sol_remaining_compute_units()
     }
-    #[cfg(not(any(target_os = "solana", target_arch = "bpf")))]
+    #[cfg(not(any(target_os = "trezoa", target_arch = "bpf")))]
     core::hint::black_box(0u64)
 }
 
@@ -271,13 +271,13 @@ macro_rules! impl_log_for_unsigned_integer {
 
                             // Copy the number to the buffer if no precision is specified.
                             if precision == 0 {
-                                #[cfg(any(target_os = "solana", target_arch = "bpf"))]
+                                #[cfg(any(target_os = "trezoa", target_arch = "bpf"))]
                                 sol_memcpy_(
                                     ptr as *mut _,
                                     source as *const _,
                                     digits_to_write as u64,
                                 );
-                                #[cfg(not(any(target_os = "solana", target_arch = "bpf")))]
+                                #[cfg(not(any(target_os = "trezoa", target_arch = "bpf")))]
                                 copy_nonoverlapping(source, ptr, digits_to_write);
                             }
                             // If padding is needed to satisfy the precision, add leading zeros
@@ -291,9 +291,9 @@ macro_rules! impl_log_for_unsigned_integer {
                                     let padding = min(length - 2, precision - digits_to_write);
 
                                     // Precision padding.
-                                    #[cfg(any(target_os = "solana", target_arch = "bpf"))]
+                                    #[cfg(any(target_os = "trezoa", target_arch = "bpf"))]
                                     sol_memset_(ptr.add(2) as *mut _, b'0', padding as u64);
-                                    #[cfg(not(any(target_os = "solana", target_arch = "bpf")))]
+                                    #[cfg(not(any(target_os = "trezoa", target_arch = "bpf")))]
                                     (ptr.add(2) as *mut u8).write_bytes(b'0', padding);
 
                                     let current = 2 + padding;
@@ -303,14 +303,14 @@ macro_rules! impl_log_for_unsigned_integer {
                                         let remaining = min(digits_to_write, length - current);
 
                                         // Number part.
-                                        #[cfg(any(target_os = "solana", target_arch = "bpf"))]
+                                        #[cfg(any(target_os = "trezoa", target_arch = "bpf"))]
                                         sol_memcpy_(
                                             ptr.add(current) as *mut _,
                                             source as *const _,
                                             remaining as u64,
                                         );
                                         #[cfg(not(any(
-                                            target_os = "solana",
+                                            target_os = "trezoa",
                                             target_arch = "bpf"
                                         )))]
                                         copy_nonoverlapping(source, ptr.add(current), remaining);
@@ -323,9 +323,9 @@ macro_rules! impl_log_for_unsigned_integer {
                                 let integer_part = digits_to_write - precision;
 
                                 // Integer part of the number.
-                                #[cfg(any(target_os = "solana", target_arch = "bpf"))]
+                                #[cfg(any(target_os = "trezoa", target_arch = "bpf"))]
                                 sol_memcpy_(ptr as *mut _, source as *const _, integer_part as u64);
-                                #[cfg(not(any(target_os = "solana", target_arch = "bpf")))]
+                                #[cfg(not(any(target_os = "trezoa", target_arch = "bpf")))]
                                 copy_nonoverlapping(source, ptr, integer_part);
 
                                 // Decimal point.
@@ -337,13 +337,13 @@ macro_rules! impl_log_for_unsigned_integer {
                                     let remaining = min(precision, length - current);
 
                                     // Fractional part of the number.
-                                    #[cfg(any(target_os = "solana", target_arch = "bpf"))]
+                                    #[cfg(any(target_os = "trezoa", target_arch = "bpf"))]
                                     sol_memcpy_(
                                         ptr.add(current) as *mut _,
                                         source.add(integer_part) as *const _,
                                         remaining as u64,
                                     );
-                                    #[cfg(not(any(target_os = "solana", target_arch = "bpf")))]
+                                    #[cfg(not(any(target_os = "trezoa", target_arch = "bpf")))]
                                     copy_nonoverlapping(
                                         source.add(integer_part),
                                         ptr.add(current),
@@ -581,13 +581,13 @@ unsafe impl Log for &str {
         if length_to_write > 0 {
             // SAFETY: the `destination` is always within `length_to_write` bounds.
             unsafe {
-                #[cfg(any(target_os = "solana", target_arch = "bpf"))]
+                #[cfg(any(target_os = "trezoa", target_arch = "bpf"))]
                 sol_memcpy_(
                     destination as *mut _,
                     source as *const _,
                     length_to_write as u64,
                 );
-                #[cfg(not(any(target_os = "solana", target_arch = "bpf")))]
+                #[cfg(not(any(target_os = "trezoa", target_arch = "bpf")))]
                 copy_nonoverlapping(source, destination as *mut _, length_to_write);
             }
 

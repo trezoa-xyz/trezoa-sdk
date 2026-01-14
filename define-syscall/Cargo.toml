@@ -1,7 +1,7 @@
 [package]
-name = "solana-define-syscall"
-description = "Solana define_syscall macro and core syscall definitions."
-documentation = "https://docs.rs/solana-define-syscall"
+name = "trezoa-define-syscall"
+description = "Trezoa define_syscall macro and core syscall definitions."
+documentation = "https://docs.rs/trezoa-define-syscall"
 version = "5.0.0"
 authors = { workspace = true }
 repository = { workspace = true }

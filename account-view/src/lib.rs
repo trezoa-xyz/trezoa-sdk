@@ -12,8 +12,8 @@ use {
         ptr::{write, write_bytes, NonNull},
         slice::{from_raw_parts, from_raw_parts_mut},
     },
-    solana_address::Address,
-    solana_program_error::{ProgramError, ProgramResult},
+    trezoa_address::Address,
+    trezoa_program_error::{ProgramError, ProgramResult},
 };
 
 /// Maximum number of bytes a program may add to an account during a
@@ -22,7 +22,7 @@ pub const MAX_PERMITTED_DATA_INCREASE: usize = 1_024 * 10;
 
 /// Value to indicate that an account is not borrowed.
 ///
-/// This value is the same as `solana_program_entrypoint::NON_DUP_MARKER`.
+/// This value is the same as `trezoa_program_entrypoint::NON_DUP_MARKER`.
 pub const NOT_BORROWED: u8 = u8::MAX;
 
 /// Raw account data.

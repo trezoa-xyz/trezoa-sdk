@@ -1,9 +1,9 @@
 //! Instructions for the v4 built-in loader program.
 #[cfg(feature = "bincode")]
 use {
-    solana_instruction::{AccountMeta, Instruction},
-    solana_pubkey::Pubkey,
-    solana_sdk_ids::loader_v4::id,
+    trezoa_instruction::{AccountMeta, Instruction},
+    trezoa_pubkey::Pubkey,
+    trezoa_sdk_ids::loader_v4::id,
 };
 
 #[repr(u8)]
@@ -139,7 +139,7 @@ pub fn create_buffer(
     recipient_address: &Pubkey,
 ) -> Vec<Instruction> {
     vec![
-        solana_system_interface::instruction::create_account(
+        trezoa_system_interface::instruction::create_account(
             payer_address,
             buffer_address,
             lamports,
@@ -291,7 +291,7 @@ pub fn finalize(
 
 #[cfg(test)]
 mod tests {
-    use {super::*, solana_sdk_ids::system_program};
+    use {super::*, trezoa_sdk_ids::system_program};
 
     #[test]
     fn test_create_buffer_instruction() {

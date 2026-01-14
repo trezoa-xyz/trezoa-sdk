@@ -7,8 +7,8 @@ const DEFAULT_PRIOR_VOTERS_OFFSET: usize = 82;
 
 #[cfg_attr(
     feature = "frozen-abi",
-    solana_frozen_abi_macro::frozen_abi(digest = "2rjXSWaNeAdoUNJDC5otC7NPR1qXHvLMuAs5faE4DPEt"),
-    derive(solana_frozen_abi_macro::AbiExample)
+    trezoa_frozen_abi_macro::frozen_abi(digest = "2rjXSWaNeAdoUNJDC5otC7NPR1qXHvLMuAs5faE4DPEt"),
+    derive(trezoa_frozen_abi_macro::AbiExample)
 )]
 #[cfg_attr(feature = "serde", derive(Deserialize, Serialize))]
 #[derive(Debug, Default, PartialEq, Eq, Clone)]

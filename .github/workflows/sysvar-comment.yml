@@ -35,8 +35,8 @@ jobs:
           GH_REPO: ${{ github.repository }}
           PRNUM: ${{ github.event.pull_request.number }}
           COMMENT: "If this PR represents a change to the sysvar layout, please
-            open a follow-up PR to update the JavaScript client `@solana/sysvars`
-            ([example](https://github.com/anza-xyz/kit/pull/375))
+            open a follow-up PR to update the JavaScript client `@trezoa/sysvars`
+            ([example](https://github.com/trezoa-xyz/kit/pull/375))
 
             Thank you for keeping the JavaScript clients in sync with the Rust
             clients."

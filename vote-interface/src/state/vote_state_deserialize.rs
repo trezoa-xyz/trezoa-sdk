@@ -7,10 +7,10 @@ use {
             MAX_LOCKOUT_HISTORY,
         },
     },
-    solana_clock::Epoch,
-    solana_instruction_error::InstructionError,
-    solana_pubkey::Pubkey,
-    solana_serialize_utils::cursor::{
+    trezoa_clock::Epoch,
+    trezoa_instruction_error::InstructionError,
+    trezoa_pubkey::Pubkey,
+    trezoa_serialize_utils::cursor::{
         read_bool, read_i64, read_option_u64, read_pubkey, read_pubkey_into, read_u16, read_u32,
         read_u64, read_u8,
     },

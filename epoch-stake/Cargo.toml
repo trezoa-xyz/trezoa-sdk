@@ -1,7 +1,7 @@
 [package]
-name = "solana-epoch-stake"
-description = "Solana epoch stake syscall API"
-documentation = "https://docs.rs/solana-epoch-stake"
+name = "trezoa-epoch-stake"
+description = "Trezoa epoch stake syscall API"
+documentation = "https://docs.rs/trezoa-epoch-stake"
 version = "3.0.0"
 authors = { workspace = true }
 repository = { workspace = true }
@@ -15,10 +15,10 @@ all-features = true
 rustdoc-args = ["--cfg=docsrs"]
 
 [dependencies]
-solana-pubkey = { workspace = true }
+trezoa-pubkey = { workspace = true }
 
-[target.'cfg(target_os = "solana")'.dependencies]
-solana-define-syscall = { workspace = true }
+[target.'cfg(target_os = "trezoa")'.dependencies]
+trezoa-define-syscall = { workspace = true }
 
 [lints]
 workspace = true

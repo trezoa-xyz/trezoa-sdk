@@ -1,7 +1,7 @@
 [package]
-name = "solana-signature"
-description = "Solana 64-byte signature type"
-documentation = "https://docs.rs/solana-signature"
+name = "trezoa-signature"
+description = "Trezoa 64-byte signature type"
+documentation = "https://docs.rs/trezoa-signature"
 version = "3.1.0"
 rust-version = "1.81.0"
 authors = { workspace = true }
@@ -19,7 +19,7 @@ rustdoc-args = ["--cfg=docsrs"]
 default = ["std", "alloc"]
 alloc = ["wincode?/alloc"]
 bytemuck = ["dep:bytemuck", "dep:bytemuck_derive"]
-frozen-abi = ["dep:solana-frozen-abi", "dep:solana-frozen-abi-macro", "std"]
+frozen-abi = ["dep:trezoa-frozen-abi", "dep:trezoa-frozen-abi-macro", "std"]
 rand = ["dep:rand"]
 serde = ["dep:serde", "dep:serde_derive", "dep:serde-big-array"]
 std = ["alloc", "serde?/std", "wincode?/std"]
@@ -35,9 +35,9 @@ rand = { workspace = true, optional = true }
 serde = { workspace = true, optional = true }
 serde-big-array = { workspace = true, optional = true }
 serde_derive = { workspace = true, optional = true }
-solana-frozen-abi = { workspace = true, optional = true, features = ["frozen-abi"] }
-solana-frozen-abi-macro = { workspace = true, optional = true, features = ["frozen-abi"] }
-solana-sanitize = { workspace = true }
+trezoa-frozen-abi = { workspace = true, optional = true, features = ["frozen-abi"] }
+trezoa-frozen-abi-macro = { workspace = true, optional = true, features = ["frozen-abi"] }
+trezoa-sanitize = { workspace = true }
 wincode = { workspace = true, optional = true }
 
 [dev-dependencies]
@@ -47,9 +47,9 @@ curve25519-dalek = { workspace = true }
 ed25519-dalek = { workspace = true }
 serde_derive = { workspace = true }
 serde_json = { workspace = true }
-solana-pubkey = { workspace = true, features = ["std"] }
-solana-short-vec = { workspace = true, features = ["serde"] }
-solana-signature = { path = ".", features = ["serde"] }
+trezoa-pubkey = { workspace = true, features = ["std"] }
+trezoa-short-vec = { workspace = true, features = ["serde"] }
+trezoa-signature = { path = ".", features = ["serde"] }
 
 [lints]
 workspace = true

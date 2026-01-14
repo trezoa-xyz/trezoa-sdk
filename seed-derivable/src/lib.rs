@@ -1,6 +1,6 @@
 //! The interface by which keys are derived.
 #![cfg_attr(docsrs, feature(doc_cfg))]
-use {solana_derivation_path::DerivationPath, std::error};
+use {trezoa_derivation_path::DerivationPath, std::error};
 
 /// The `SeedDerivable` trait defines the interface by which cryptographic keys/keypairs are
 /// derived from byte seeds, derivation paths, and passphrases.

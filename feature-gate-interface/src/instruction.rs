@@ -1,11 +1,11 @@
 #[cfg(feature = "bincode")]
 use {
     crate::state::Feature,
-    solana_instruction::{AccountMeta, Instruction},
-    solana_pubkey::Pubkey,
-    solana_rent::Rent,
-    solana_sdk_ids::{feature::id, incinerator, system_program},
-    solana_system_interface::instruction as system_instruction,
+    trezoa_instruction::{AccountMeta, Instruction},
+    trezoa_pubkey::Pubkey,
+    trezoa_rent::Rent,
+    trezoa_sdk_ids::{feature::id, incinerator, system_program},
+    trezoa_system_interface::instruction as system_instruction,
 };
 
 #[cfg(feature = "bincode")]

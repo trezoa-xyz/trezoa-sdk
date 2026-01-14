@@ -1,7 +1,7 @@
 [package]
-name = "solana-quic-definitions"
-description = "Definitions related to Solana over QUIC."
-documentation = "https://docs.rs/solana-quic-definitions"
+name = "trezoa-quic-definitions"
+description = "Definitions related to Trezoa over QUIC."
+documentation = "https://docs.rs/trezoa-quic-definitions"
 version = "3.0.0"
 rust-version = "1.81.0"
 authors = { workspace = true }
@@ -14,7 +14,7 @@ edition = { workspace = true }
 targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
-solana-keypair = { workspace = true }
+trezoa-keypair = { workspace = true }
 
 [lints]
 workspace = true

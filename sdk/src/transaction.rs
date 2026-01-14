@@ -1,6 +1,6 @@
 #![cfg(feature = "full")]
-#[deprecated(since = "2.2.0", note = "Use solana_transaction crate instead")]
-pub use solana_transaction::{
+#[deprecated(since = "2.2.0", note = "Use trezoa_transaction crate instead")]
+pub use trezoa_transaction::{
     sanitized::{MessageHash, SanitizedTransaction, TransactionAccountLocks, MAX_TX_ACCOUNT_LOCKS},
     uses_durable_nonce,
     versioned::{
@@ -8,8 +8,8 @@ pub use solana_transaction::{
     },
     Transaction, TransactionVerificationMode,
 };
-#[deprecated(since = "2.2.0", note = "Use solana_transaction_error crate instead")]
-pub use solana_transaction_error::{
+#[deprecated(since = "2.2.0", note = "Use trezoa_transaction_error crate instead")]
+pub use trezoa_transaction_error::{
     AddressLoaderError, SanitizeMessageError, TransactionError, TransactionResult as Result,
     TransportError, TransportResult,
 };

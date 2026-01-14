@@ -1,5 +1,5 @@
 //! Instructions for the
-//! [secp256r1 native program](https://docs.solana.com/developing/runtime-facilities/programs#secp256r1-program)
+//! [secp256r1 native program](https://docs.trezoa.com/developing/runtime-facilities/programs#secp256r1-program)
 //!
 //! Note on Signature Malleability:
 //! This precompile requires low-S values in signatures (s <= half_curve_order) to prevent signature malleability.
@@ -11,7 +11,7 @@
 //! replay protection schemes that rely on signature uniqueness.
 #![cfg_attr(docsrs, feature(doc_cfg))]
 use bytemuck::{Pod, Zeroable};
-pub use solana_sdk_ids::secp256r1_program::{check_id, id, ID};
+pub use trezoa_sdk_ids::secp256r1_program::{check_id, id, ID};
 
 #[derive(Default, Debug, Copy, Clone, Zeroable, Pod, Eq, PartialEq)]
 #[repr(C)]
@@ -38,13 +38,13 @@ pub struct Secp256r1SignatureOffsets {
     pub message_instruction_index: u16,
 }
 
-#[cfg(all(not(target_arch = "wasm32"), not(target_os = "solana")))]
+#[cfg(all(not(target_arch = "wasm32"), not(target_os = "trezoa")))]
 mod target_arch {
     use {
         crate::Secp256r1SignatureOffsets,
         bytemuck::bytes_of,
         openssl::{bn::BigNum, ec::EcKey, ecdsa::EcdsaSig, nid::Nid, pkey::PKey, sign::Signer},
-        solana_instruction::Instruction,
+        trezoa_instruction::Instruction,
     };
 
     pub const COMPRESSED_PUBKEY_SERIALIZED_SIZE: usize = 33;

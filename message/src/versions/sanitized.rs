@@ -1,6 +1,6 @@
 use {
     super::VersionedMessage, crate::compiled_instruction::CompiledInstruction,
-    solana_address::Address, solana_sanitize::SanitizeError,
+    trezoa_address::Address, trezoa_sanitize::SanitizeError,
 };
 
 /// Wraps a sanitized `VersionedMessage` to provide a safe API

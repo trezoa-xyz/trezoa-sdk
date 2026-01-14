@@ -1,7 +1,7 @@
 [package]
-name = "solana-serde"
-description = "Solana serde helpers"
-documentation = "https://docs.rs/solana-serde"
+name = "trezoa-serde"
+description = "Trezoa serde helpers"
+documentation = "https://docs.rs/trezoa-serde"
 version = "3.0.0"
 authors = { workspace = true }
 repository = { workspace = true }

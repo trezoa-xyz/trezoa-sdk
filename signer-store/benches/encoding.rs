@@ -2,7 +2,7 @@ use {
     bitvec::prelude::*,
     criterion::{criterion_group, criterion_main, BenchmarkId, Criterion},
     rand::{rngs::ThreadRng, Rng},
-    solana_signer_store::{decode, encode_base2, encode_base3, Decoded},
+    trezoa_signer_store::{decode, encode_base2, encode_base3, Decoded},
     std::iter,
 };
 

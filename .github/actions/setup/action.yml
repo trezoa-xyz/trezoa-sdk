@@ -34,8 +34,8 @@ inputs:
   llvm-tools-preview:
     description: Install llvm-tools-preview if `true`. Defaults to `false`.
     required: false
-  agave:
-    description: Install required packages for Agave if `true`. Defaults to `false`.
+  trezoa:
+    description: Install required packages for Trezoa if `true`. Defaults to `false`.
     required: false
   purge:
     description: Purge unused directories if `true`. Defaults to `false`.
@@ -128,8 +128,8 @@ runs:
         toolchain: ${{ env.RUST_NIGHTLY }}
         components: rust-src
 
-    - name: Install Agave build dependencies
-      if: ${{ inputs.agave == 'true' }}
+    - name: Install Trezoa build dependencies
+      if: ${{ inputs.trezoa == 'true' }}
       shell: bash
       run: sudo apt update && sudo apt install -y libudev-dev protobuf-compiler
 

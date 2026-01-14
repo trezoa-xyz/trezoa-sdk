@@ -1,9 +1,9 @@
 #![cfg_attr(docsrs, feature(doc_cfg))]
-pub use solana_signer::PresignerError;
+pub use trezoa_signer::PresignerError;
 use {
-    solana_pubkey::Pubkey,
-    solana_signature::Signature,
-    solana_signer::{Signer, SignerError},
+    trezoa_pubkey::Pubkey,
+    trezoa_signature::Signature,
+    trezoa_signer::{Signer, SignerError},
 };
 
 /// A `Signer` implementation that represents a `Signature` that has been
@@ -54,7 +54,7 @@ where
 
 #[cfg(test)]
 mod tests {
-    use {super::*, solana_keypair::keypair_from_seed};
+    use {super::*, trezoa_keypair::keypair_from_seed};
 
     #[test]
     fn test_presigner() {

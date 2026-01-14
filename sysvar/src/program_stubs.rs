@@ -1,14 +1,14 @@
-//! Implementations of syscalls used when `solana-program` is built for non-SBF targets.
+//! Implementations of syscalls used when `trezoa-program` is built for non-SBF targets.
 
-#![cfg(not(target_os = "solana"))]
+#![cfg(not(target_os = "trezoa"))]
 
 use {
     base64::{prelude::BASE64_STANDARD, Engine},
-    solana_account_info::AccountInfo,
-    solana_instruction::{error::UNSUPPORTED_SYSVAR, Instruction},
-    solana_program_error::ProgramResult,
-    solana_program_memory::stubs,
-    solana_pubkey::Pubkey,
+    trezoa_account_info::AccountInfo,
+    trezoa_instruction::{error::UNSUPPORTED_SYSVAR, Instruction},
+    trezoa_program_error::ProgramResult,
+    trezoa_program_memory::stubs,
+    trezoa_pubkey::Pubkey,
     std::sync::{Arc, RwLock},
 };
 

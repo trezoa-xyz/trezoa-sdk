@@ -31,7 +31,7 @@ pub const SIGNATURE_BYTES: usize = 64;
 const MAX_BASE58_SIGNATURE_LEN: usize = 88;
 
 #[repr(transparent)]
-#[cfg_attr(feature = "frozen-abi", derive(solana_frozen_abi_macro::AbiExample))]
+#[cfg_attr(feature = "frozen-abi", derive(trezoa_frozen_abi_macro::AbiExample))]
 #[derive(Clone, Copy, Eq, PartialEq, Ord, PartialOrd, Hash)]
 #[cfg_attr(
     feature = "bytemuck",
@@ -49,7 +49,7 @@ impl Default for Signature {
     }
 }
 
-impl solana_sanitize::Sanitize for Signature {}
+impl trezoa_sanitize::Sanitize for Signature {}
 
 impl Signature {
     /// Return a reference to the `Signature`'s byte array.
@@ -185,7 +185,7 @@ mod tests {
     use {
         super::*,
         serde_derive::{Deserialize, Serialize},
-        solana_pubkey::Pubkey,
+        trezoa_pubkey::Pubkey,
     };
 
     #[test]
@@ -213,7 +213,7 @@ mod tests {
     fn test_short_vec() {
         #[derive(Debug, Deserialize, Serialize, PartialEq)]
         struct SigShortVec {
-            #[serde(with = "solana_short_vec")]
+            #[serde(with = "trezoa_short_vec")]
             pub signatures: Vec<Signature>,
         }
         let sig = Signature::from([

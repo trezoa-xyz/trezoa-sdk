@@ -1,7 +1,7 @@
 [package]
-name = "solana-keypair"
-description = "Concrete implementation of a Solana `Signer`."
-documentation = "https://docs.rs/solana-keypair"
+name = "trezoa-keypair"
+description = "Concrete implementation of a Trezoa `Signer`."
+documentation = "https://docs.rs/trezoa-keypair"
 version = "3.1.0"
 rust-version = "1.81.0"
 authors = { workspace = true }
@@ -17,8 +17,8 @@ rustdoc-args = ["--cfg=docsrs"]
 
 [features]
 seed-derivable = [
-    "dep:solana-derivation-path",
-    "dep:solana-seed-derivable",
+    "dep:trezoa-derivation-path",
+    "dep:trezoa-seed-derivable",
     "dep:ed25519-dalek-bip32",
 ]
 
@@ -27,12 +27,12 @@ ed25519-dalek = { workspace = true, features = ["rand_core"] }
 ed25519-dalek-bip32 = { workspace = true, optional = true }
 five8 = { workspace = true }
 rand = { workspace = true }
-solana-address = { workspace = true, features = ["decode"] }
-solana-derivation-path = { workspace = true, optional = true }
-solana-seed-derivable = { workspace = true, optional = true }
-solana-seed-phrase = { workspace = true }
-solana-signature = { workspace = true, features = ["std", "verify"] }
-solana-signer = { workspace = true }
+trezoa-address = { workspace = true, features = ["decode"] }
+trezoa-derivation-path = { workspace = true, optional = true }
+trezoa-seed-derivable = { workspace = true, optional = true }
+trezoa-seed-phrase = { workspace = true }
+trezoa-signature = { workspace = true, features = ["std", "verify"] }
+trezoa-signer = { workspace = true }
 
 [dev-dependencies]
 serde_json = { workspace = true }

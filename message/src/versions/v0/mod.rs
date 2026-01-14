@@ -1,19 +1,19 @@
-//! A future Solana message format.
+//! A future Trezoa message format.
 //!
 //! This crate defines two versions of `Message` in their own modules:
-//! [`legacy`] and [`v0`]. `legacy` is the current version as of Solana 1.10.0.
+//! [`legacy`] and [`v0`]. `legacy` is the current version as of Trezoa 1.10.0.
 //! `v0` is a [future message format] that encodes more account keys into a
 //! transaction than the legacy format.
 //!
 //! [`legacy`]: crate::legacy
 //! [`v0`]: crate::v0
-//! [future message format]: https://docs.solanalabs.com/proposals/versioned-transactions
+//! [future message format]: https://docs.trezoalabs.com/proposals/versioned-transactions
 
 pub use loaded::*;
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
 #[cfg(feature = "frozen-abi")]
-use solana_frozen_abi_macro::AbiExample;
+use trezoa_frozen_abi_macro::AbiExample;
 #[cfg(feature = "wincode")]
 use wincode::{containers, len::ShortU16Len, SchemaRead, SchemaWrite};
 use {
@@ -22,11 +22,11 @@ use {
         compiled_keys::{CompileError, CompiledKeys},
         AccountKeys, AddressLookupTableAccount, MessageHeader,
     },
-    solana_address::Address,
-    solana_hash::Hash,
-    solana_instruction::Instruction,
-    solana_sanitize::SanitizeError,
-    solana_sdk_ids::bpf_loader_upgradeable,
+    trezoa_address::Address,
+    trezoa_hash::Hash,
+    trezoa_instruction::Instruction,
+    trezoa_sanitize::SanitizeError,
+    trezoa_sdk_ids::bpf_loader_upgradeable,
     std::collections::HashSet,
 };
 
@@ -46,16 +46,16 @@ pub struct MessageAddressTableLookup {
     /// Address lookup table account key
     pub account_key: Address,
     /// List of indexes used to load writable account addresses
-    #[cfg_attr(feature = "serde", serde(with = "solana_short_vec"))]
+    #[cfg_attr(feature = "serde", serde(with = "trezoa_short_vec"))]
     #[cfg_attr(feature = "wincode", wincode(with = "containers::Vec<_, ShortU16Len>"))]
     pub writable_indexes: Vec<u8>,
     /// List of indexes used to load readonly account addresses
-    #[cfg_attr(feature = "serde", serde(with = "solana_short_vec"))]
+    #[cfg_attr(feature = "serde", serde(with = "trezoa_short_vec"))]
     #[cfg_attr(feature = "wincode", wincode(with = "containers::Vec<_, ShortU16Len>"))]
     pub readonly_indexes: Vec<u8>,
 }
 
-/// A Solana transaction message (v0).
+/// A Trezoa transaction message (v0).
 ///
 /// This message format supports succinct account loading with
 /// on-chain address lookup tables.
@@ -77,7 +77,7 @@ pub struct Message {
     pub header: MessageHeader,
 
     /// List of accounts loaded by this transaction.
-    #[cfg_attr(feature = "serde", serde(with = "solana_short_vec"))]
+    #[cfg_attr(feature = "serde", serde(with = "trezoa_short_vec"))]
     #[cfg_attr(feature = "wincode", wincode(with = "containers::Vec<_, ShortU16Len>"))]
     pub account_keys: Vec<Address>,
 
@@ -97,13 +97,13 @@ pub struct Message {
     ///   1) message `account_keys`
     ///   2) ordered list of keys loaded from `writable` lookup table indexes
     ///   3) ordered list of keys loaded from `readable` lookup table indexes
-    #[cfg_attr(feature = "serde", serde(with = "solana_short_vec"))]
+    #[cfg_attr(feature = "serde", serde(with = "trezoa_short_vec"))]
     #[cfg_attr(feature = "wincode", wincode(with = "containers::Vec<_, ShortU16Len>"))]
     pub instructions: Vec<CompiledInstruction>,
 
     /// List of address table lookups used to load additional accounts
     /// for this transaction.
-    #[cfg_attr(feature = "serde", serde(with = "solana_short_vec"))]
+    #[cfg_attr(feature = "serde", serde(with = "trezoa_short_vec"))]
     #[cfg_attr(feature = "wincode", wincode(with = "containers::Vec<_, ShortU16Len>"))]
     pub address_table_lookups: Vec<MessageAddressTableLookup>,
 }
@@ -200,31 +200,31 @@ impl Message {
     ///
     /// # Examples
     ///
-    /// This example uses the [`solana_rpc_client`], [`solana_account`], and [`anyhow`] crates.
+    /// This example uses the [`trezoa_rpc_client`], [`trezoa_account`], and [`anyhow`] crates.
     ///
-    /// [`solana_rpc_client`]: https://docs.rs/solana-rpc-client
-    /// [`solana_account`]: https://docs.rs/solana-account
+    /// [`trezoa_rpc_client`]: https://docs.rs/trezoa-rpc-client
+    /// [`trezoa_account`]: https://docs.rs/trezoa-account
     /// [`anyhow`]: https://docs.rs/anyhow
     ///
     /// ```
-    /// # use solana_example_mocks::{
-    /// #     solana_rpc_client,
-    /// #     solana_account,
-    /// #     solana_transaction,
-    /// #     solana_signer,
-    /// #     solana_keypair,
+    /// # use trezoa_example_mocks::{
+    /// #     trezoa_rpc_client,
+    /// #     trezoa_account,
+    /// #     trezoa_transaction,
+    /// #     trezoa_signer,
+    /// #     trezoa_keypair,
     /// # };
     /// # use std::borrow::Cow;
-    /// # use solana_account::Account;
+    /// # use trezoa_account::Account;
     /// use anyhow::Result;
-    /// use solana_address_lookup_table_interface::state::{AddressLookupTable, LookupTableMeta};
-    /// use solana_instruction::{AccountMeta, Instruction};
-    /// use solana_keypair::Keypair;
-    /// use solana_message::{AddressLookupTableAccount, VersionedMessage, v0};
-    /// use solana_address::Address;
-    /// use solana_rpc_client::rpc_client::RpcClient;
-    /// use solana_signer::Signer;
-    /// use solana_transaction::versioned::VersionedTransaction;
+    /// use trezoa_address_lookup_table_interface::state::{AddressLookupTable, LookupTableMeta};
+    /// use trezoa_instruction::{AccountMeta, Instruction};
+    /// use trezoa_keypair::Keypair;
+    /// use trezoa_message::{AddressLookupTableAccount, VersionedMessage, v0};
+    /// use trezoa_address::Address;
+    /// use trezoa_rpc_client::rpc_client::RpcClient;
+    /// use trezoa_signer::Signer;
+    /// use trezoa_transaction::versioned::VersionedTransaction;
     ///
     /// fn create_tx_with_address_table_lookup(
     ///     client: &RpcClient,
@@ -238,7 +238,7 @@ impl Message {
     ///     #     meta: LookupTableMeta::default(),
     ///     #     addresses: Cow::Owned(instruction.accounts.iter().map(|meta| meta.pubkey).collect()),
     ///     #   }.serialize_for_tests().unwrap(),
-    ///     #   owner: solana_address_lookup_table_interface::program::id(),
+    ///     #   owner: trezoa_address_lookup_table_interface::program::id(),
     ///     #   executable: false,
     ///     # });
     ///     let raw_account = client.get_account(&address_lookup_table_key)?;
@@ -395,7 +395,7 @@ impl Message {
 
 #[cfg(test)]
 mod tests {
-    use {super::*, crate::VersionedMessage, solana_instruction::AccountMeta};
+    use {super::*, crate::VersionedMessage, trezoa_instruction::AccountMeta};
 
     #[test]
     fn test_sanitize() {

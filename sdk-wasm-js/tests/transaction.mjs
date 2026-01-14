@@ -1,6 +1,6 @@
 import { expect } from "chai";
 import {
-  solana_program_init,
+  trezoa_program_init,
   AccountMeta,
   Address,
   Keypair,
@@ -8,7 +8,7 @@ import {
   Instruction,
   Transaction,
 } from "crate";
-solana_program_init();
+trezoa_program_init();
 
 const MAX_TRANSACTION_SIZE = 1232;
 

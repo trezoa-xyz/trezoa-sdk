@@ -8,7 +8,7 @@ use log::*;
 extern crate std;
 
 #[repr(C)]
-#[cfg_attr(feature = "frozen-abi", derive(solana_frozen_abi_macro::AbiExample))]
+#[cfg_attr(feature = "frozen-abi", derive(trezoa_frozen_abi_macro::AbiExample))]
 #[cfg_attr(
     feature = "serde",
     derive(serde_derive::Serialize, serde_derive::Deserialize)
@@ -31,7 +31,7 @@ impl FeeCalculator {
     }
 }
 
-#[cfg_attr(feature = "frozen-abi", derive(solana_frozen_abi_macro::AbiExample))]
+#[cfg_attr(feature = "frozen-abi", derive(trezoa_frozen_abi_macro::AbiExample))]
 #[cfg_attr(
     feature = "serde",
     derive(serde_derive::Serialize, serde_derive::Deserialize)
@@ -63,7 +63,7 @@ pub struct FeeRateGovernor {
 pub const DEFAULT_TARGET_LAMPORTS_PER_SIGNATURE: u64 = 10_000;
 const DEFAULT_MS_PER_SLOT: u64 = 400;
 #[cfg(test)]
-static_assertions::const_assert_eq!(DEFAULT_MS_PER_SLOT, solana_clock::DEFAULT_MS_PER_SLOT);
+static_assertions::const_assert_eq!(DEFAULT_MS_PER_SLOT, trezoa_clock::DEFAULT_MS_PER_SLOT);
 pub const DEFAULT_TARGET_SIGNATURES_PER_SLOT: u64 = 50 * DEFAULT_MS_PER_SLOT;
 
 // Percentage of tx fees to burn

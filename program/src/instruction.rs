@@ -1,4 +1,4 @@
-pub use solana_instruction::{
+pub use trezoa_instruction::{
     error::InstructionError, AccountMeta, Instruction, ProcessedSiblingInstruction,
     TRANSACTION_LEVEL_STACK_HEIGHT,
 };
@@ -16,12 +16,12 @@ pub use solana_instruction::{
 /// Then B's processed sibling instruction list is: `[A]`
 /// Then F's processed sibling instruction list is: `[E, C]`
 pub fn get_processed_sibling_instruction(index: usize) -> Option<Instruction> {
-    #[cfg(target_os = "solana")]
+    #[cfg(target_os = "trezoa")]
     {
-        solana_instruction::syscalls::get_processed_sibling_instruction(index)
+        trezoa_instruction::syscalls::get_processed_sibling_instruction(index)
     }
 
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "trezoa"))]
     {
         crate::program_stubs::sol_get_processed_sibling_instruction(index)
     }
@@ -31,12 +31,12 @@ pub fn get_processed_sibling_instruction(index: usize) -> Option<Instruction> {
 /// TRANSACTION_LEVEL_STACK_HEIGHT, fist invoked inner instruction is height
 /// TRANSACTION_LEVEL_STACK_HEIGHT + 1, etc...
 pub fn get_stack_height() -> usize {
-    #[cfg(target_os = "solana")]
+    #[cfg(target_os = "trezoa")]
     {
-        solana_instruction::syscalls::get_stack_height()
+        trezoa_instruction::syscalls::get_stack_height()
     }
 
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "trezoa"))]
     {
         crate::program_stubs::sol_get_stack_height() as usize
     }

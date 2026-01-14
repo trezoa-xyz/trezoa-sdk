@@ -3,17 +3,17 @@
 use {
     crate::display_to_jsvalue,
     js_sys::{Array, Uint8Array},
-    solana_address::{ADDRESS_BYTES, MAX_SEEDS, MAX_SEED_LEN},
+    trezoa_address::{ADDRESS_BYTES, MAX_SEEDS, MAX_SEED_LEN},
     wasm_bindgen::{prelude::wasm_bindgen, JsCast, JsValue},
 };
 
 #[wasm_bindgen]
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub struct Address {
-    pub(crate) inner: solana_address::Address,
+    pub(crate) inner: trezoa_address::Address,
 }
 
-crate::conversion::impl_inner_conversion!(Address, solana_address::Address);
+crate::conversion::impl_inner_conversion!(Address, trezoa_address::Address);
 
 fn js_value_to_seeds_vec(array_of_uint8_arrays: &[JsValue]) -> Result<Vec<Vec<u8>>, JsValue> {
     if array_of_uint8_arrays.len() > MAX_SEEDS {
@@ -55,7 +55,7 @@ impl Address {
     pub fn constructor(value: JsValue) -> Result<Self, JsValue> {
         if let Some(base58_str) = value.as_string() {
             base58_str
-                .parse::<solana_address::Address>()
+                .parse::<trezoa_address::Address>()
                 .map(Into::into)
                 .map_err(display_to_jsvalue)
         } else if let Some(uint8_array) = value.dyn_ref::<Uint8Array>() {
@@ -69,7 +69,7 @@ impl Address {
             }
             let mut bytes = [0u8; ADDRESS_BYTES];
             uint8_array.copy_to(&mut bytes);
-            Ok(solana_address::Address::new_from_array(bytes).into())
+            Ok(trezoa_address::Address::new_from_array(bytes).into())
         } else if let Some(array) = value.dyn_ref::<Array>() {
             if array.length() as usize != ADDRESS_BYTES {
                 return Err(std::format!(
@@ -92,9 +92,9 @@ impl Address {
                 }
                 return Err(std::format!("Invalid array argument: {:?}", x).into());
             }
-            Ok(solana_address::Address::new_from_array(bytes).into())
+            Ok(trezoa_address::Address::new_from_array(bytes).into())
         } else if value.is_undefined() {
-            Ok(solana_address::Address::default().into())
+            Ok(trezoa_address::Address::default().into())
         } else {
             Err("Unsupported argument".into())
         }
@@ -122,7 +122,7 @@ impl Address {
 
     /// Derive an Address from anothern Address, string seed, and a program id
     pub fn createWithSeed(base: &Self, seed: &str, owner: &Self) -> Result<Self, JsValue> {
-        solana_address::Address::create_with_seed(&base.inner, seed, &owner.inner)
+        trezoa_address::Address::create_with_seed(&base.inner, seed, &owner.inner)
             .map(Into::into)
             .map_err(display_to_jsvalue)
     }
@@ -138,7 +138,7 @@ impl Address {
             .map(|seed| seed.as_slice())
             .collect::<Vec<_>>();
 
-        solana_address::Address::create_program_address(seeds_slice.as_slice(), &program_id.inner)
+        trezoa_address::Address::create_program_address(seeds_slice.as_slice(), &program_id.inner)
             .map(Into::into)
             .map_err(display_to_jsvalue)
     }
@@ -157,7 +157,7 @@ impl Address {
             .map(|seed| seed.as_slice())
             .collect::<Vec<_>>();
 
-        let (address, bump_seed) = solana_address::Address::find_program_address(
+        let (address, bump_seed) = trezoa_address::Address::find_program_address(
             seeds_slice.as_slice(),
             &program_id.inner,
         );

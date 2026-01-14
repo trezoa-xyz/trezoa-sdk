@@ -14,12 +14,12 @@
 #![allow(clippy::new_without_default)]
 #![cfg_attr(docsrs, feature(doc_cfg))]
 
-pub mod solana_rpc_client {
+pub mod trezoa_rpc_client {
     pub mod rpc_client {
         use {
             super::super::{
-                solana_rpc_client_api::client_error::Result as ClientResult,
-                solana_sdk::{
+                trezoa_rpc_client_api::client_error::Result as ClientResult,
+                trezoa_sdk::{
                     account::Account, hash::Hash, pubkey::Pubkey, signature::Signature,
                     transaction::Transaction,
                 },
@@ -77,7 +77,7 @@ pub mod solana_rpc_client {
     }
 }
 
-pub mod solana_rpc_client_api {
+pub mod trezoa_rpc_client_api {
     pub mod client_error {
         #[derive(thiserror::Error, Debug)]
         #[error("mock-error")]
@@ -86,10 +86,10 @@ pub mod solana_rpc_client_api {
     }
 }
 
-pub mod solana_rpc_client_nonce_utils {
+pub mod trezoa_rpc_client_nonce_utils {
     use {
-        super::solana_sdk::{account::ReadableAccount, account_utils::StateMut, pubkey::Pubkey},
-        solana_nonce::{
+        super::trezoa_sdk::{account::ReadableAccount, account_utils::StateMut, pubkey::Pubkey},
+        trezoa_nonce::{
             state::{Data, DurableNonce},
             versions::Versions,
         },
@@ -110,8 +110,8 @@ pub mod solana_rpc_client_nonce_utils {
     }
 }
 
-pub mod solana_account {
-    use solana_pubkey::Pubkey;
+pub mod trezoa_account {
+    use trezoa_pubkey::Pubkey;
     #[derive(Clone)]
     pub struct Account {
         pub lamports: u64,
@@ -139,13 +139,13 @@ pub mod solana_account {
     }
 }
 
-pub mod solana_signature {
+pub mod trezoa_signature {
     #[derive(Default, Debug)]
     pub struct Signature;
 }
 
-pub mod solana_signer {
-    use {solana_pubkey::Pubkey, thiserror::Error};
+pub mod trezoa_signer {
+    use {trezoa_pubkey::Pubkey, thiserror::Error};
 
     #[derive(Error, Debug)]
     #[error("mock-error")]
@@ -165,8 +165,8 @@ pub mod solana_signer {
     }
 }
 
-pub mod solana_keypair {
-    use {crate::solana_signer::Signer, solana_pubkey::Pubkey};
+pub mod trezoa_keypair {
+    use {crate::trezoa_signer::Signer, trezoa_pubkey::Pubkey};
     pub struct Keypair;
 
     impl Keypair {
@@ -182,23 +182,23 @@ pub mod solana_keypair {
     }
 }
 
-pub mod solana_transaction {
+pub mod trezoa_transaction {
     use {
-        crate::solana_signer::{signers::Signers, SignerError},
+        crate::trezoa_signer::{signers::Signers, SignerError},
         serde_derive::Serialize,
-        solana_hash::Hash,
-        solana_instruction::Instruction,
-        solana_message::Message,
-        solana_pubkey::Pubkey,
+        trezoa_hash::Hash,
+        trezoa_instruction::Instruction,
+        trezoa_message::Message,
+        trezoa_pubkey::Pubkey,
     };
 
     pub mod versioned {
         use {
             crate::{
-                solana_signature::Signature,
-                solana_signer::{signers::Signers, SignerError},
+                trezoa_signature::Signature,
+                trezoa_signer::{signers::Signers, SignerError},
             },
-            solana_message::VersionedMessage,
+            trezoa_message::VersionedMessage,
         };
         pub struct VersionedTransaction {
             pub signatures: Vec<Signature>,
@@ -268,42 +268,42 @@ pub mod solana_transaction {
     }
 }
 
-/// Re-exports and mocks of solana-program modules that mirror those from
-/// solana-program.
+/// Re-exports and mocks of trezoa-program modules that mirror those from
+/// trezoa-program.
 ///
-/// This lets examples in solana-program appear to be written as client
+/// This lets examples in trezoa-program appear to be written as client
 /// programs.
-pub mod solana_sdk {
+pub mod trezoa_sdk {
     pub use {
         crate::{
-            solana_account::{self as account, state_traits as account_utils},
-            solana_signer::{self as signer, signers},
+            trezoa_account::{self as account, state_traits as account_utils},
+            trezoa_signer::{self as signer, signers},
         },
-        solana_clock::Clock,
-        solana_hash as hash, solana_instruction as instruction, solana_keccak_hasher as keccak,
-        solana_message as message, solana_nonce as nonce,
-        solana_pubkey::{self as pubkey, Pubkey},
-        solana_sdk_ids::{
+        trezoa_clock::Clock,
+        trezoa_hash as hash, trezoa_instruction as instruction, trezoa_keccak_hasher as keccak,
+        trezoa_message as message, trezoa_nonce as nonce,
+        trezoa_pubkey::{self as pubkey, Pubkey},
+        trezoa_sdk_ids::{
             system_program,
             sysvar::{self, clock},
         },
-        solana_system_interface::instruction as system_instruction,
+        trezoa_system_interface::instruction as system_instruction,
     };
 
     pub mod signature {
         pub use crate::{
-            solana_keypair::Keypair, solana_signature::Signature, solana_signer::Signer,
+            trezoa_keypair::Keypair, trezoa_signature::Signature, trezoa_signer::Signer,
         };
     }
 
     pub mod transaction {
-        pub use crate::solana_transaction::{versioned::VersionedTransaction, Transaction};
+        pub use crate::trezoa_transaction::{versioned::VersionedTransaction, Transaction};
     }
 
     pub mod address_lookup_table {
         pub use {
-            solana_address_lookup_table_interface::{error, instruction, program, state},
-            solana_message::AddressLookupTableAccount,
+            trezoa_address_lookup_table_interface::{error, instruction, program, state},
+            trezoa_message::AddressLookupTableAccount,
         };
     }
 }

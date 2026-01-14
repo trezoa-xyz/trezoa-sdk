@@ -173,8 +173,8 @@ impl PoseidonHash {
     }
 }
 
-#[cfg(target_os = "solana")]
-pub use solana_define_syscall::definitions::sol_poseidon;
+#[cfg(target_os = "trezoa")]
+pub use trezoa_define_syscall::definitions::sol_poseidon;
 
 /// Return a Poseidon hash for the given data with the given elliptic curve and
 /// endianness.
@@ -182,7 +182,7 @@ pub use solana_define_syscall::definitions::sol_poseidon;
 /// # Examples
 ///
 /// ```rust
-/// use solana_poseidon::{hashv, Endianness, Parameters};
+/// use trezoa_poseidon::{hashv, Endianness, Parameters};
 ///
 /// # fn test() {
 /// let input1 = [1u8; 32];
@@ -217,7 +217,7 @@ pub fn hashv(
 ) -> Result<PoseidonHash, PoseidonSyscallError> {
     // Perform the calculation inline, calling this from within a program is
     // not supported.
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "trezoa"))]
     {
         use {
             ark_bn254::Fr,
@@ -262,7 +262,7 @@ pub fn hashv(
         Ok(PoseidonHash(res))
     }
     // Call via a system call to perform the calculation.
-    #[cfg(target_os = "solana")]
+    #[cfg(target_os = "trezoa")]
     {
         let mut hash_result = [0; HASH_BYTES];
         let result = unsafe {
@@ -288,7 +288,7 @@ pub fn hashv(
 /// # Examples
 ///
 /// ```rust
-/// use solana_poseidon::{hash, Endianness, Parameters};
+/// use trezoa_poseidon::{hash, Endianness, Parameters};
 ///
 /// # fn test() {
 /// let input = [1u8; 32];

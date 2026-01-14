@@ -4,14 +4,14 @@
 //! [leader schedule][ls] is in effect. The epoch schedule determines the length
 //! of epochs, and the timing of the next leader-schedule selection.
 //!
-//! [ls]: https://docs.solanalabs.com/consensus/leader-rotation#leader-schedule-rotation
+//! [ls]: https://docs.trezoalabs.com/consensus/leader-rotation#leader-schedule-rotation
 //!
 //! The epoch schedule does not change during the life of a blockchain,
 //! though the length of an epoch does &mdash; during the initial launch of
 //! the chain there is a "warmup" period, where epochs are short, with subsequent
 //! epochs increasing in slots until they last for [`DEFAULT_SLOTS_PER_EPOCH`].
 //!
-//! [`DEFAULT_SLOTS_PER_EPOCH`]: https://docs.rs/solana-clock/latest/solana_clock/constant.DEFAULT_SLOTS_PER_EPOCH.html
+//! [`DEFAULT_SLOTS_PER_EPOCH`]: https://docs.rs/trezoa-clock/latest/trezoa_clock/constant.DEFAULT_SLOTS_PER_EPOCH.html
 #![cfg_attr(feature = "frozen-abi", feature(min_specialization))]
 #![cfg_attr(docsrs, feature(doc_cfg))]
 #![no_std]
@@ -23,14 +23,14 @@ pub mod sysvar;
 
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
-use solana_sdk_macro::CloneZeroed;
+use trezoa_sdk_macro::CloneZeroed;
 
-// inlined to avoid solana_clock dep
+// inlined to avoid trezoa_clock dep
 const DEFAULT_SLOTS_PER_EPOCH: u64 = 432_000;
 #[cfg(test)]
 static_assertions::const_assert_eq!(
     DEFAULT_SLOTS_PER_EPOCH,
-    solana_clock::DEFAULT_SLOTS_PER_EPOCH
+    trezoa_clock::DEFAULT_SLOTS_PER_EPOCH
 );
 /// The default number of slots before an epoch starts to calculate the leader schedule.
 pub const DEFAULT_LEADER_SCHEDULE_SLOT_OFFSET: u64 = DEFAULT_SLOTS_PER_EPOCH;
@@ -47,7 +47,7 @@ pub const MAX_LEADER_SCHEDULE_EPOCH_OFFSET: u64 = 3;
 pub const MINIMUM_SLOTS_PER_EPOCH: u64 = 32;
 
 #[repr(C)]
-#[cfg_attr(feature = "frozen-abi", derive(solana_frozen_abi_macro::AbiExample))]
+#[cfg_attr(feature = "frozen-abi", derive(trezoa_frozen_abi_macro::AbiExample))]
 #[cfg_attr(
     feature = "serde",
     derive(Deserialize, Serialize),

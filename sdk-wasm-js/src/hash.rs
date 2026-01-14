@@ -1,7 +1,7 @@
-//! Wrapper over `solana_hash::Hash` with wasm-bindgen
+//! Wrapper over `trezoa_hash::Hash` with wasm-bindgen
 use {
     js_sys::{Array, Uint8Array},
-    solana_hash::HASH_BYTES,
+    trezoa_hash::HASH_BYTES,
     std::{boxed::Box, format, string::String},
     wasm_bindgen::{prelude::*, JsCast},
 };
@@ -9,10 +9,10 @@ use {
 #[wasm_bindgen]
 #[derive(Debug, PartialEq, Eq, Clone)]
 pub struct Hash {
-    pub(crate) inner: solana_hash::Hash,
+    pub(crate) inner: trezoa_hash::Hash,
 }
 
-crate::conversion::impl_inner_conversion!(Hash, solana_hash::Hash);
+crate::conversion::impl_inner_conversion!(Hash, trezoa_hash::Hash);
 
 #[allow(non_snake_case)]
 #[wasm_bindgen]
@@ -24,7 +24,7 @@ impl Hash {
     pub fn constructor(value: JsValue) -> Result<Self, JsValue> {
         if let Some(base58_str) = value.as_string() {
             base58_str
-                .parse::<solana_hash::Hash>()
+                .parse::<trezoa_hash::Hash>()
                 .map(Into::into)
                 .map_err(|x| JsValue::from(x.to_string()))
         } else if let Some(uint8_array) = value.dyn_ref::<Uint8Array>() {
@@ -38,7 +38,7 @@ impl Hash {
             }
             let mut bytes = [0u8; HASH_BYTES];
             uint8_array.copy_to(&mut bytes);
-            Ok(solana_hash::Hash::new_from_array(bytes).into())
+            Ok(trezoa_hash::Hash::new_from_array(bytes).into())
         } else if let Some(array) = value.dyn_ref::<Array>() {
             if array.length() as usize != HASH_BYTES {
                 return Err(format!(
@@ -62,9 +62,9 @@ impl Hash {
                 }
                 return Err(format!("Invalid array argument: {:?}", x).into());
             }
-            Ok(solana_hash::Hash::new_from_array(bytes).into())
+            Ok(trezoa_hash::Hash::new_from_array(bytes).into())
         } else if value.is_undefined() {
-            Ok(solana_hash::Hash::default().into())
+            Ok(trezoa_hash::Hash::default().into())
         } else {
             Err("Unsupported argument".into())
         }

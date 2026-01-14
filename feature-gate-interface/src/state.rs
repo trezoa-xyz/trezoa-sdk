@@ -1,9 +1,9 @@
 #[cfg(feature = "bincode")]
 use {
-    solana_account::{AccountSharedData, ReadableAccount, WritableAccount},
-    solana_account_info::AccountInfo,
-    solana_program_error::ProgramError,
-    solana_sdk_ids::feature::id,
+    trezoa_account::{AccountSharedData, ReadableAccount, WritableAccount},
+    trezoa_account_info::AccountInfo,
+    trezoa_program_error::ProgramError,
+    trezoa_sdk_ids::feature::id,
 };
 
 #[cfg_attr(
@@ -57,7 +57,7 @@ pub fn create_account(feature: &Feature, lamports: u64) -> AccountSharedData {
 
 #[cfg(test)]
 mod test {
-    use {super::*, solana_pubkey::Pubkey};
+    use {super::*, trezoa_pubkey::Pubkey};
 
     #[test]
     fn test_feature_size_of() {

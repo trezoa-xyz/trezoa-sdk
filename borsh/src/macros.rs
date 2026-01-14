@@ -5,7 +5,7 @@ macro_rules! impl_get_packed_len_v1 {
         /// Get the worst-case packed length for the given BorshSchema
         ///
         /// Note: due to the serializer currently used by Borsh, this function cannot
-        /// be used on-chain in the Solana SBF execution environment.
+        /// be used on-chain in the Trezoa SBF execution environment.
         $(#[$meta])?
         pub fn get_packed_len<S: $borsh::BorshSchema>() -> usize {
             let container = $borsh::schema_container_of::<S>();

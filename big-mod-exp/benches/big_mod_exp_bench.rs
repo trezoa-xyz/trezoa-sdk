@@ -1,7 +1,7 @@
 use {
     criterion::{black_box, criterion_group, criterion_main, Criterion},
     serde::Deserialize,
-    solana_big_mod_exp::big_mod_exp,
+    trezoa_big_mod_exp::big_mod_exp,
 };
 
 #[derive(Deserialize, Debug)]

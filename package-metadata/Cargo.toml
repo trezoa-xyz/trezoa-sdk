@@ -1,7 +1,7 @@
 [package]
-name = "solana-package-metadata"
-description = "Solana Package Metadata"
-documentation = "https://docs.rs/solana-package-metadata"
+name = "trezoa-package-metadata"
+description = "Trezoa Package Metadata"
+documentation = "https://docs.rs/trezoa-package-metadata"
 version = "3.0.0"
 authors = { workspace = true }
 repository = { workspace = true }
@@ -13,5 +13,5 @@ edition = { workspace = true }
 targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
-solana-package-metadata-macro = { workspace = true }
-solana-pubkey = { workspace = true, features = ["std"] }
+trezoa-package-metadata-macro = { workspace = true }
+trezoa-pubkey = { workspace = true, features = ["std"] }

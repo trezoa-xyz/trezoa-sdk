@@ -1,7 +1,7 @@
 [package]
-name = "solana-validator-exit"
-description = "Solana validator exit handling."
-documentation = "https://docs.rs/solana-validator-exit"
+name = "trezoa-validator-exit"
+description = "Trezoa validator exit handling."
+documentation = "https://docs.rs/trezoa-validator-exit"
 version = "3.0.0"
 authors = { workspace = true }
 repository = { workspace = true }

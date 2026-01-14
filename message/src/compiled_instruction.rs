@@ -1,15 +1,15 @@
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
 #[cfg(feature = "frozen-abi")]
-use solana_frozen_abi_macro::AbiExample;
+use trezoa_frozen_abi_macro::AbiExample;
 #[cfg(feature = "wincode")]
 use wincode::{containers, len::ShortU16Len, SchemaRead, SchemaWrite};
-use {solana_address::Address, solana_sanitize::Sanitize};
+use {trezoa_address::Address, trezoa_sanitize::Sanitize};
 
 /// A compact encoding of an instruction.
 ///
 /// A `CompiledInstruction` is a component of a multi-instruction [`Message`],
-/// which is the core of a Solana transaction. It is created during the
+/// which is the core of a Trezoa transaction. It is created during the
 /// construction of `Message`. Most users will not interact with it directly.
 ///
 /// [`Message`]: crate::Message
@@ -25,11 +25,11 @@ pub struct CompiledInstruction {
     /// Index into the transaction keys array indicating the program account that executes this instruction.
     pub program_id_index: u8,
     /// Ordered indices into the transaction keys array indicating which accounts to pass to the program.
-    #[cfg_attr(feature = "serde", serde(with = "solana_short_vec"))]
+    #[cfg_attr(feature = "serde", serde(with = "trezoa_short_vec"))]
     #[cfg_attr(feature = "wincode", wincode(with = "containers::Vec<_, ShortU16Len>"))]
     pub accounts: Vec<u8>,
     /// The program input data.
-    #[cfg_attr(feature = "serde", serde(with = "solana_short_vec"))]
+    #[cfg_attr(feature = "serde", serde(with = "trezoa_short_vec"))]
     #[cfg_attr(feature = "wincode", wincode(with = "containers::Vec<_, ShortU16Len>"))]
     pub data: Vec<u8>,
 }

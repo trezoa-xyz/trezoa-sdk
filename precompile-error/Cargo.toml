@@ -1,7 +1,7 @@
 [package]
-name = "solana-precompile-error"
-description = "Solana PrecompileError type"
-documentation = "https://docs.rs/solana-precompile-error"
+name = "trezoa-precompile-error"
+description = "Trezoa PrecompileError type"
+documentation = "https://docs.rs/trezoa-precompile-error"
 version = "3.0.0"
 rust-version = "1.81.0"
 authors = { workspace = true }

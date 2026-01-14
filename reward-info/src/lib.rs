@@ -3,7 +3,7 @@
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
 #[cfg(feature = "frozen-abi")]
-use solana_frozen_abi_macro::{AbiEnumVisitor, AbiExample};
+use trezoa_frozen_abi_macro::{AbiEnumVisitor, AbiExample};
 use std::fmt;
 
 #[cfg_attr(feature = "frozen-abi", derive(AbiExample, AbiEnumVisitor))]

@@ -5,10 +5,10 @@
 use num_traits::ToPrimitive;
 #[cfg(feature = "frozen-abi")]
 extern crate std;
-use {core::fmt, solana_program_error::ProgramError};
+use {core::fmt, trezoa_program_error::ProgramError};
 pub use {
     instruction_error_module::*,
-    solana_program_error::{
+    trezoa_program_error::{
         ACCOUNT_ALREADY_INITIALIZED, ACCOUNT_BORROW_FAILED, ACCOUNT_DATA_TOO_SMALL,
         ACCOUNT_NOT_RENT_EXEMPT, ARITHMETIC_OVERFLOW, BORSH_IO_ERROR,
         BUILTIN_PROGRAMS_MUST_CONSUME_COMPUTE_UNITS, CUSTOM_ZERO, ILLEGAL_OWNER, IMMUTABLE,
@@ -24,7 +24,7 @@ pub use {
 #[allow(deprecated)]
 mod instruction_error_module {
     #[cfg(feature = "frozen-abi")]
-    use solana_frozen_abi_macro::{AbiEnumVisitor, AbiExample};
+    use trezoa_frozen_abi_macro::{AbiEnumVisitor, AbiExample};
 
     /// Reasons the runtime might have rejected an instruction.
     ///
@@ -121,7 +121,7 @@ mod instruction_error_module {
         DuplicateAccountOutOfSync,
 
         /// Allows on-chain programs to implement program-specific error types and see them returned
-        /// by the Solana runtime. A program-specific error may be any type that is represented as
+        /// by the Trezoa runtime. A program-specific error may be any type that is represented as
         /// or serialized to a u32 integer.
         Custom(u32),
 
@@ -395,7 +395,7 @@ where
             INCORRECT_AUTHORITY => Self::IncorrectAuthority,
             _ => {
                 // A valid custom error has no bits set in the upper 32
-                if error >> solana_program_error::BUILTIN_BIT_SHIFT == 0 {
+                if error >> trezoa_program_error::BUILTIN_BIT_SHIFT == 0 {
                     Self::Custom(error as u32)
                 } else {
                     Self::InvalidError

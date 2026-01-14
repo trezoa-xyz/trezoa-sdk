@@ -1,5 +1,5 @@
 //! A C representation of Rust's `Option`, used across the FFI
-//! boundary for Solana program interfaces.
+//! boundary for Trezoa program interfaces.
 //!
 //! This implementation mostly matches `std::option` except iterators since the iteration
 //! trait requires returning `std::option::Option`
@@ -173,7 +173,7 @@ impl<T> COption<T> {
     /// ```
     ///
     /// ```should_panic
-    /// # use solana_program_option::COption;
+    /// # use trezoa_program_option::COption;
     /// let x: COption<&str> = COption::None;
     /// x.expect("the world is ending"); // panics with `the world is ending`
     /// ```
@@ -206,7 +206,7 @@ impl<T> COption<T> {
     /// ```
     ///
     /// ```should_panic
-    /// # use solana_program_option::COption;
+    /// # use trezoa_program_option::COption;
     /// let x: COption<&str> = COption::None;
     /// assert_eq!(x.unwrap(), "air"); // fails
     /// ```

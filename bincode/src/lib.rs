@@ -3,7 +3,7 @@
 //! [bincode]: https://docs.rs/bincode
 #![cfg_attr(docsrs, feature(doc_cfg))]
 
-use {bincode::config::Options, solana_instruction_error::InstructionError};
+use {bincode::config::Options, trezoa_instruction_error::InstructionError};
 
 /// Deserialize with a limit based the maximum amount of data a program can expect to get.
 /// This function should be used in place of direct deserialization to help prevent OOM errors
@@ -21,7 +21,7 @@ where
 
 #[cfg(test)]
 pub mod tests {
-    use {super::*, solana_system_interface::instruction::SystemInstruction};
+    use {super::*, trezoa_system_interface::instruction::SystemInstruction};
 
     #[test]
     fn test_limited_deserialize_advance_nonce_account() {

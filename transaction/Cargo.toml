@@ -1,7 +1,7 @@
 [package]
-name = "solana-transaction"
-description = "Solana transaction-types"
-documentation = "https://docs.rs/solana-transaction"
+name = "trezoa-transaction"
+description = "Trezoa transaction-types"
+documentation = "https://docs.rs/trezoa-transaction"
 version = "3.0.2"
 authors = { workspace = true }
 repository = { workspace = true }
@@ -17,50 +17,50 @@ rustdoc-args = ["--cfg=docsrs"]
 [features]
 bincode = [
     "dep:bincode",
-    "dep:solana-signer",
+    "dep:trezoa-signer",
     "serde",
-    "solana-message/bincode",
+    "trezoa-message/bincode",
 ]
-blake3 = ["bincode", "solana-message/blake3"]
-dev-context-only-utils = ["blake3", "serde", "verify", "solana-hash/atomic"]
+blake3 = ["bincode", "trezoa-message/blake3"]
+dev-context-only-utils = ["blake3", "serde", "verify", "trezoa-hash/atomic"]
 frozen-abi = [
-    "dep:solana-frozen-abi",
-    "dep:solana-frozen-abi-macro",
-    "solana-transaction-error/frozen-abi",
-    "solana-signature/frozen-abi",
-    "solana-message/frozen-abi",
+    "dep:trezoa-frozen-abi",
+    "dep:trezoa-frozen-abi-macro",
+    "trezoa-transaction-error/frozen-abi",
+    "trezoa-signature/frozen-abi",
+    "trezoa-message/frozen-abi",
 ]
 serde = [
     "dep:serde",
     "dep:serde_derive",
-    "dep:solana-short-vec",
-    "solana-message/serde",
-    "solana-signature/serde",
-    "solana-transaction-error/serde",
-    "solana-short-vec/serde",
+    "dep:trezoa-short-vec",
+    "trezoa-message/serde",
+    "trezoa-signature/serde",
+    "trezoa-transaction-error/serde",
+    "trezoa-short-vec/serde",
 ]
-verify = ["blake3", "solana-signature/verify"]
-wincode = ["dep:wincode", "solana-message/wincode", "solana-signature/wincode"]
+verify = ["blake3", "trezoa-signature/verify"]
+wincode = ["dep:wincode", "trezoa-message/wincode", "trezoa-signature/wincode"]
 
 [dependencies]
 bincode = { workspace = true, optional = true }
 serde = { workspace = true, optional = true }
 serde_derive = { workspace = true, optional = true }
-solana-address = { workspace = true }
-solana-frozen-abi = { workspace = true, optional = true, features = ["frozen-abi"] }
-solana-frozen-abi-macro = { workspace = true, optional = true, features = ["frozen-abi"] }
-solana-hash = { workspace = true }
-solana-instruction = { workspace = true }
-solana-instruction-error = { workspace = true }
-solana-message = { workspace = true }
-solana-sanitize = { workspace = true }
-solana-sdk-ids = { workspace = true }
-solana-short-vec = { workspace = true, optional = true }
-solana-signature = { workspace = true }
-solana-signer = { workspace = true, optional = true }
-solana-transaction-error = { workspace = true }
+trezoa-address = { workspace = true }
+trezoa-frozen-abi = { workspace = true, optional = true, features = ["frozen-abi"] }
+trezoa-frozen-abi-macro = { workspace = true, optional = true, features = ["frozen-abi"] }
+trezoa-hash = { workspace = true }
+trezoa-instruction = { workspace = true }
+trezoa-instruction-error = { workspace = true }
+trezoa-message = { workspace = true }
+trezoa-sanitize = { workspace = true }
+trezoa-sdk-ids = { workspace = true }
+trezoa-short-vec = { workspace = true, optional = true }
+trezoa-signature = { workspace = true }
+trezoa-signer = { workspace = true, optional = true }
+trezoa-transaction-error = { workspace = true }
 wincode = { workspace = true, optional = true, features = [
-    "solana-short-vec",
+    "trezoa-short-vec",
     "alloc",
 ] }
 
@@ -69,19 +69,19 @@ anyhow = { workspace = true }
 bincode = { workspace = true }
 borsh = { workspace = true }
 proptest = { workspace = true }
-solana-example-mocks = { path = "../example-mocks" }
-solana-hash = { workspace = true, features = ["atomic"] }
-solana-instruction = { workspace = true, features = ["borsh"] }
-solana-keypair = { workspace = true }
-solana-nonce = { workspace = true }
-solana-packet = { workspace = true }
-solana-presigner = { workspace = true }
-solana-pubkey = { workspace = true, features = ["rand"] }
-solana-sha256-hasher = { workspace = true }
-solana-system-interface = { workspace = true, features = ["bincode"] }
-solana-transaction = { path = ".", features = [
+trezoa-example-mocks = { path = "../example-mocks" }
+trezoa-hash = { workspace = true, features = ["atomic"] }
+trezoa-instruction = { workspace = true, features = ["borsh"] }
+trezoa-keypair = { workspace = true }
+trezoa-nonce = { workspace = true }
+trezoa-packet = { workspace = true }
+trezoa-presigner = { workspace = true }
+trezoa-pubkey = { workspace = true, features = ["rand"] }
+trezoa-sha256-hasher = { workspace = true }
+trezoa-system-interface = { workspace = true, features = ["bincode"] }
+trezoa-transaction = { path = ".", features = [
     "dev-context-only-utils",
     "wincode",
 ] }
-solana-vote-interface = { workspace = true, features = ["bincode"] }
+trezoa-vote-interface = { workspace = true, features = ["bincode"] }
 static_assertions = { workspace = true }

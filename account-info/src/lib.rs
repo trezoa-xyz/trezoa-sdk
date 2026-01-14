@@ -1,9 +1,9 @@
 //! Account information.
 #![cfg_attr(docsrs, feature(doc_cfg))]
 use {
-    solana_address::Address,
-    solana_program_error::ProgramError,
-    solana_program_memory::sol_memset,
+    trezoa_address::Address,
+    trezoa_program_error::ProgramError,
+    trezoa_program_memory::sol_memset,
     std::{
         cell::{Ref, RefCell, RefMut},
         fmt,
@@ -138,7 +138,7 @@ impl<'a> AccountInfo<'a> {
     /// Resize the account's data: Either truncating or zero extending.
     ///
     /// Note:  Account data can be increased within a single call by up to
-    /// `solana_program::entrypoint::MAX_PERMITTED_DATA_INCREASE` bytes.
+    /// `trezoa_program::entrypoint::MAX_PERMITTED_DATA_INCREASE` bytes.
     ///
     /// # Safety
     ///
@@ -291,10 +291,10 @@ impl<'a, T: Account> IntoAccountInfo<'a> for &'a mut (Address, T) {
 /// # Examples
 ///
 /// ```
-/// use solana_program_error::ProgramResult;
-/// use solana_account_info::{AccountInfo, next_account_info};
-/// use solana_address::Address;
-/// # use solana_program_error::ProgramError;
+/// use trezoa_program_error::ProgramResult;
+/// use trezoa_account_info::{AccountInfo, next_account_info};
+/// use trezoa_address::Address;
+/// # use trezoa_program_error::ProgramError;
 ///
 /// pub fn process_instruction(
 ///     program_id: &Address,
@@ -340,10 +340,10 @@ pub fn next_account_info<'a, 'b, I: Iterator<Item = &'a AccountInfo<'b>>>(
 /// # Examples
 ///
 /// ```
-/// use solana_program_error::ProgramResult;
-/// use solana_account_info::{AccountInfo, next_account_info, next_account_infos};
-/// use solana_address::Address;
-/// # use solana_program_error::ProgramError;
+/// use trezoa_program_error::ProgramResult;
+/// use trezoa_account_info::{AccountInfo, next_account_info, next_account_infos};
+/// use trezoa_address::Address;
+/// # use trezoa_program_error::ProgramError;
 ///
 /// pub fn process_instruction(
 ///     program_id: &Address,

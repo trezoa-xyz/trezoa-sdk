@@ -7,21 +7,21 @@
 //! [`LastRestartSlot`] implements [`Sysvar::get`] and can be loaded efficiently without
 //! passing the sysvar account ID to the program.
 //!
-//! See also the Solana [SIMD proposal][simd].
+//! See also the Trezoa [SIMD proposal][simd].
 //!
-//! [simd]: https://github.com/solana-foundation/solana-improvement-documents/blob/main/proposals/0047-syscall-and-sysvar-for-last-restart-slot.md
+//! [simd]: https://github.com/trezoa-foundation/trezoa-improvement-documents/blob/main/proposals/0047-syscall-and-sysvar-for-last-restart-slot.md
 //!
 //! # Examples
 //!
 //! Accessing via on-chain program directly:
 //!
 //! ```no_run
-//! # use solana_account_info::AccountInfo;
-//! # use solana_msg::msg;
-//! # use solana_sysvar::Sysvar;
-//! # use solana_program_error::ProgramResult;
-//! # use solana_pubkey::Pubkey;
-//! # use solana_last_restart_slot::LastRestartSlot;
+//! # use trezoa_account_info::AccountInfo;
+//! # use trezoa_msg::msg;
+//! # use trezoa_sysvar::Sysvar;
+//! # use trezoa_program_error::ProgramResult;
+//! # use trezoa_pubkey::Pubkey;
+//! # use trezoa_last_restart_slot::LastRestartSlot;
 //!
 //! fn process_instruction(
 //!     program_id: &Pubkey,
@@ -40,8 +40,8 @@
 use crate::SysvarSerialize;
 use crate::{impl_sysvar_get, Sysvar};
 pub use {
-    solana_last_restart_slot::LastRestartSlot,
-    solana_sdk_ids::sysvar::last_restart_slot::{check_id, id, ID},
+    trezoa_last_restart_slot::LastRestartSlot,
+    trezoa_sdk_ids::sysvar::last_restart_slot::{check_id, id, ID},
 };
 
 impl Sysvar for LastRestartSlot {

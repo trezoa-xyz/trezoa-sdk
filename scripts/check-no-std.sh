@@ -8,35 +8,35 @@ src_root="$(readlink -f "${here}/..")"
 cd "${src_root}"
 
 no_std_crates=(
-  -p solana-address
-  -p solana-account-view
-  -p solana-blake3-hasher
-  -p solana-clock
-  -p solana-cluster-type
-  -p solana-commitment-config
-  -p solana-define-syscall
-  -p solana-epoch-info
-  -p solana-epoch-rewards
-  -p solana-epoch-schedule
-  -p solana-epoch-stake
-  -p solana-fee-calculator
-  -p solana-hash
-  -p solana-instruction-view
-  -p solana-keccak-hasher
-  -p solana-msg
-  -p solana-program-error
-  -p solana-program-log
-  -p solana-program-log-macro
-  -p solana-program-memory
-  -p solana-program-pack
-  -p solana-pubkey
-  -p solana-rent
-  -p solana-sanitize
-  -p solana-sdk-ids
-  -p solana-sha256-hasher
-  -p solana-signature
-  -p solana-sysvar-id
-  -p solana-system-interface
+  -p trezoa-address
+  -p trezoa-account-view
+  -p trezoa-blake3-hasher
+  -p trezoa-clock
+  -p trezoa-cluster-type
+  -p trezoa-commitment-config
+  -p trezoa-define-syscall
+  -p trezoa-epoch-info
+  -p trezoa-epoch-rewards
+  -p trezoa-epoch-schedule
+  -p trezoa-epoch-stake
+  -p trezoa-fee-calculator
+  -p trezoa-hash
+  -p trezoa-instruction-view
+  -p trezoa-keccak-hasher
+  -p trezoa-msg
+  -p trezoa-program-error
+  -p trezoa-program-log
+  -p trezoa-program-log-macro
+  -p trezoa-program-memory
+  -p trezoa-program-pack
+  -p trezoa-pubkey
+  -p trezoa-rent
+  -p trezoa-sanitize
+  -p trezoa-sdk-ids
+  -p trezoa-sha256-hasher
+  -p trezoa-signature
+  -p trezoa-sysvar-id
+  -p trezoa-system-interface
 )
 # Use the upstream BPF target, which doesn't support std, to make sure that our
 # no_std support really works.

@@ -1,4 +1,4 @@
-//! solana-program Javascript interface
+//! trezoa-program Javascript interface
 #![cfg_attr(docsrs, feature(doc_cfg))]
 #![cfg(target_arch = "wasm32")]
 
@@ -16,7 +16,7 @@ pub mod transaction;
 
 /// Initialize Javascript logging and panic handler
 #[wasm_bindgen]
-pub fn solana_program_init() {
+pub fn trezoa_program_init() {
     use std::sync::Once;
     static INIT: Once = Once::new();
 

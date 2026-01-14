@@ -19,11 +19,11 @@
 //! - Performing secp256k1 public key recovery generally.
 //! - Verifying a single secp256k1 signature.
 //!
-//! While `secp256k1_recover` can be used to verify secp256k1 signatures, Solana
+//! While `secp256k1_recover` can be used to verify secp256k1 signatures, Trezoa
 //! also provides the [secp256k1 program][sp], which is more flexible, has lower CPU
 //! cost, and can validate many signatures at once.
 //!
-//! [sp]: https://docs.rs/solana-program/latest/solana_program/secp256k1_program/
+//! [sp]: https://docs.rs/trezoa-program/latest/trezoa_program/secp256k1_program/
 //! [`ecrecover`]: https://docs.soliditylang.org/en/v0.8.14/units-and-global-variables.html?highlight=ecrecover#mathematical-and-cryptographic-functions
 
 #[cfg(feature = "borsh")]
@@ -65,7 +65,7 @@ pub const SECP256K1_SIGNATURE_LENGTH: usize = 64;
 pub const SECP256K1_PUBLIC_KEY_LENGTH: usize = 64;
 
 #[repr(transparent)]
-#[cfg_attr(feature = "frozen-abi", derive(solana_frozen_abi_macro::AbiExample))]
+#[cfg_attr(feature = "frozen-abi", derive(trezoa_frozen_abi_macro::AbiExample))]
 #[cfg_attr(
     feature = "borsh",
     derive(BorshSerialize, BorshDeserialize, BorshSchema),
@@ -87,8 +87,8 @@ impl Secp256k1Pubkey {
     }
 }
 
-#[cfg(any(target_os = "solana", target_arch = "bpf"))]
-pub use solana_define_syscall::definitions::sol_secp256k1_recover;
+#[cfg(any(target_os = "trezoa", target_arch = "bpf"))]
+pub use trezoa_define_syscall::definitions::sol_secp256k1_recover;
 
 /// Recover the public key from a [secp256k1] ECDSA signature and
 /// cryptographically-hashed message.
@@ -115,7 +115,7 @@ pub use solana_define_syscall::definitions::sol_secp256k1_recover;
 /// "overflowing" signature, and this function returns an error when parsing
 /// overflowing signatures.
 ///
-/// [`keccak`]: https://docs.rs/solana-program/latest/solana_program/keccak/
+/// [`keccak`]: https://docs.rs/trezoa-program/latest/trezoa_program/keccak/
 /// [`wrapping_sub`]: https://doc.rust-lang.org/std/primitive.u8.html#method.wrapping_sub
 ///
 /// On success this function returns a [`Secp256k1Pubkey`], a wrapper around a
@@ -124,11 +124,11 @@ pub use solana_define_syscall::definitions::sol_secp256k1_recover;
 /// `signature`.
 ///
 /// While `secp256k1_recover` can be used to verify secp256k1 signatures by
-/// comparing the recovered key against an expected key, Solana also provides
+/// comparing the recovered key against an expected key, Trezoa also provides
 /// the [secp256k1 program][sp], which is more flexible, has lower CPU cost, and
 /// can validate many signatures at once.
 ///
-/// [sp]: https://docs.rs/solana-program/latest/solana_program/secp256k1_program/
+/// [sp]: https://docs.rs/trezoa-program/latest/trezoa_program/secp256k1_program/
 ///
 /// The `secp256k1_recover` syscall is implemented with the [`libsecp256k1`]
 /// crate, but clients may want to use [`k256`] for an up-to-date pure Rust
@@ -157,9 +157,9 @@ pub use solana_define_syscall::definitions::sol_secp256k1_recover;
 /// a unique representation this can be the source of bugs, potentially with
 /// security implications.
 ///
-/// **The solana `secp256k1_recover` function does not prevent signature
+/// **The trezoa `secp256k1_recover` function does not prevent signature
 /// malleability**. This is in contrast to the Bitcoin secp256k1 library, which
-/// does prevent malleability by default. Solana accepts signatures with `S`
+/// does prevent malleability by default. Trezoa accepts signatures with `S`
 /// values that are either in the _high order_ or in the _low order_, and it
 /// is trivial to produce one from the other.
 ///
@@ -170,7 +170,7 @@ pub use solana_define_syscall::definitions::sol_secp256k1_recover;
 ///
 /// ```rust
 /// # use k256::elliptic_curve::scalar::IsHigh;
-/// # use solana_program::program_error::ProgramError;
+/// # use trezoa_program::program_error::ProgramError;
 /// # let signature_bytes = [
 /// #     0x83, 0x55, 0x81, 0xDF, 0xB1, 0x02, 0xA7, 0xD2,
 /// #     0x2D, 0x33, 0xA4, 0x07, 0xDD, 0x7E, 0xFA, 0x9A,
@@ -238,7 +238,7 @@ pub use solana_define_syscall::definitions::sol_secp256k1_recover;
 /// # Examples
 ///
 /// This example demonstrates recovering a public key and using it to verify a
-/// signature with the `secp256k1_recover` syscall. It has three parts: a Solana
+/// signature with the `secp256k1_recover` syscall. It has three parts: a Trezoa
 /// program, an RPC client to call the program, and common definitions shared
 /// between the two.
 ///
@@ -256,17 +256,17 @@ pub use solana_define_syscall::definitions::sol_secp256k1_recover;
 /// }
 /// ```
 ///
-/// The Solana program. Note that it uses `k256` version 0.13.0 to parse
+/// The Trezoa program. Note that it uses `k256` version 0.13.0 to parse
 /// the secp256k1 signature to prevent malleability.
 ///
 /// ```rust
 /// use k256::elliptic_curve::scalar::IsHigh;
-/// use solana_program::{
+/// use trezoa_program::{
 ///     entrypoint::ProgramResult,
 ///     keccak, msg,
 ///     program_error::ProgramError,
 /// };
-/// use solana_secp256k1_recover::secp256k1_recover;
+/// use trezoa_secp256k1_recover::secp256k1_recover;
 ///
 /// # pub struct DemoSecp256k1RecoverInstruction {
 /// #     pub message: Vec<u8>,
@@ -291,7 +291,7 @@ pub use solana_define_syscall::definitions::sol_secp256k1_recover;
 ///     };
 ///
 ///     // Reject high-s value signatures to prevent malleability.
-///     // Solana does not do this itself.
+///     // Trezoa does not do this itself.
 ///     // This may or may not be necessary depending on use case.
 ///     {
 ///         let signature = k256::ecdsa::Signature::from_slice(&instruction.signature)
@@ -341,11 +341,11 @@ pub use solana_define_syscall::definitions::sol_secp256k1_recover;
 /// The RPC client program:
 ///
 /// ```rust
-/// # use solana_program::example_mocks::solana_rpc_client;
-/// # use solana_program::example_mocks::solana_sdk;
+/// # use trezoa_program::example_mocks::trezoa_rpc_client;
+/// # use trezoa_program::example_mocks::trezoa_sdk;
 /// use anyhow::Result;
-/// use solana_rpc_client::rpc_client::RpcClient;
-/// use solana_sdk::{
+/// use trezoa_rpc_client::rpc_client::RpcClient;
+/// use trezoa_sdk::{
 ///     instruction::Instruction,
 ///     keccak,
 ///     pubkey::Pubkey,
@@ -402,13 +402,13 @@ pub use solana_define_syscall::definitions::sol_secp256k1_recover;
 ///     Ok(())
 /// }
 /// ```
-#[cfg_attr(any(target_os = "solana", target_arch = "bpf"), inline(always))]
+#[cfg_attr(any(target_os = "trezoa", target_arch = "bpf"), inline(always))]
 pub fn secp256k1_recover(
     hash: &[u8],
     recovery_id: u8,
     signature: &[u8],
 ) -> Result<Secp256k1Pubkey, Secp256k1RecoverError> {
-    #[cfg(any(target_os = "solana", target_arch = "bpf"))]
+    #[cfg(any(target_os = "trezoa", target_arch = "bpf"))]
     {
         let mut pubkey_buffer =
             core::mem::MaybeUninit::<[u8; SECP256K1_PUBLIC_KEY_LENGTH]>::uninit();
@@ -429,7 +429,7 @@ pub fn secp256k1_recover(
         }
     }
 
-    #[cfg(not(any(target_os = "solana", target_arch = "bpf")))]
+    #[cfg(not(any(target_os = "trezoa", target_arch = "bpf")))]
     {
         const HASH_SIZE: usize = 32;
         if hash.len() != HASH_SIZE {

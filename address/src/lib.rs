@@ -1,4 +1,4 @@
-//! Address representation for Solana.
+//! Address representation for Trezoa.
 //!
 //! An address is a sequence of 32 bytes, often shown as a base58 encoded string
 //! (e.g. 14grJpemFaf88c8tiVb77W7TYg2W3ir6pfkKz3YjhhZ5).
@@ -19,7 +19,7 @@ pub mod syscalls;
 use crate::error::AddressError;
 #[cfg(feature = "decode")]
 use crate::error::ParseAddressError;
-#[cfg(all(feature = "rand", not(any(target_os = "solana", target_arch = "bpf"))))]
+#[cfg(all(feature = "rand", not(any(target_os = "trezoa", target_arch = "bpf"))))]
 pub use crate::hasher::{AddressHasher, AddressHasherBuilder};
 
 #[cfg(feature = "alloc")]
@@ -67,22 +67,22 @@ pub static PDA_MARKER: &[u8; 21] = b"ProgramDerivedAddress";
 #[cfg(not(target_arch = "bpf"))]
 pub const PDA_MARKER: &[u8; 21] = b"ProgramDerivedAddress";
 
-/// The address of a [Solana account][acc].
+/// The address of a [Trezoa account][acc].
 ///
 /// Some account addresses are [ed25519] public keys, with corresponding secret
 /// keys that are managed off-chain. Often, though, account addresses do not
 /// have corresponding secret keys &mdash; as with [_program derived
 /// addresses_][pdas] &mdash; or the secret key is not relevant to the operation
-/// of a program, and may have even been disposed of. As running Solana programs
+/// of a program, and may have even been disposed of. As running Trezoa programs
 /// can not safely create or manage secret keys, the full [`Keypair`] is not
-/// defined in `solana-program` but in `solana-sdk`.
+/// defined in `trezoa-program` but in `trezoa-sdk`.
 ///
-/// [acc]: https://solana.com/docs/core/accounts
+/// [acc]: https://trezoa.com/docs/core/accounts
 /// [ed25519]: https://ed25519.cr.yp.to/
-/// [pdas]: https://solana.com/docs/core/cpi#program-derived-addresses
-/// [`Keypair`]: https://docs.rs/solana-sdk/latest/solana_sdk/signer/keypair/struct.Keypair.html
+/// [pdas]: https://trezoa.com/docs/core/cpi#program-derived-addresses
+/// [`Keypair`]: https://docs.rs/trezoa-sdk/latest/trezoa_sdk/signer/keypair/struct.Keypair.html
 #[repr(transparent)]
-#[cfg_attr(feature = "frozen-abi", derive(solana_frozen_abi_macro::AbiExample))]
+#[cfg_attr(feature = "frozen-abi", derive(trezoa_frozen_abi_macro::AbiExample))]
 #[cfg_attr(
     feature = "borsh",
     derive(BorshSerialize, BorshDeserialize),
@@ -99,7 +99,7 @@ pub const PDA_MARKER: &[u8; 21] = b"ProgramDerivedAddress";
 pub struct Address(pub(crate) [u8; 32]);
 
 #[cfg(feature = "sanitize")]
-impl solana_sanitize::Sanitize for Address {}
+impl trezoa_sanitize::Sanitize for Address {}
 
 #[cfg(feature = "decode")]
 impl FromStr for Address {
@@ -172,13 +172,13 @@ impl TryFrom<&str> for Address {
     }
 }
 
-// If target_os = "solana" or target_arch = "bpf", then this panics so there
+// If target_os = "trezoa" or target_arch = "bpf", then this panics so there
 // are no dependencies; otherwise this should be opt-in so users don't need the
 // curve25519 dependency.
-#[cfg(any(target_os = "solana", target_arch = "bpf", feature = "curve25519"))]
+#[cfg(any(target_os = "trezoa", target_arch = "bpf", feature = "curve25519"))]
 #[allow(clippy::used_underscore_binding)]
 pub fn bytes_are_curve_point<T: AsRef<[u8]>>(_bytes: T) -> bool {
-    #[cfg(not(any(target_os = "solana", target_arch = "bpf")))]
+    #[cfg(not(any(target_os = "trezoa", target_arch = "bpf")))]
     {
         let Ok(compressed_edwards_y) =
             curve25519_dalek::edwards::CompressedEdwardsY::from_slice(_bytes.as_ref())
@@ -187,7 +187,7 @@ pub fn bytes_are_curve_point<T: AsRef<[u8]>>(_bytes: T) -> bool {
         };
         compressed_edwards_y.decompress().is_some()
     }
-    #[cfg(any(target_os = "solana", target_arch = "bpf"))]
+    #[cfg(any(target_os = "trezoa", target_arch = "bpf"))]
     unimplemented!();
 }
 
@@ -206,7 +206,7 @@ impl Address {
     #[cfg(feature = "atomic")]
     /// Create an unique `Address` for tests and benchmarks.
     pub fn new_unique() -> Self {
-        use solana_atomic_u64::AtomicU64;
+        use trezoa_atomic_u64::AtomicU64;
         static I: AtomicU64 = AtomicU64::new(1);
         type T = u32;
         const COUNTER_BYTES: usize = core::mem::size_of::<T>();
@@ -240,8 +240,8 @@ impl Address {
         Self::from(b)
     }
 
-    // If target_os = "solana" or target_arch = "bpf", then the
-    // `solana_sha256_hasher` crate will use syscalls which bring no
+    // If target_os = "trezoa" or target_arch = "bpf", then the
+    // `trezoa_sha256_hasher` crate will use syscalls which bring no
     // dependencies; otherwise, this should be opt-in so users don't
     // need the sha2 dependency.
     #[cfg(feature = "sha2")]
@@ -261,7 +261,7 @@ impl Address {
                 return Err(AddressError::IllegalOwner);
             }
         }
-        let hash = solana_sha256_hasher::hashv(&[base.as_ref(), seed.as_ref(), owner]);
+        let hash = trezoa_sha256_hasher::hashv(&[base.as_ref(), seed.as_ref(), owner]);
         Ok(Address::from(hash.to_bytes()))
     }
 
@@ -275,16 +275,16 @@ impl Address {
         &self.0
     }
 
-    // If target_os = "solana" or target_arch = "bpf", then this panics so there
+    // If target_os = "trezoa" or target_arch = "bpf", then this panics so there
     // are no dependencies; otherwise, this should be opt-in so users don't need
     // the curve25519 dependency.
-    #[cfg(any(target_os = "solana", target_arch = "bpf", feature = "curve25519"))]
+    #[cfg(any(target_os = "trezoa", target_arch = "bpf", feature = "curve25519"))]
     pub fn is_on_curve(&self) -> bool {
         bytes_are_curve_point(self)
     }
 
     /// Log an `Address` value.
-    #[cfg(all(not(any(target_os = "solana", target_arch = "bpf")), feature = "std"))]
+    #[cfg(all(not(any(target_os = "trezoa", target_arch = "bpf")), feature = "std"))]
     pub fn log(&self) {
         std::println!("{}", std::string::ToString::to_string(&self));
     }
@@ -333,7 +333,7 @@ impl core::fmt::Display for Address {
 /// This isn't the implementation for the `PartialEq` trait because we can't do
 /// structural equality with a trait implementation.
 ///
-/// [Issue #345](https://github.com/anza-xyz/solana-sdk/issues/345) contains
+/// [Issue #345](https://github.com/trezoa-xyz/trezoa-sdk/issues/345) contains
 /// more information about the problem.
 #[inline(always)]
 pub fn address_eq(a1: &Address, a2: &Address) -> bool {
@@ -357,7 +357,7 @@ pub fn address_eq(a1: &Address, a2: &Address) -> bool {
 ///
 /// ```
 /// use std::str::FromStr;
-/// use solana_address::{address, Address};
+/// use trezoa_address::{address, Address};
 ///
 /// static ID: Address = address!("My11111111111111111111111111111111111111111");
 ///
@@ -381,10 +381,10 @@ macro_rules! address {
 /// # // wrapper is used so that the macro invocation occurs in the item position
 /// # // rather than in the statement position which isn't allowed.
 /// use std::str::FromStr;
-/// use solana_address::{declare_id, Address};
+/// use trezoa_address::{declare_id, Address};
 ///
 /// # mod item_wrapper {
-/// #   use solana_address::declare_id;
+/// #   use trezoa_address::declare_id;
 /// declare_id!("My11111111111111111111111111111111111111111");
 /// # }
 /// # use item_wrapper::id;

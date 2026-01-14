@@ -1,7 +1,7 @@
 [package]
-name = "solana-sdk"
-description = "Solana SDK"
-documentation = "https://docs.rs/solana-sdk"
+name = "trezoa-sdk"
+description = "Trezoa SDK"
+documentation = "https://docs.rs/trezoa-sdk"
 readme = "README.md"
 version = "3.0.0"
 authors = { workspace = true }
@@ -25,86 +25,86 @@ default = [
     "full",  # functionality that is not compatible or needed for on-chain programs
 ]
 full = [
-    "solana-signature",
-    "solana-pubkey/rand",
-    "dep:solana-keypair",
-    "dep:solana-offchain-message",
-    "dep:solana-presigner",
-    "dep:solana-seed-derivable",
-    "dep:solana-seed-phrase",
-    "dep:solana-shred-version",
-    "dep:solana-signer",
-    "dep:solana-transaction",
-    "dep:solana-transaction-error",
+    "trezoa-signature",
+    "trezoa-pubkey/rand",
+    "dep:trezoa-keypair",
+    "dep:trezoa-offchain-message",
+    "dep:trezoa-presigner",
+    "dep:trezoa-seed-derivable",
+    "dep:trezoa-seed-phrase",
+    "dep:trezoa-shred-version",
+    "dep:trezoa-signer",
+    "dep:trezoa-transaction",
+    "dep:trezoa-transaction-error",
 ]
-borsh = ["solana-program/borsh"]
+borsh = ["trezoa-program/borsh"]
 dev-context-only-utils = [
-    "solana-account/dev-context-only-utils",
-    "solana-program/dev-context-only-utils",
-    "solana-transaction/dev-context-only-utils",
+    "trezoa-account/dev-context-only-utils",
+    "trezoa-program/dev-context-only-utils",
+    "trezoa-transaction/dev-context-only-utils",
 ]
 frozen-abi = [
-    "solana-fee-structure/frozen-abi",
-    "solana-account/frozen-abi",
-    "solana-inflation/frozen-abi",
-    "solana-program/frozen-abi",
-    "solana-short-vec/frozen-abi",
-    "solana-signature/frozen-abi",
-    "solana-transaction/frozen-abi",
-    "solana-transaction-error/frozen-abi",
+    "trezoa-fee-structure/frozen-abi",
+    "trezoa-account/frozen-abi",
+    "trezoa-inflation/frozen-abi",
+    "trezoa-program/frozen-abi",
+    "trezoa-short-vec/frozen-abi",
+    "trezoa-signature/frozen-abi",
+    "trezoa-transaction/frozen-abi",
+    "trezoa-transaction-error/frozen-abi",
 ]
 
 [dependencies]
 bincode = { workspace = true }
 bs58 = { workspace = true }
 serde = { workspace = true }
-solana-account = { workspace = true, features = ["bincode"] }
-solana-epoch-info = { workspace = true, features = ["serde"] }
-solana-epoch-rewards-hasher = { workspace = true }
-solana-fee-structure = { workspace = true, features = ["serde"] }
-solana-inflation = { workspace = true, features = ["serde"] }
-solana-keypair = { workspace = true, optional = true, features = [
+trezoa-account = { workspace = true, features = ["bincode"] }
+trezoa-epoch-info = { workspace = true, features = ["serde"] }
+trezoa-epoch-rewards-hasher = { workspace = true }
+trezoa-fee-structure = { workspace = true, features = ["serde"] }
+trezoa-inflation = { workspace = true, features = ["serde"] }
+trezoa-keypair = { workspace = true, optional = true, features = [
     "seed-derivable",
 ] }
-solana-message = { workspace = true, features = ["serde"] }
-solana-offchain-message = { workspace = true, optional = true, features = ["verify"] }
-solana-presigner = { workspace = true, optional = true }
-solana-program = { workspace = true }
-solana-program-memory = { workspace = true }
-solana-pubkey = { workspace = true, default-features = false, features = [
+trezoa-message = { workspace = true, features = ["serde"] }
+trezoa-offchain-message = { workspace = true, optional = true, features = ["verify"] }
+trezoa-presigner = { workspace = true, optional = true }
+trezoa-program = { workspace = true }
+trezoa-program-memory = { workspace = true }
+trezoa-pubkey = { workspace = true, default-features = false, features = [
     "std",
 ] }
-solana-sanitize = { workspace = true }
-solana-sdk-ids = { workspace = true }
-solana-sdk-macro = { workspace = true }
-solana-seed-derivable = { workspace = true, optional = true }
-solana-seed-phrase = { workspace = true, optional = true }
-solana-serde = { workspace = true }
-solana-serde-varint = { workspace = true }
-solana-short-vec = { workspace = true }
-solana-shred-version = { workspace = true, optional = true }
-solana-signature = { workspace = true, features = [
+trezoa-sanitize = { workspace = true }
+trezoa-sdk-ids = { workspace = true }
+trezoa-sdk-macro = { workspace = true }
+trezoa-seed-derivable = { workspace = true, optional = true }
+trezoa-seed-phrase = { workspace = true, optional = true }
+trezoa-serde = { workspace = true }
+trezoa-serde-varint = { workspace = true }
+trezoa-short-vec = { workspace = true }
+trezoa-shred-version = { workspace = true, optional = true }
+trezoa-signature = { workspace = true, features = [
     "rand",
     "serde",
     "std",
     "verify",
 ], optional = true }
-solana-signer = { workspace = true, optional = true }
-solana-time-utils = { workspace = true }
-solana-transaction = { workspace = true, features = [
+trezoa-signer = { workspace = true, optional = true }
+trezoa-time-utils = { workspace = true }
+trezoa-transaction = { workspace = true, features = [
     "blake3",
     "serde",
     "verify"
 ], optional = true }
-solana-transaction-error = { workspace = true, features = [
+trezoa-transaction-error = { workspace = true, features = [
     "serde",
 ], optional = true }
 thiserror = { workspace = true }
 
 [dev-dependencies]
-solana-instructions-sysvar = { workspace = true, features = ["dev-context-only-utils"] }
-solana-program = { workspace = true, features = ["dev-context-only-utils"] }
-solana-sdk = { path = ".", features = ["dev-context-only-utils"] }
+trezoa-instructions-sysvar = { workspace = true, features = ["dev-context-only-utils"] }
+trezoa-program = { workspace = true, features = ["dev-context-only-utils"] }
+trezoa-sdk = { path = ".", features = ["dev-context-only-utils"] }
 
 [lints]
 workspace = true

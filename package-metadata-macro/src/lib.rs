@@ -29,7 +29,7 @@ use {
 ///
 /// You can fetch the copyright with the following:
 /// ```ignore
-/// use solana_sdk_macro::package_metadata;
+/// use trezoa_sdk_macro::package_metadata;
 ///
 /// pub fn main() {
 ///     let copyright = package_metadata!("copyright");
@@ -166,13 +166,13 @@ mod tests {
         let program_id = "11111111111111111111111111111111";
         let manifest = toml::from_str(&format!(
             r#"
-            [package.metadata.solana]
+            [package.metadata.trezoa]
             program-id = "{program_id}"
         "#
         ))
         .unwrap();
         assert_eq!(
-            package_metadata_value(&manifest, "solana.program-id")
+            package_metadata_value(&manifest, "trezoa.program-id")
                 .as_str()
                 .unwrap(),
             program_id

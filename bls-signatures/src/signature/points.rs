@@ -1,13 +1,13 @@
-#[cfg(all(not(target_os = "solana"), feature = "std"))]
+#[cfg(all(not(target_os = "trezoa"), feature = "std"))]
 use crate::pubkey::points::NEG_G1_GENERATOR_AFFINE;
 #[cfg(all(
-    not(target_os = "solana"),
+    not(target_os = "trezoa"),
     any(feature = "parallel", not(feature = "std"))
 ))]
 use blstrs::G1Affine;
 #[cfg(not(feature = "std"))]
 use blstrs::G1Projective;
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 use {
     crate::{
         error::BlsError,
@@ -19,18 +19,18 @@ use {
     group::Group,
     pairing::{MillerLoopResult, MultiMillerLoop},
 };
-#[cfg(all(feature = "parallel", not(target_os = "solana")))]
+#[cfg(all(feature = "parallel", not(target_os = "trezoa")))]
 use {alloc::vec::Vec, rayon::prelude::*};
 
 /// A trait for types that can be converted into a `SignatureProjective`.
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 pub trait AsSignatureProjective {
     /// Attempt to convert the type into a `SignatureProjective`.
     fn try_as_projective(&self) -> Result<SignatureProjective, BlsError>;
 }
 
 /// A trait that provides verification methods to any convertible signature type.
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 pub trait VerifiableSignature: AsSignatureAffine + Sized {
     /// Verify the signature against any convertible public key type and a message.
     fn verify<P: VerifiablePubkey>(&self, pubkey: &P, message: &[u8]) -> Result<(), BlsError> {
@@ -39,11 +39,11 @@ pub trait VerifiableSignature: AsSignatureAffine + Sized {
 }
 
 /// A BLS signature in a projective point representation.
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 pub struct SignatureProjective(pub(crate) G2Projective);
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 impl SignatureProjective {
     /// Creates the identity element, which is the starting point for aggregation
     ///
@@ -327,32 +327,32 @@ impl SignatureProjective {
     }
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 impl<T: AsSignatureAffine> VerifiableSignature for T {}
 
 /// A trait for types that can be converted into a `SignatureAffine`.
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 pub trait AsSignatureAffine {
     /// Attempt to convert the type into a `SignatureAffine`.
     fn try_as_affine(&self) -> Result<SignatureAffine, BlsError>;
 }
 
 /// A BLS signature in an affine point representation.
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
 #[repr(transparent)]
 pub struct SignatureAffine(pub(crate) G2Affine);
 
 /// A trait for types that can be efficiently added to a `SignatureProjective` accumulator.
 /// This enables Mixed Addition (Projective += Affine) optimization.
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 pub trait AddToSignatureProjective {
     /// Adds itself to the accumulator
     fn add_to_accumulator(&self, acc: &mut SignatureProjective) -> Result<(), BlsError>;
 }
 
 // Fallback for trait objects to support `dyn` types
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 impl AddToSignatureProjective for dyn AsSignatureProjective {
     #[allow(clippy::arithmetic_side_effects)]
     fn add_to_accumulator(&self, acc: &mut SignatureProjective) -> Result<(), BlsError> {
@@ -362,28 +362,28 @@ impl AddToSignatureProjective for dyn AsSignatureProjective {
     }
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 impl_add_to_accumulator!(
     AddToSignatureProjective,
     SignatureProjective,
     SignatureAffine,
     affine
 );
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 impl_add_to_accumulator!(
     AddToSignatureProjective,
     SignatureProjective,
     SignatureProjective,
     projective
 );
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 impl_add_to_accumulator!(
     AddToSignatureProjective,
     SignatureProjective,
     Signature,
     convert
 );
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 impl_add_to_accumulator!(
     AddToSignatureProjective,
     SignatureProjective,

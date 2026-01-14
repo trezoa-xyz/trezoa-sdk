@@ -10,14 +10,14 @@
 //! a functioning authority. For more information refer to the
 //! [`instruction`] module.
 //!
-//! The `solana program deploy` CLI command uses the
-//! upgradeable BPF loader. Calling `solana program deploy --final` deploys a
+//! The `trezoa program deploy` CLI command uses the
+//! upgradeable BPF loader. Calling `trezoa program deploy --final` deploys a
 //! program that cannot be upgraded, but it does so by revoking the authority to
 //! upgrade, not by using the non-upgradeable loader.
 //!
 //! [`instruction`]: crate::instruction
 
-use solana_pubkey::Pubkey;
+use trezoa_pubkey::Pubkey;
 
 pub mod instruction;
 pub mod state;
@@ -26,7 +26,7 @@ pub mod state;
 pub fn get_program_data_address(program_address: &Pubkey) -> Pubkey {
     Pubkey::find_program_address(
         &[program_address.as_ref()],
-        &solana_sdk_ids::bpf_loader_upgradeable::id(),
+        &trezoa_sdk_ids::bpf_loader_upgradeable::id(),
     )
     .0
 }

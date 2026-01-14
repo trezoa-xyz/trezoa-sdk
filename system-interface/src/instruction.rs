@@ -4,7 +4,7 @@
 //! accounts][na]. It is responsible for transferring lamports from accounts
 //! owned by the system program, including typical user wallet accounts.
 //!
-//! [na]: https://docs.solanalabs.com/implemented-proposals/durable-tx-nonces
+//! [na]: https://docs.trezoalabs.com/implemented-proposals/durable-tx-nonces
 //!
 //! Account creation typically involves three steps: [`allocate`] space,
 //! [`transfer`] lamports for rent, [`assign`] to its owning program. The
@@ -12,21 +12,21 @@
 //! contain enough lamports to be [rent exempt], or else the creation
 //! instruction will fail.
 //!
-//! [rent exempt]: https://solana.com/docs/core/accounts#rent-exemption
+//! [rent exempt]: https://trezoa.com/docs/core/accounts#rent-exemption
 //!
 //! The [`create_account`] function requires that the account have zero
 //! lamports. [`create_account_allow_prefund`] allows for the account to have
 //! lamports prefunded; note that without feature activation of [SIMD-0312],
 //! [`create_account_allow_prefund`] will fail downstream.
 //!
-//! [SIMD-0312]: https://github.com/solana-foundation/solana-improvement-documents/pull/312
+//! [SIMD-0312]: https://github.com/trezoa-foundation/trezoa-improvement-documents/pull/312
 //!
 //! The accounts created by the System program can either be user-controlled,
 //! where the secret keys are held outside the blockchain,
 //! or they can be [program derived addresses][pda],
 //! where write access to accounts is granted by an owning program.
 //!
-//! [pda]: https://docs.rs/solana-address/latest/solana_address/struct.Address.html#method.find_program_address
+//! [pda]: https://docs.rs/trezoa-address/latest/trezoa_address/struct.Address.html#method.find_program_address
 //!
 //! Most of the functions in this module construct an [`Instruction`], that must
 //! be submitted to the runtime for execution, either via RPC, typically with
@@ -38,27 +38,27 @@
 //! for the [`SystemInstruction`] variants for each System program instruction,
 //! and these variants are linked from the documentation for their constructors.
 //!
-//! [`RpcClient`]: https://docs.rs/solana-client/latest/solana_client/rpc_client/struct.RpcClient.html
-//! [cpi]: https://docs.rs/solana-cpi/latest/solana_cpi/index.html
-//! [`invoke`]: https://docs.rs/solana-cpi/latest/solana_cpi/fn.invoke.html
-//! [`invoke_signed`]: https://docs.rs/solana-cpi/latest/solana_cpi/fn.invoke_signed.html
-//! [`AccountInfo`]: https://docs.rs/solana-account-info/latest/solana_account_info/struct.AccountInfo.html
+//! [`RpcClient`]: https://docs.rs/trezoa-client/latest/trezoa_client/rpc_client/struct.RpcClient.html
+//! [cpi]: https://docs.rs/trezoa-cpi/latest/trezoa_cpi/index.html
+//! [`invoke`]: https://docs.rs/trezoa-cpi/latest/trezoa_cpi/fn.invoke.html
+//! [`invoke_signed`]: https://docs.rs/trezoa-cpi/latest/trezoa_cpi/fn.invoke_signed.html
+//! [`AccountInfo`]: https://docs.rs/trezoa-account-info/latest/trezoa_account_info/struct.AccountInfo.html
 //! [`Instruction`]:
-//! https://docs.rs/solana-instruction/latest/solana_instruction/struct.Instruction.html
+//! https://docs.rs/trezoa-instruction/latest/trezoa_instruction/struct.Instruction.html
 
 #[cfg(feature = "bincode")]
 use {
     crate::program::ID,
     alloc::{string::ToString, vec, vec::Vec},
-    solana_instruction::{AccountMeta, Instruction},
+    trezoa_instruction::{AccountMeta, Instruction},
 };
 #[cfg(feature = "alloc")]
-use {alloc::string::String, solana_address::Address};
+use {alloc::string::String, trezoa_address::Address};
 
 // Inline some constants to avoid dependencies.
 //
 // Note: replace these inline IDs with the corresponding value from
-// `solana_sdk_ids` once the version is updated to 2.2.0.
+// `trezoa_sdk_ids` once the version is updated to 2.2.0.
 
 #[cfg(feature = "bincode")]
 const RECENT_BLOCKHASHES_ID: Address =
@@ -69,7 +69,7 @@ const RENT_ID: Address = Address::from_str_const("SysvarRent11111111111111111111
 
 #[cfg(feature = "bincode")]
 #[cfg(test)]
-static_assertions::const_assert_eq!(solana_nonce::state::State::size(), NONCE_STATE_SIZE);
+static_assertions::const_assert_eq!(trezoa_nonce::state::State::size(), NONCE_STATE_SIZE);
 /// The serialized size of the nonce state.
 #[cfg(feature = "bincode")]
 const NONCE_STATE_SIZE: usize = 80;
@@ -77,10 +77,10 @@ const NONCE_STATE_SIZE: usize = 80;
 /// An instruction to the system program.
 #[cfg_attr(
     feature = "frozen-abi",
-    solana_frozen_abi_macro::frozen_abi(digest = "CBvp4X1gf36kwDqnprAa6MpKckptiAHfXSxFRHFnNRVw"),
+    trezoa_frozen_abi_macro::frozen_abi(digest = "CBvp4X1gf36kwDqnprAa6MpKckptiAHfXSxFRHFnNRVw"),
     derive(
-        solana_frozen_abi_macro::AbiExample,
-        solana_frozen_abi_macro::AbiEnumVisitor
+        trezoa_frozen_abi_macro::AbiExample,
+        trezoa_frozen_abi_macro::AbiEnumVisitor
     )
 )]
 #[cfg_attr(
@@ -305,8 +305,8 @@ pub enum SystemInstruction {
 ///
 /// [`SystemInstruction::CreateAccount`].
 ///
-/// [`Transaction`]: https://docs.rs/solana-sdk/latest/solana_sdk/transaction/struct.Transaction.html
-/// [invoked]: https://docs.rs/solana-cpi/latest/solana_cpi/fn.invoke.html
+/// [`Transaction`]: https://docs.rs/trezoa-sdk/latest/trezoa_sdk/transaction/struct.Transaction.html
+/// [invoked]: https://docs.rs/trezoa-cpi/latest/trezoa_cpi/fn.invoke.html
 ///
 /// Account creation typically involves three steps: [`allocate`] space,
 /// [`transfer`] lamports for rent, [`assign`] to its owning program. The
@@ -336,13 +336,13 @@ pub enum SystemInstruction {
 /// The `payer` and `new_account` are signers.
 ///
 /// ```
-/// # use solana_example_mocks::{solana_sdk, solana_rpc_client};
-/// use solana_rpc_client::rpc_client::RpcClient;
-/// use solana_sdk::{
+/// # use trezoa_example_mocks::{trezoa_sdk, trezoa_rpc_client};
+/// use trezoa_rpc_client::rpc_client::RpcClient;
+/// use trezoa_sdk::{
 ///     signature::{Keypair, Signer},
 ///     transaction::Transaction,
 /// };
-/// use solana_system_interface::{instruction, program};
+/// use trezoa_system_interface::{instruction, program};
 /// use anyhow::Result;
 ///
 /// fn create_account(
@@ -382,24 +382,24 @@ pub enum SystemInstruction {
 ///
 /// ## Example: on-chain program
 ///
-/// This example submits the instruction from an on-chain Solana program. The
+/// This example submits the instruction from an on-chain Trezoa program. The
 /// created account is a [program derived address][pda]. The `payer` and
 /// `new_account_pda` are signers, with `new_account_pda` being signed for
 /// virtually by the program itself via [`invoke_signed`], `payer` being signed
 /// for by the client that submitted the transaction.
 ///
-/// [pda]: https://docs.rs/solana-address/latest/solana_address/struct.Address.html#method.find_program_address
-/// [`invoke_signed`]: https://docs.rs/solana-cpi/latest/solana_cpi/fn.invoke_signed.html
+/// [pda]: https://docs.rs/trezoa-address/latest/trezoa_address/struct.Address.html#method.find_program_address
+/// [`invoke_signed`]: https://docs.rs/trezoa-cpi/latest/trezoa_cpi/fn.invoke_signed.html
 ///
 /// ```
 /// use borsh::{BorshDeserialize, BorshSerialize};
-/// use solana_account_info::{next_account_info, AccountInfo};
-/// use solana_address::Address;
-/// use solana_cpi::invoke_signed;
-/// use solana_program_entrypoint::entrypoint;
-/// use solana_program_error::ProgramResult;
-/// use solana_system_interface::{instruction, program};
-/// use solana_sysvar::{rent::Rent, Sysvar};
+/// use trezoa_account_info::{next_account_info, AccountInfo};
+/// use trezoa_address::Address;
+/// use trezoa_cpi::invoke_signed;
+/// use trezoa_program_entrypoint::entrypoint;
+/// use trezoa_program_error::ProgramResult;
+/// use trezoa_system_interface::{instruction, program};
+/// use trezoa_sysvar::{rent::Rent, Sysvar};
 ///
 /// #[derive(BorshSerialize, BorshDeserialize, Debug)]
 /// pub struct CreateAccountInstruction {
@@ -521,8 +521,8 @@ pub fn create_account_with_seed(
 /// [`Transaction`] or [invoked] to take effect, containing a serialized
 /// [`SystemInstruction::Assign`].
 ///
-/// [`Transaction`]: https://docs.rs/solana-sdk/latest/solana_sdk/transaction/struct.Transaction.html
-/// [invoked]: https://docs.rs/solana-cpi/latest/solana_cpi/fn.invoke.html
+/// [`Transaction`]: https://docs.rs/trezoa-sdk/latest/trezoa_sdk/transaction/struct.Transaction.html
+/// [invoked]: https://docs.rs/trezoa-cpi/latest/trezoa_cpi/fn.invoke.html
 ///
 /// # Required signers
 ///
@@ -540,14 +540,14 @@ pub fn create_account_with_seed(
 /// The `payer` and `new_account` are signers.
 ///
 /// ```
-/// # use solana_example_mocks::{solana_sdk, solana_rpc_client};
-/// use solana_rpc_client::rpc_client::RpcClient;
-/// use solana_address::Address;
-/// use solana_sdk::{
+/// # use trezoa_example_mocks::{trezoa_sdk, trezoa_rpc_client};
+/// use trezoa_rpc_client::rpc_client::RpcClient;
+/// use trezoa_address::Address;
+/// use trezoa_sdk::{
 ///     signature::{Keypair, Signer},
 ///     transaction::Transaction,
 /// };
-/// use solana_system_interface::instruction;
+/// use trezoa_system_interface::instruction;
 /// use anyhow::Result;
 ///
 /// fn create_account(
@@ -598,25 +598,25 @@ pub fn create_account_with_seed(
 ///
 /// ## Example: on-chain program
 ///
-/// This example submits the instructions from an on-chain Solana program. The
+/// This example submits the instructions from an on-chain Trezoa program. The
 /// created account is a [program derived address][pda], funded by `payer`, and
 /// assigned to the running program. The `payer` and `new_account_pda` are
 /// signers, with `new_account_pda` being signed for virtually by the program
 /// itself via [`invoke_signed`], `payer` being signed for by the client that
 /// submitted the transaction.
 ///
-/// [pda]: https://docs.rs/solana-address/latest/solana_address/struct.Address.html#method.find_program_address
-/// [`invoke_signed`]: https://docs.rs/solana-cpi/latest/solana_cpi/fn.invoke_signed.html
+/// [pda]: https://docs.rs/trezoa-address/latest/trezoa_address/struct.Address.html#method.find_program_address
+/// [`invoke_signed`]: https://docs.rs/trezoa-cpi/latest/trezoa_cpi/fn.invoke_signed.html
 ///
 /// ```
 /// use borsh::{BorshDeserialize, BorshSerialize};
-/// use solana_account_info::{next_account_info, AccountInfo};
-/// use solana_cpi::invoke_signed;
-/// use solana_program_entrypoint::entrypoint;
-/// use solana_program_error::ProgramResult;
-/// use solana_address::Address;
-/// use solana_system_interface::{instruction, program};
-/// use solana_sysvar::{rent::Rent, Sysvar};
+/// use trezoa_account_info::{next_account_info, AccountInfo};
+/// use trezoa_cpi::invoke_signed;
+/// use trezoa_program_entrypoint::entrypoint;
+/// use trezoa_program_error::ProgramResult;
+/// use trezoa_address::Address;
+/// use trezoa_system_interface::{instruction, program};
+/// use trezoa_sysvar::{rent::Rent, Sysvar};
 ///
 /// #[derive(BorshSerialize, BorshDeserialize, Debug)]
 /// pub struct CreateAccountInstruction {
@@ -714,8 +714,8 @@ pub fn assign_with_seed(
 /// [`Transaction`] or [invoked] to take effect, containing a serialized
 /// [`SystemInstruction::Transfer`].
 ///
-/// [`Transaction`]: https://docs.rs/solana-sdk/latest/solana_sdk/transaction/struct.Transaction.html
-/// [invoked]: https://docs.rs/solana-cpi/latest/solana_cpi/fn.invoke.html
+/// [`Transaction`]: https://docs.rs/trezoa-sdk/latest/trezoa_sdk/transaction/struct.Transaction.html
+/// [invoked]: https://docs.rs/trezoa-cpi/latest/trezoa_cpi/fn.invoke.html
 ///
 /// # Required signers
 ///
@@ -733,14 +733,14 @@ pub fn assign_with_seed(
 /// The `payer` and `new_account` are signers.
 ///
 /// ```
-/// # use solana_example_mocks::{solana_sdk, solana_rpc_client};
-/// use solana_rpc_client::rpc_client::RpcClient;
-/// use solana_address::Address;
-/// use solana_sdk::{
+/// # use trezoa_example_mocks::{trezoa_sdk, trezoa_rpc_client};
+/// use trezoa_rpc_client::rpc_client::RpcClient;
+/// use trezoa_address::Address;
+/// use trezoa_sdk::{
 ///     signature::{Keypair, Signer},
 ///     transaction::Transaction,
 /// };
-/// use solana_system_interface::instruction;
+/// use trezoa_system_interface::instruction;
 /// use anyhow::Result;
 ///
 /// fn create_account(
@@ -791,25 +791,25 @@ pub fn assign_with_seed(
 ///
 /// ## Example: on-chain program
 ///
-/// This example submits the instructions from an on-chain Solana program. The
+/// This example submits the instructions from an on-chain Trezoa program. The
 /// created account is a [program derived address][pda], funded by `payer`, and
 /// assigned to the running program. The `payer` and `new_account_pda` are
 /// signers, with `new_account_pda` being signed for virtually by the program
 /// itself via [`invoke_signed`], `payer` being signed for by the client that
 /// submitted the transaction.
 ///
-/// [pda]: https://docs.rs/solana-address/latest/solana_address/struct.Address.html#method.find_program_address
-/// [`invoke_signed`]: https://docs.rs/solana-cpi/latest/solana_cpi/fn.invoke_signed.html
+/// [pda]: https://docs.rs/trezoa-address/latest/trezoa_address/struct.Address.html#method.find_program_address
+/// [`invoke_signed`]: https://docs.rs/trezoa-cpi/latest/trezoa_cpi/fn.invoke_signed.html
 ///
 /// ```
 /// # use borsh::{BorshDeserialize, BorshSerialize};
-/// use solana_account_info::{next_account_info, AccountInfo};
-/// use solana_cpi::invoke_signed;
-/// use solana_program_entrypoint::entrypoint;
-/// use solana_program_error::ProgramResult;
-/// use solana_address::Address;
-/// use solana_system_interface::{instruction, program};
-/// use solana_sysvar::{rent::Rent, Sysvar};
+/// use trezoa_account_info::{next_account_info, AccountInfo};
+/// use trezoa_cpi::invoke_signed;
+/// use trezoa_program_entrypoint::entrypoint;
+/// use trezoa_program_error::ProgramResult;
+/// use trezoa_address::Address;
+/// use trezoa_system_interface::{instruction, program};
+/// use trezoa_sysvar::{rent::Rent, Sysvar};
 ///
 /// #[derive(BorshSerialize, BorshDeserialize, Debug)]
 /// # #[borsh(crate = "borsh")]
@@ -910,8 +910,8 @@ pub fn transfer_with_seed(
 /// [`Transaction`] or [invoked] to take effect, containing a serialized
 /// [`SystemInstruction::Allocate`].
 ///
-/// [`Transaction`]: https://docs.rs/solana-sdk/latest/solana_sdk/transaction/struct.Transaction.html
-/// [invoked]: https://docs.rs/solana-cpi/latest/solana_cpi/fn.invoke.html
+/// [`Transaction`]: https://docs.rs/trezoa-sdk/latest/trezoa_sdk/transaction/struct.Transaction.html
+/// [invoked]: https://docs.rs/trezoa-cpi/latest/trezoa_cpi/fn.invoke.html
 ///
 /// The transaction will fail if the account already has size greater than 0,
 /// or if the requested size is greater than [`super::MAX_PERMITTED_DATA_LENGTH`].
@@ -932,14 +932,14 @@ pub fn transfer_with_seed(
 /// The `payer` and `new_account` are signers.
 ///
 /// ```
-/// # use solana_example_mocks::{solana_sdk, solana_rpc_client};
-/// use solana_rpc_client::rpc_client::RpcClient;
-/// use solana_address::Address;
-/// use solana_sdk::{
+/// # use trezoa_example_mocks::{trezoa_sdk, trezoa_rpc_client};
+/// use trezoa_rpc_client::rpc_client::RpcClient;
+/// use trezoa_address::Address;
+/// use trezoa_sdk::{
 ///     signature::{Keypair, Signer},
 ///     transaction::Transaction,
 /// };
-/// use solana_system_interface::instruction;
+/// use trezoa_system_interface::instruction;
 /// use anyhow::Result;
 ///
 /// fn create_account(
@@ -990,25 +990,25 @@ pub fn transfer_with_seed(
 ///
 /// ## Example: on-chain program
 ///
-/// This example submits the instructions from an on-chain Solana program. The
+/// This example submits the instructions from an on-chain Trezoa program. The
 /// created account is a [program derived address][pda], funded by `payer`, and
 /// assigned to the running program. The `payer` and `new_account_pda` are
 /// signers, with `new_account_pda` being signed for virtually by the program
 /// itself via [`invoke_signed`], `payer` being signed for by the client that
 /// submitted the transaction.
 ///
-/// [pda]: https://docs.rs/solana-address/latest/solana_address/struct.Address.html#method.find_program_address
-/// [`invoke_signed`]: https://docs.rs/solana-cpi/latest/solana_cpi/fn.invoke_signed.html
+/// [pda]: https://docs.rs/trezoa-address/latest/trezoa_address/struct.Address.html#method.find_program_address
+/// [`invoke_signed`]: https://docs.rs/trezoa-cpi/latest/trezoa_cpi/fn.invoke_signed.html
 ///
 /// ```
 /// use borsh::{BorshDeserialize, BorshSerialize};
-/// use solana_account_info::{next_account_info, AccountInfo};
-/// use solana_cpi::invoke_signed;
-/// use solana_program_entrypoint::entrypoint;
-/// use solana_program_error::ProgramResult;
-/// use solana_address::Address;
-/// use solana_system_interface::{instruction, program};
-/// use solana_sysvar::{rent::Rent, Sysvar};
+/// use trezoa_account_info::{next_account_info, AccountInfo};
+/// use trezoa_cpi::invoke_signed;
+/// use trezoa_program_entrypoint::entrypoint;
+/// use trezoa_program_error::ProgramResult;
+/// use trezoa_address::Address;
+/// use trezoa_system_interface::{instruction, program};
+/// use trezoa_sysvar::{rent::Rent, Sysvar};
 ///
 /// #[derive(BorshSerialize, BorshDeserialize, Debug)]
 /// pub struct CreateAccountInstruction {
@@ -1104,8 +1104,8 @@ pub fn allocate_with_seed(
 /// in a [`Transaction`] or [invoked] to take effect, containing serialized
 /// [`SystemInstruction::Transfer`]s.
 ///
-/// [`Transaction`]: https://docs.rs/solana-sdk/latest/solana_sdk/transaction/struct.Transaction.html
-/// [invoked]: https://docs.rs/solana-cpi/latest/solana_cpi/fn.invoke.html
+/// [`Transaction`]: https://docs.rs/trezoa-sdk/latest/trezoa_sdk/transaction/struct.Transaction.html
+/// [invoked]: https://docs.rs/trezoa-cpi/latest/trezoa_cpi/fn.invoke.html
 ///
 /// # Required signers
 ///
@@ -1118,14 +1118,14 @@ pub fn allocate_with_seed(
 /// This example performs multiple transfers in a single transaction.
 ///
 /// ```
-/// # use solana_example_mocks::{solana_sdk, solana_rpc_client};
-/// use solana_rpc_client::rpc_client::RpcClient;
-/// use solana_address::Address;
-/// use solana_sdk::{
+/// # use trezoa_example_mocks::{trezoa_sdk, trezoa_rpc_client};
+/// use trezoa_rpc_client::rpc_client::RpcClient;
+/// use trezoa_address::Address;
+/// use trezoa_sdk::{
 ///     signature::{Keypair, Signer},
 ///     transaction::Transaction,
 /// };
-/// use solana_system_interface::instruction;
+/// use trezoa_system_interface::instruction;
 /// use anyhow::Result;
 ///
 /// fn transfer_lamports_to_many(
@@ -1163,24 +1163,24 @@ pub fn allocate_with_seed(
 ///
 /// This example makes multiple transfers out of a "bank" account,
 /// a [program derived address][pda] owned by the calling program.
-/// This example submits the instructions from an on-chain Solana program. The
+/// This example submits the instructions from an on-chain Trezoa program. The
 /// created account is a [program derived address][pda], and it is assigned to
 /// the running program. The `payer` and `new_account_pda` are signers, with
 /// `new_account_pda` being signed for virtually by the program itself via
 /// [`invoke_signed`], `payer` being signed for by the client that submitted the
 /// transaction.
 ///
-/// [pda]: https://docs.rs/solana-address/latest/solana_address/struct.Address.html#method.find_program_address
-/// [`invoke_signed`]: https://docs.rs/solana-cpi/latest/solana_cpi/fn.invoke_signed.html
+/// [pda]: https://docs.rs/trezoa-address/latest/trezoa_address/struct.Address.html#method.find_program_address
+/// [`invoke_signed`]: https://docs.rs/trezoa-cpi/latest/trezoa_cpi/fn.invoke_signed.html
 ///
 /// ```
 /// # use borsh::{BorshDeserialize, BorshSerialize};
-/// use solana_account_info::{next_account_info, next_account_infos, AccountInfo};
-/// use solana_cpi::invoke_signed;
-/// use solana_program_entrypoint::entrypoint;
-/// use solana_program_error::ProgramResult;
-/// use solana_address::Address;
-/// use solana_system_interface::{instruction, program};
+/// use trezoa_account_info::{next_account_info, next_account_infos, AccountInfo};
+/// use trezoa_cpi::invoke_signed;
+/// use trezoa_program_entrypoint::entrypoint;
+/// use trezoa_program_error::ProgramResult;
+/// use trezoa_address::Address;
+/// use trezoa_system_interface::{instruction, program};
 ///
 /// /// # Accounts
 /// ///
@@ -1280,22 +1280,22 @@ pub fn create_nonce_account_with_seed(
 /// [`SystemInstruction::CreateAccount`] and
 /// [`SystemInstruction::InitializeNonceAccount`].
 ///
-/// [`Transaction`]: https://docs.rs/solana-sdk/latest/solana_sdk/transaction/struct.Transaction.html
-/// [invoked]: https://docs.rs/solana-cpi/latest/solana_cpi/fn.invoke.html
+/// [`Transaction`]: https://docs.rs/trezoa-sdk/latest/trezoa_sdk/transaction/struct.Transaction.html
+/// [invoked]: https://docs.rs/trezoa-cpi/latest/trezoa_cpi/fn.invoke.html
 ///
 /// A [durable transaction nonce][dtn] is a special account that enables
 /// execution of transactions that have been signed in the past.
 ///
-/// Standard Solana transactions include a [recent blockhash][rbh] (sometimes
-/// referred to as a _[nonce]_). During execution the Solana runtime verifies
+/// Standard Trezoa transactions include a [recent blockhash][rbh] (sometimes
+/// referred to as a _[nonce]_). During execution the Trezoa runtime verifies
 /// the recent blockhash is approximately less than two minutes old, and that in
 /// those two minutes no other identical transaction with the same blockhash has
 /// been executed. These checks prevent accidental replay of transactions.
 /// Consequently, it is not possible to sign a transaction, wait more than two
 /// minutes, then successfully execute that transaction.
 ///
-/// [dtn]: https://docs.solanalabs.com/implemented-proposals/durable-tx-nonces
-/// [rbh]: https://docs.rs/solana-program/latest/solana_program/message/legacy/struct.Message.html#structfield.recent_blockhash
+/// [dtn]: https://docs.trezoalabs.com/implemented-proposals/durable-tx-nonces
+/// [rbh]: https://docs.rs/trezoa-program/latest/trezoa_program/message/legacy/struct.Message.html#structfield.recent_blockhash
 /// [nonce]: https://en.wikipedia.org/wiki/Cryptographic_nonce
 ///
 /// Durable transaction nonces are an alternative to the standard recent
@@ -1310,8 +1310,8 @@ pub fn create_nonce_account_with_seed(
 /// the [`blockhash`] field of [`nonce::state::Data`], which is deserialized
 /// from the nonce account data.
 ///
-/// [`blockhash`]: https://docs.rs/solana-program/latest/solana_program/message/legacy/struct.Message.html#structfield.recent_blockhash
-/// [`nonce::state::Data`]: https://docs.rs/solana-nonce/latest/solana_nonce/state/struct.Data.html
+/// [`blockhash`]: https://docs.rs/trezoa-program/latest/trezoa_program/message/legacy/struct.Message.html#structfield.recent_blockhash
+/// [`nonce::state::Data`]: https://docs.rs/trezoa-nonce/latest/trezoa_nonce/state/struct.Data.html
 ///
 /// The basic durable transaction nonce lifecycle is
 ///
@@ -1341,16 +1341,16 @@ pub fn create_nonce_account_with_seed(
 /// Create a nonce account from an off-chain client:
 ///
 /// ```
-/// # use solana_example_mocks::solana_keypair;
-/// # use solana_example_mocks::solana_signer;
-/// # use solana_example_mocks::solana_rpc_client;
-/// # use solana_example_mocks::solana_transaction;
-/// use solana_keypair::Keypair;
-/// use solana_nonce::state::State;
-/// use solana_rpc_client::rpc_client::RpcClient;
-/// use solana_signer::Signer;
-/// use solana_system_interface::instruction;
-/// use solana_transaction::Transaction;
+/// # use trezoa_example_mocks::trezoa_keypair;
+/// # use trezoa_example_mocks::trezoa_signer;
+/// # use trezoa_example_mocks::trezoa_rpc_client;
+/// # use trezoa_example_mocks::trezoa_transaction;
+/// use trezoa_keypair::Keypair;
+/// use trezoa_nonce::state::State;
+/// use trezoa_rpc_client::rpc_client::RpcClient;
+/// use trezoa_signer::Signer;
+/// use trezoa_system_interface::instruction;
+/// use trezoa_transaction::Transaction;
 /// use anyhow::Result;
 ///
 /// fn submit_create_nonce_account_tx(
@@ -1418,13 +1418,13 @@ pub fn create_nonce_account(
 /// [`Transaction`] or [invoked] to take effect, containing a serialized
 /// [`SystemInstruction::AdvanceNonceAccount`].
 ///
-/// [`Transaction`]: https://docs.rs/solana-sdk/latest/solana_sdk/transaction/struct.Transaction.html
-/// [invoked]: https://docs.rs/solana-cpi/latest/solana_cpi/fn.invoke.html
+/// [`Transaction`]: https://docs.rs/trezoa-sdk/latest/trezoa_sdk/transaction/struct.Transaction.html
+/// [invoked]: https://docs.rs/trezoa-cpi/latest/trezoa_cpi/fn.invoke.html
 ///
 /// Every transaction that relies on a durable transaction nonce must contain a
 /// [`SystemInstruction::AdvanceNonceAccount`] instruction as the first
 /// instruction in the [`Message`], as created by this function. When included
-/// in the first position, the Solana runtime recognizes the transaction as one
+/// in the first position, the Trezoa runtime recognizes the transaction as one
 /// that relies on a durable transaction nonce and processes it accordingly. The
 /// [`Message::new_with_nonce`] function can be used to construct a `Message` in
 /// the correct format without calling `advance_nonce_account` directly.
@@ -1434,15 +1434,15 @@ pub fn create_nonce_account(
 /// setting it to a recent blockhash, the value of the nonce must be retrieved
 /// and deserialized from the nonce account, and that value specified as the
 /// "recent blockhash". A nonce account can be deserialized with the
-/// [`solana_rpc_client_nonce_utils::data_from_account`][dfa] function.
+/// [`trezoa_rpc_client_nonce_utils::data_from_account`][dfa] function.
 ///
 /// For further description of durable transaction nonces see
 /// [`create_nonce_account`].
 ///
-/// [`Message`]: https://docs.rs/solana-program/latest/solana_program/message/legacy/struct.Message.html
-/// [`Message::new_with_nonce`]: https://docs.rs/solana-program/latest/solana_program/message/legacy/struct.Message.html#method.new_with_nonce
-/// [`recent_blockhash`]: https://docs.rs/solana-program/latest/solana_program/message/legacy/struct.Message.html#structfield.recent_blockhash
-/// [dfa]: https://docs.rs/solana-rpc-client-nonce-utils/latest/solana_rpc_client_nonce_utils/fn.data_from_account.html
+/// [`Message`]: https://docs.rs/trezoa-program/latest/trezoa_program/message/legacy/struct.Message.html
+/// [`Message::new_with_nonce`]: https://docs.rs/trezoa-program/latest/trezoa_program/message/legacy/struct.Message.html#method.new_with_nonce
+/// [`recent_blockhash`]: https://docs.rs/trezoa-program/latest/trezoa_program/message/legacy/struct.Message.html#structfield.recent_blockhash
+/// [dfa]: https://docs.rs/trezoa-rpc-client-nonce-utils/latest/trezoa_rpc_client_nonce_utils/fn.data_from_account.html
 ///
 /// # Required signers
 ///
@@ -1453,18 +1453,18 @@ pub fn create_nonce_account(
 /// Create and sign a transaction with a durable nonce:
 ///
 /// ```
-/// # use solana_example_mocks::solana_sdk;
-/// # use solana_example_mocks::solana_rpc_client;
-/// # use solana_example_mocks::solana_rpc_client_nonce_utils;
-/// # use solana_sdk::account::Account;
-/// use solana_rpc_client::rpc_client::RpcClient;
-/// use solana_address::Address;
-/// use solana_sdk::{
+/// # use trezoa_example_mocks::trezoa_sdk;
+/// # use trezoa_example_mocks::trezoa_rpc_client;
+/// # use trezoa_example_mocks::trezoa_rpc_client_nonce_utils;
+/// # use trezoa_sdk::account::Account;
+/// use trezoa_rpc_client::rpc_client::RpcClient;
+/// use trezoa_address::Address;
+/// use trezoa_sdk::{
 ///     message::Message,
 ///     signature::{Keypair, Signer},
 ///     transaction::Transaction,
 /// };
-/// use solana_system_interface::instruction;
+/// use trezoa_system_interface::instruction;
 /// use std::path::Path;
 /// use anyhow::Result;
 ///
@@ -1506,11 +1506,11 @@ pub fn create_nonce_account(
 ///     # client.set_get_account_response(*nonce_account_address, Account {
 ///     #   lamports: 1,
 ///     #   data: vec![0],
-///     #   owner: solana_sdk::system_program::ID,
+///     #   owner: trezoa_sdk::system_program::ID,
 ///     #   executable: false,
 ///     # });
 ///     let nonce_account = client.get_account(nonce_account_address)?;
-///     let nonce_data = solana_rpc_client_nonce_utils::data_from_account(&nonce_account)?;
+///     let nonce_data = trezoa_rpc_client_nonce_utils::data_from_account(&nonce_account)?;
 ///     let blockhash = nonce_data.blockhash();
 ///
 ///     tx.try_sign(&[payer], blockhash)?;
@@ -1550,8 +1550,8 @@ pub fn advance_nonce_account(nonce_address: &Address, authorized_address: &Addre
 /// [`Transaction`] or [invoked] to take effect, containing a serialized
 /// [`SystemInstruction::WithdrawNonceAccount`].
 ///
-/// [`Transaction`]: https://docs.rs/solana-sdk/latest/solana_sdk/transaction/struct.Transaction.html
-/// [invoked]: https://docs.rs/solana-cpi/latest/solana_cpi/fn.invoke.html
+/// [`Transaction`]: https://docs.rs/trezoa-sdk/latest/trezoa_sdk/transaction/struct.Transaction.html
+/// [invoked]: https://docs.rs/trezoa-cpi/latest/trezoa_cpi/fn.invoke.html
 ///
 /// Withdrawing the entire balance of a nonce account will cause the runtime to
 /// destroy it upon successful completion of the transaction.
@@ -1561,7 +1561,7 @@ pub fn advance_nonce_account(nonce_address: &Address, authorized_address: &Addre
 /// would leave the nonce account with a balance less than required for rent
 /// exemption, but also greater than zero, then the transaction will fail.
 ///
-/// [rent exemption]: https://solana.com/docs/core/accounts#rent-exemption
+/// [rent exemption]: https://trezoa.com/docs/core/accounts#rent-exemption
 ///
 /// This constructor creates a [`SystemInstruction::WithdrawNonceAccount`]
 /// instruction.
@@ -1573,15 +1573,15 @@ pub fn advance_nonce_account(nonce_address: &Address, authorized_address: &Addre
 /// # Examples
 ///
 /// ```
-/// # use solana_example_mocks::solana_sdk;
-/// # use solana_example_mocks::solana_rpc_client;
-/// use solana_rpc_client::rpc_client::RpcClient;
-/// use solana_address::Address;
-/// use solana_sdk::{
+/// # use trezoa_example_mocks::trezoa_sdk;
+/// # use trezoa_example_mocks::trezoa_rpc_client;
+/// use trezoa_rpc_client::rpc_client::RpcClient;
+/// use trezoa_address::Address;
+/// use trezoa_sdk::{
 ///     signature::{Keypair, Signer},
 ///     transaction::Transaction,
 /// };
-/// use solana_system_interface::instruction;
+/// use trezoa_system_interface::instruction;
 /// use anyhow::Result;
 ///
 /// fn submit_withdraw_nonce_account_tx(
@@ -1644,8 +1644,8 @@ pub fn withdraw_nonce_account(
 /// [`Transaction`] or [invoked] to take effect, containing a serialized
 /// [`SystemInstruction::AuthorizeNonceAccount`].
 ///
-/// [`Transaction`]: https://docs.rs/solana-sdk/latest/solana_sdk/transaction/struct.Transaction.html
-/// [invoked]: https://docs.rs/solana-cpi/latest/solana_cpi/fn.invoke.html
+/// [`Transaction`]: https://docs.rs/trezoa-sdk/latest/trezoa_sdk/transaction/struct.Transaction.html
+/// [invoked]: https://docs.rs/trezoa-cpi/latest/trezoa_cpi/fn.invoke.html
 ///
 /// This constructor creates a [`SystemInstruction::AuthorizeNonceAccount`]
 /// instruction.
@@ -1657,15 +1657,15 @@ pub fn withdraw_nonce_account(
 /// # Examples
 ///
 /// ```
-/// # use solana_example_mocks::solana_sdk;
-/// # use solana_example_mocks::solana_rpc_client;
-/// use solana_rpc_client::rpc_client::RpcClient;
-/// use solana_address::Address;
-/// use solana_sdk::{
+/// # use trezoa_example_mocks::trezoa_sdk;
+/// # use trezoa_example_mocks::trezoa_rpc_client;
+/// use trezoa_rpc_client::rpc_client::RpcClient;
+/// use trezoa_address::Address;
+/// use trezoa_sdk::{
 ///     signature::{Keypair, Signer},
 ///     transaction::Transaction,
 /// };
-/// use solana_system_interface::instruction;
+/// use trezoa_system_interface::instruction;
 /// use anyhow::Result;
 ///
 /// fn authorize_nonce_account_tx(
@@ -1761,7 +1761,7 @@ pub fn create_account_allow_prefund(
 #[cfg(feature = "bincode")]
 #[cfg(test)]
 mod tests {
-    use {super::*, solana_sysvar_id::SysvarId};
+    use {super::*, trezoa_sysvar_id::SysvarId};
 
     fn get_keys(instruction: &Instruction) -> Vec<Address> {
         instruction.accounts.iter().map(|x| x.pubkey).collect()
@@ -1770,14 +1770,14 @@ mod tests {
     #[allow(deprecated)]
     #[test]
     fn test_constants() {
-        // Ensure that the constants are in sync with the solana program.
+        // Ensure that the constants are in sync with the trezoa program.
         assert_eq!(
             RECENT_BLOCKHASHES_ID,
-            solana_sysvar::recent_blockhashes::RecentBlockhashes::id(),
+            trezoa_sysvar::recent_blockhashes::RecentBlockhashes::id(),
         );
 
-        // Ensure that the constants are in sync with the solana rent.
-        assert_eq!(RENT_ID, solana_sysvar::rent::Rent::id());
+        // Ensure that the constants are in sync with the trezoa rent.
+        assert_eq!(RENT_ID, trezoa_sysvar::rent::Rent::id());
     }
 
     #[test]

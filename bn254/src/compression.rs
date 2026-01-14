@@ -109,7 +109,7 @@ impl From<AltBn128CompressionError> for u64 {
     }
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 mod target_arch {
 
     pub use crate::target_arch::convert_endianness;
@@ -368,7 +368,7 @@ mod target_arch {
     }
 }
 
-#[cfg(target_os = "solana")]
+#[cfg(target_os = "trezoa")]
 mod target_arch {
     use {
         super::*,
@@ -376,7 +376,7 @@ mod target_arch {
             ALT_BN128_G1_COMPRESSED_POINT_SIZE, ALT_BN128_G2_COMPRESSED_POINT_SIZE,
         },
         prelude::*,
-        solana_define_syscall::definitions as syscalls,
+        trezoa_define_syscall::definitions as syscalls,
     };
 
     #[deprecated(

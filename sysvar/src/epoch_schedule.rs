@@ -7,22 +7,22 @@
 //! [`EpochSchedule`] implements [`Sysvar::get`] and can be loaded efficiently without
 //! passing the sysvar account ID to the program.
 //!
-//! See also the Solana [documentation on the epoch schedule sysvar][sdoc].
+//! See also the Trezoa [documentation on the epoch schedule sysvar][sdoc].
 //!
-//! [sdoc]: https://docs.solanalabs.com/runtime/sysvars#epochschedule
+//! [sdoc]: https://docs.trezoalabs.com/runtime/sysvars#epochschedule
 //!
 //! # Examples
 //!
 //! Accessing via on-chain program directly:
 //!
 //! ```no_run
-//! # use solana_account_info::AccountInfo;
-//! # use solana_epoch_schedule::EpochSchedule;
-//! # use solana_msg::msg;
-//! # use solana_program_error::{ProgramError, ProgramResult};
-//! # use solana_pubkey::Pubkey;
-//! # use solana_sdk_ids::sysvar::epoch_schedule;
-//! # use solana_sysvar::Sysvar;
+//! # use trezoa_account_info::AccountInfo;
+//! # use trezoa_epoch_schedule::EpochSchedule;
+//! # use trezoa_msg::msg;
+//! # use trezoa_program_error::{ProgramError, ProgramResult};
+//! # use trezoa_pubkey::Pubkey;
+//! # use trezoa_sdk_ids::sysvar::epoch_schedule;
+//! # use trezoa_sysvar::Sysvar;
 //! fn process_instruction(
 //!     program_id: &Pubkey,
 //!     accounts: &[AccountInfo],
@@ -35,7 +35,7 @@
 //!     Ok(())
 //! }
 //! #
-//! # use solana_sysvar_id::SysvarId;
+//! # use trezoa_sysvar_id::SysvarId;
 //! # let p = EpochSchedule::id();
 //! # let l = &mut 1120560;
 //! # let d = &mut vec![0, 32, 0, 0, 0, 0, 0, 0, 0, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -52,13 +52,13 @@
 //! Accessing via on-chain program's account parameters:
 //!
 //! ```
-//! # use solana_account_info::{AccountInfo, next_account_info};
-//! # use solana_epoch_schedule::EpochSchedule;
-//! # use solana_msg::msg;
-//! # use solana_program_error::{ProgramError, ProgramResult};
-//! # use solana_pubkey::Pubkey;
-//! # use solana_sdk_ids::sysvar::epoch_schedule;
-//! # use solana_sysvar::{Sysvar, SysvarSerialize};
+//! # use trezoa_account_info::{AccountInfo, next_account_info};
+//! # use trezoa_epoch_schedule::EpochSchedule;
+//! # use trezoa_msg::msg;
+//! # use trezoa_program_error::{ProgramError, ProgramResult};
+//! # use trezoa_pubkey::Pubkey;
+//! # use trezoa_sdk_ids::sysvar::epoch_schedule;
+//! # use trezoa_sysvar::{Sysvar, SysvarSerialize};
 //! fn process_instruction(
 //!     program_id: &Pubkey,
 //!     accounts: &[AccountInfo],
@@ -75,7 +75,7 @@
 //!     Ok(())
 //! }
 //! #
-//! # use solana_sysvar_id::SysvarId;
+//! # use trezoa_sysvar_id::SysvarId;
 //! # let p = EpochSchedule::id();
 //! # let l = &mut 1120560;
 //! # let d = &mut vec![0, 32, 0, 0, 0, 0, 0, 0, 0, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
@@ -92,19 +92,19 @@
 //! Accessing via the RPC client:
 //!
 //! ```
-//! # use solana_epoch_schedule::EpochSchedule;
-//! # use solana_example_mocks::solana_account;
-//! # use solana_example_mocks::solana_rpc_client;
-//! # use solana_rpc_client::rpc_client::RpcClient;
-//! # use solana_account::Account;
-//! # use solana_sdk_ids::sysvar::epoch_schedule;
+//! # use trezoa_epoch_schedule::EpochSchedule;
+//! # use trezoa_example_mocks::trezoa_account;
+//! # use trezoa_example_mocks::trezoa_rpc_client;
+//! # use trezoa_rpc_client::rpc_client::RpcClient;
+//! # use trezoa_account::Account;
+//! # use trezoa_sdk_ids::sysvar::epoch_schedule;
 //! # use anyhow::Result;
 //! #
 //! fn print_sysvar_epoch_schedule(client: &RpcClient) -> Result<()> {
 //! #   client.set_get_account_response(epoch_schedule::ID, Account {
 //! #       lamports: 1120560,
 //! #       data: vec![0, 32, 0, 0, 0, 0, 0, 0, 0, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-//! #       owner: solana_sdk_ids::system_program::ID,
+//! #       owner: trezoa_sdk_ids::system_program::ID,
 //! #       executable: false,
 //! # });
 //! #
@@ -123,8 +123,8 @@ use crate::Sysvar;
 #[cfg(feature = "bincode")]
 use crate::SysvarSerialize;
 pub use {
-    solana_epoch_schedule::EpochSchedule,
-    solana_sdk_ids::sysvar::epoch_schedule::{check_id, id, ID},
+    trezoa_epoch_schedule::EpochSchedule,
+    trezoa_sdk_ids::sysvar::epoch_schedule::{check_id, id, ID},
 };
 
 /// Pod (Plain Old Data) representation of [`EpochSchedule`] with no padding.
@@ -147,7 +147,7 @@ const _: () = assert!(core::mem::size_of::<PodEpochSchedule>() == POD_EPOCH_SCHE
 impl PodEpochSchedule {
     /// Fetch the sysvar data using the `sol_get_sysvar` syscall.
     /// This provides an alternative to `EpochSchedule` which provides zero-copy accessors.
-    pub fn fetch() -> Result<Self, solana_program_error::ProgramError> {
+    pub fn fetch() -> Result<Self, trezoa_program_error::ProgramError> {
         let mut pod = core::mem::MaybeUninit::<Self>::uninit();
         // Safety: `get_sysvar_unchecked` will initialize `pod` with the sysvar data,
         // and error if unsuccessful.
@@ -172,7 +172,7 @@ impl PodEpochSchedule {
 
     pub fn warmup(&self) -> bool {
         // SAFETY: upstream invariant: the sysvar data is created exclusively
-        // by the Solana runtime and serializes bool as 0x00 or 0x01.
+        // by the Trezoa runtime and serializes bool as 0x00 or 0x01.
         self.warmup > 0
     }
 
@@ -198,7 +198,7 @@ impl From<PodEpochSchedule> for EpochSchedule {
 }
 
 impl Sysvar for EpochSchedule {
-    fn get() -> Result<Self, solana_program_error::ProgramError> {
+    fn get() -> Result<Self, trezoa_program_error::ProgramError> {
         Ok(PodEpochSchedule::fetch()?.into())
     }
 }

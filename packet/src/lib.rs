@@ -1,9 +1,9 @@
-//! The definition of a Solana network packet.
+//! The definition of a Trezoa network packet.
 #![cfg_attr(feature = "frozen-abi", feature(min_specialization))]
 #![cfg_attr(docsrs, feature(doc_cfg))]
 
 #[cfg(feature = "frozen-abi")]
-use solana_frozen_abi_macro::AbiExample;
+use trezoa_frozen_abi_macro::AbiExample;
 #[cfg(feature = "bincode")]
 use {
     bincode::{Options, Result},
@@ -11,7 +11,7 @@ use {
 };
 use {
     bitflags::bitflags,
-    solana_pubkey::Pubkey,
+    trezoa_pubkey::Pubkey,
     std::{
         fmt,
         net::{IpAddr, Ipv4Addr, SocketAddr},
@@ -77,17 +77,17 @@ pub struct Meta {
 }
 
 #[cfg(feature = "frozen-abi")]
-impl ::solana_frozen_abi::abi_example::AbiExample for PacketFlags {
+impl ::trezoa_frozen_abi::abi_example::AbiExample for PacketFlags {
     fn example() -> Self {
         Self::empty()
     }
 }
 
 #[cfg(feature = "frozen-abi")]
-impl ::solana_frozen_abi::abi_example::TransparentAsHelper for PacketFlags {}
+impl ::trezoa_frozen_abi::abi_example::TransparentAsHelper for PacketFlags {}
 
 #[cfg(feature = "frozen-abi")]
-impl ::solana_frozen_abi::abi_example::EvenAsOpaque for PacketFlags {
+impl ::trezoa_frozen_abi::abi_example::EvenAsOpaque for PacketFlags {
     const TYPE_NAME_MATCHER: &'static str = "::_::InternalBitFlags";
 }
 

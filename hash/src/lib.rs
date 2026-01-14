@@ -15,7 +15,7 @@ use core::{
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
 #[cfg(feature = "sanitize")]
-use solana_sanitize::Sanitize;
+use trezoa_sanitize::Sanitize;
 #[cfg(feature = "borsh")]
 extern crate alloc;
 #[cfg(feature = "borsh")]
@@ -30,12 +30,12 @@ pub const MAX_BASE58_LEN: usize = 44;
 
 /// A hash; the 32-byte output of a hashing algorithm.
 ///
-/// This struct is used most often in `solana-sdk` and related crates to contain
+/// This struct is used most often in `trezoa-sdk` and related crates to contain
 /// a [SHA-256] hash, but may instead contain a [blake3] hash.
 ///
 /// [SHA-256]: https://en.wikipedia.org/wiki/SHA-2
 /// [blake3]: https://github.com/BLAKE3-team/BLAKE3
-#[cfg_attr(feature = "frozen-abi", derive(solana_frozen_abi_macro::AbiExample))]
+#[cfg_attr(feature = "frozen-abi", derive(trezoa_frozen_abi_macro::AbiExample))]
 #[cfg_attr(
     feature = "borsh",
     derive(BorshSerialize, BorshDeserialize),
@@ -138,7 +138,7 @@ impl Hash {
     /// unique Hash for tests and benchmarks.
     #[cfg(feature = "atomic")]
     pub fn new_unique() -> Self {
-        use solana_atomic_u64::AtomicU64;
+        use trezoa_atomic_u64::AtomicU64;
         static I: AtomicU64 = AtomicU64::new(1);
 
         let mut b = [0u8; HASH_BYTES];

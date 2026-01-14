@@ -1,14 +1,14 @@
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
 #[cfg(feature = "frozen-abi")]
-use solana_frozen_abi_macro::{AbiEnumVisitor, AbiExample};
+use trezoa_frozen_abi_macro::{AbiEnumVisitor, AbiExample};
 #[cfg(feature = "bincode")]
-use solana_instruction_error::InstructionError;
+use trezoa_instruction_error::InstructionError;
 use {
     crate::error::AddressLookupError,
-    solana_clock::Slot,
-    solana_pubkey::Pubkey,
-    solana_slot_hashes::{get_entries, SlotHashes, MAX_ENTRIES},
+    trezoa_clock::Slot,
+    trezoa_pubkey::Pubkey,
+    trezoa_slot_hashes::{get_entries, SlotHashes, MAX_ENTRIES},
     std::borrow::Cow,
 };
 
@@ -257,7 +257,7 @@ impl<'a> AddressLookupTable<'a> {
 
 #[cfg(test)]
 mod tests {
-    use {super::*, solana_hash::Hash};
+    use {super::*, trezoa_hash::Hash};
 
     impl AddressLookupTable<'_> {
         fn new_for_tests(meta: LookupTableMeta, num_addresses: usize) -> Self {

@@ -1,6 +1,6 @@
 use {
     criterion::{criterion_group, criterion_main, Criterion},
-    solana_bn254::{
+    trezoa_bn254::{
         compression::prelude::convert_endianness,
         prelude::{
             alt_bn128_g1_addition_be, alt_bn128_g1_addition_le, alt_bn128_g1_multiplication_be,

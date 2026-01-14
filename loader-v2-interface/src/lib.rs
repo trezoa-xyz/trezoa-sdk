@@ -3,9 +3,9 @@
 
 #[cfg(feature = "bincode")]
 use {
-    solana_instruction::{AccountMeta, Instruction},
-    solana_pubkey::Pubkey,
-    solana_sdk_ids::sysvar::rent,
+    trezoa_instruction::{AccountMeta, Instruction},
+    trezoa_pubkey::Pubkey,
+    trezoa_sdk_ids::sysvar::rent,
 };
 
 #[cfg_attr(

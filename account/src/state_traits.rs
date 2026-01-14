@@ -3,7 +3,7 @@
 use {
     crate::{Account, AccountSharedData},
     bincode::ErrorKind,
-    solana_instruction_error::InstructionError,
+    trezoa_instruction_error::InstructionError,
     std::cell::Ref,
 };
 
@@ -64,7 +64,7 @@ where
 
 #[cfg(test)]
 mod tests {
-    use {super::*, solana_pubkey::Pubkey};
+    use {super::*, trezoa_pubkey::Pubkey};
 
     #[test]
     fn test_account_state() {

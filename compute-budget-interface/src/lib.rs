@@ -4,15 +4,15 @@
 
 #[cfg(feature = "borsh")]
 use borsh::{BorshDeserialize, BorshSerialize};
-use solana_instruction::Instruction;
-pub use solana_sdk_ids::compute_budget::{check_id, id, ID};
+use trezoa_instruction::Instruction;
+pub use trezoa_sdk_ids::compute_budget::{check_id, id, ID};
 
 /// Compute Budget Instructions
 #[cfg_attr(
     feature = "frozen-abi",
     derive(
-        solana_frozen_abi_macro::AbiExample,
-        solana_frozen_abi_macro::AbiEnumVisitor
+        trezoa_frozen_abi_macro::AbiExample,
+        trezoa_frozen_abi_macro::AbiEnumVisitor
     )
 )]
 #[cfg_attr(feature = "borsh", derive(BorshSerialize, BorshDeserialize))]

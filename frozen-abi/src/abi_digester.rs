@@ -205,13 +205,13 @@ impl AbiDigester {
 
         let hash = hasher.result();
 
-        if let Ok(dir) = std::env::var("SOLANA_ABI_DUMP_DIR") {
+        if let Ok(dir) = std::env::var("TREZOA_ABI_DUMP_DIR") {
             let thread_name = std::thread::current()
                 .name()
                 .unwrap_or("unknown-test-thread")
                 .replace(':', "_");
             if thread_name == "main" {
-                eprintln!("Bad thread name detected for dumping; Maybe, --test-threads=1? Sorry, SOLANA_ABI_DUMP_DIR doesn't work under 1; increase it");
+                eprintln!("Bad thread name detected for dumping; Maybe, --test-threads=1? Sorry, TREZOA_ABI_DUMP_DIR doesn't work under 1; increase it");
             }
 
             let path = format!("{dir}/{thread_name}_{hash}",);
@@ -677,7 +677,7 @@ mod tests {
         // impl AbiExample for its private type:
         // thread '...TestFlags_frozen_abi...' panicked at ...:
         //   derive or implement AbiExample/AbiEnumVisitor for
-        //   solana_frozen_abi::abi_digester::tests::_::InternalBitFlags
+        //   trezoa_frozen_abi::abi_digester::tests::_::InternalBitFlags
         impl EvenAsOpaque for TestFlags {
             const TYPE_NAME_MATCHER: &'static str = "::_::InternalBitFlags";
         }
@@ -686,7 +686,7 @@ mod tests {
     mod serde_with_abi {
         use serde_with::{serde_as, Bytes};
 
-        // This is a minimized testcase based on solana_sdk::packet::Packet
+        // This is a minimized testcase based on trezoa_sdk::packet::Packet
         #[serde_as]
         #[derive(serde_derive::Serialize, AbiExample)]
         #[frozen_abi(digest = "DcR9EB87D4uQBjUrsendvcFgS5KSF7okjnxGx8ZaDE8Z")]
@@ -703,7 +703,7 @@ mod tests {
             foo: [u8; 42],
         }
 
-        // This is a minimized testcase based on solana_lattice_hash::lt_hash::LtHash
+        // This is a minimized testcase based on trezoa_lattice_hash::lt_hash::LtHash
         #[serde_as]
         #[derive(serde_derive::Serialize, AbiExample)]
         #[frozen_abi(digest = "A1J57qgtrhpqk6vD4tjV1CHLPagacBKsXJBBUB5mdp5W")]

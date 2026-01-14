@@ -1,7 +1,7 @@
 [package]
-name = "solana-sdk-wasm-js-tests"
-description = "Tests for using the Solana SDK Wasm JS crate"
-documentation = "https://docs.rs/solana-system-interface-wasm-js"
+name = "trezoa-sdk-wasm-js-tests"
+description = "Tests for using the Trezoa SDK Wasm JS crate"
+documentation = "https://docs.rs/trezoa-system-interface-wasm-js"
 publish = false
 version = "1.0.0"
 authors = { workspace = true }
@@ -19,9 +19,9 @@ rustdoc-args = ["--cfg=docsrs"]
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
-solana-address = { workspace = true }
-solana-instruction = { workspace = true, features = ["std"] }
-solana-sdk-wasm-js = { workspace = true }
+trezoa-address = { workspace = true }
+trezoa-instruction = { workspace = true, features = ["std"] }
+trezoa-sdk-wasm-js = { workspace = true }
 
 [target.'cfg(target_arch = "wasm32")'.dependencies]
 js-sys = { workspace = true }

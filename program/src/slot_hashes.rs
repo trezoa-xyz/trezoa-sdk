@@ -1,1 +1,1 @@
-pub use {solana_clock::Slot, solana_slot_hashes::*};
+pub use {trezoa_clock::Slot, trezoa_slot_hashes::*};

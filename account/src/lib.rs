@@ -1,21 +1,21 @@
 #![cfg_attr(feature = "frozen-abi", feature(min_specialization))]
 #![cfg_attr(docsrs, feature(doc_cfg))]
-//! The Solana [`Account`] type.
+//! The Trezoa [`Account`] type.
 
 #[cfg(feature = "dev-context-only-utils")]
 use qualifier_attr::qualifiers;
 #[cfg(feature = "serde")]
 use serde::ser::{Serialize, Serializer};
 #[cfg(feature = "frozen-abi")]
-use solana_frozen_abi_macro::{frozen_abi, AbiExample};
+use trezoa_frozen_abi_macro::{frozen_abi, AbiExample};
 #[cfg(feature = "bincode")]
-use solana_sysvar::SysvarSerialize;
+use trezoa_sysvar::SysvarSerialize;
 use {
-    solana_account_info::{debug_account_data::*, AccountInfo},
-    solana_clock::{Epoch, INITIAL_RENT_EPOCH},
-    solana_instruction_error::LamportsError,
-    solana_pubkey::Pubkey,
-    solana_sdk_ids::{bpf_loader, bpf_loader_deprecated, bpf_loader_upgradeable, loader_v4},
+    trezoa_account_info::{debug_account_data::*, AccountInfo},
+    trezoa_clock::{Epoch, INITIAL_RENT_EPOCH},
+    trezoa_instruction_error::LamportsError,
+    trezoa_pubkey::Pubkey,
+    trezoa_sdk_ids::{bpf_loader, bpf_loader_deprecated, bpf_loader_upgradeable, loader_v4},
     std::{
         cell::{Ref, RefCell},
         fmt,
@@ -59,12 +59,12 @@ pub struct Account {
 #[cfg(feature = "serde")]
 mod account_serialize {
     #[cfg(feature = "frozen-abi")]
-    use solana_frozen_abi_macro::{frozen_abi, AbiExample};
+    use trezoa_frozen_abi_macro::{frozen_abi, AbiExample};
     use {
         crate::ReadableAccount,
         serde::{ser::Serializer, Serialize},
-        solana_clock::Epoch,
-        solana_pubkey::Pubkey,
+        trezoa_clock::Epoch,
+        trezoa_pubkey::Pubkey,
     };
     #[repr(C)]
     #[cfg_attr(
@@ -635,7 +635,7 @@ pub fn create_account_with_fields<S: SysvarSerialize>(
     (lamports, rent_epoch): InheritableAccountFields,
 ) -> Account {
     let data_len = S::size_of().max(bincode::serialized_size(sysvar).unwrap() as usize);
-    let mut account = Account::new(lamports, data_len, &solana_sdk_ids::sysvar::id());
+    let mut account = Account::new(lamports, data_len, &trezoa_sdk_ids::sysvar::id());
     to_account::<S, Account>(sysvar, &mut account).unwrap();
     account.rent_epoch = rent_epoch;
     account
@@ -680,7 +680,7 @@ pub fn to_account<S: SysvarSerialize, T: WritableAccount>(
 
 /// Return the information required to construct an `AccountInfo`.  Used by the
 /// `AccountInfo` conversion implementations.
-impl solana_account_info::Account for Account {
+impl trezoa_account_info::Account for Account {
     fn get(&mut self) -> (&mut u64, &mut [u8], &Pubkey, bool) {
         (
             &mut self.lamports,

@@ -1,6 +1,6 @@
 use {
     serde_derive::Deserialize,
-    solana_bn254::{compression::prelude::*, prelude::*},
+    trezoa_bn254::{compression::prelude::*, prelude::*},
 };
 
 #[test]

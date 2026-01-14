@@ -3,9 +3,9 @@
 //! [SHA-256]: https://en.wikipedia.org/wiki/SHA-2
 //! [`Hash`]: struct@Hash
 
-#[cfg(not(target_os = "solana"))]
-pub use solana_sha256_hasher::Hasher;
+#[cfg(not(target_os = "trezoa"))]
+pub use trezoa_sha256_hasher::Hasher;
 pub use {
-    solana_hash::{Hash, ParseHashError, HASH_BYTES},
-    solana_sha256_hasher::{hash, hashv},
+    trezoa_hash::{Hash, ParseHashError, HASH_BYTES},
+    trezoa_sha256_hasher::{hash, hashv},
 };

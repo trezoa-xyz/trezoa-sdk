@@ -104,9 +104,9 @@ all_crate_dirs=(
   vote-interface
 )
 
-update_solana_sdk_dependencies() {
+update_trezoa_sdk_dependencies() {
   declare project_root="$1"
-  declare solana_sdk_dir="$2"
+  declare trezoa_sdk_dir="$2"
   declare crate_dir="$3"
   declare tomls=()
   while IFS='' read -r line; do tomls+=("$line"); done < <(find "$project_root" -name Cargo.toml)
@@ -117,26 +117,26 @@ update_solana_sdk_dependencies() {
     crate_dirs=("$crate_dir")
   fi
   for crate_dir in "${crate_dirs[@]}"; do
-    full_path="$solana_sdk_dir/$crate_dir"
+    full_path="$trezoa_sdk_dir/$crate_dir"
     crate_version=$(readCargoVariable version "$full_path/Cargo.toml")
-    sed -E -i'' -e "s:(solana-${crate_dir} = \")([=<>]*)[0-9.]+([^\"]*)\".*:\1\2${crate_version}\3\":" "${tomls[@]}"
-    sed -E -i'' -e "s:(solana-${crate_dir} = \{ version = \")([=<>]*)[0-9.]+([^\"]*)(\".*):\1\2${crate_version}\3\4:" "${tomls[@]}"
+    sed -E -i'' -e "s:(trezoa-${crate_dir} = \")([=<>]*)[0-9.]+([^\"]*)\".*:\1\2${crate_version}\3\":" "${tomls[@]}"
+    sed -E -i'' -e "s:(trezoa-${crate_dir} = \{ version = \")([=<>]*)[0-9.]+([^\"]*)(\".*):\1\2${crate_version}\3\4:" "${tomls[@]}"
   done
 }
 
-patch_crates_io_solana_sdk() {
+patch_crates_io_trezoa_sdk() {
   declare Cargo_toml="$1"
-  declare solana_sdk_dir="$2"
+  declare trezoa_sdk_dir="$2"
   declare crate_dir="$3"
   cat >> "$Cargo_toml" <<EOF
 [patch.crates-io]
 EOF
-  patch_crates_io_solana_sdk_no_header "$Cargo_toml" "$solana_sdk_dir" "$crate_dir"
+  patch_crates_io_trezoa_sdk_no_header "$Cargo_toml" "$trezoa_sdk_dir" "$crate_dir"
 }
 
-patch_crates_io_solana_sdk_no_header() {
+patch_crates_io_trezoa_sdk_no_header() {
   declare Cargo_toml="$1"
-  declare solana_sdk_dir="$2"
+  declare trezoa_sdk_dir="$2"
   declare crate_dir="$3"
 
   crate_dirs=("${all_crate_dirs[@]}")
@@ -150,16 +150,16 @@ patch_crates_io_solana_sdk_no_header() {
     fi
   fi
 
-  full_path_solana_sdk_dir="$(cd "$solana_sdk_dir" && pwd -P)"
+  full_path_trezoa_sdk_dir="$(cd "$trezoa_sdk_dir" && pwd -P)"
   patch_crates=()
   for crate_dir in "${crate_dirs[@]}"; do
-    full_path="$full_path_solana_sdk_dir/$crate_dir"
+    full_path="$full_path_trezoa_sdk_dir/$crate_dir"
     if [[ -r "$full_path/Cargo.toml" ]]; then
-      patch_crates+=("solana-${crate_dir} = { path = \"$full_path\" }")
+      patch_crates+=("trezoa-${crate_dir} = { path = \"$full_path\" }")
     fi
   done
 
-  echo "Patching in crates from $solana_sdk_dir"
+  echo "Patching in crates from $trezoa_sdk_dir"
   echo
   if ! grep -q '\[patch.crates-io\]' "$Cargo_toml"; then
     echo "[patch.crates-io]" >> "$Cargo_toml"

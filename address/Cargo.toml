@@ -1,7 +1,7 @@
 [package]
-name = "solana-address"
-description = "Solana account addresses"
-documentation = "https://docs.rs/solana-address"
+name = "trezoa-address"
+description = "Trezoa account addresses"
+documentation = "https://docs.rs/trezoa-address"
 version = "2.0.0"
 rust-version = "1.81.0"
 authors = { workspace = true }
@@ -16,27 +16,27 @@ all-features = true
 rustdoc-args = ["--cfg=docsrs"]
 
 [features]
-atomic = ["dep:solana-atomic-u64"]
+atomic = ["dep:trezoa-atomic-u64"]
 borsh = ["dep:borsh", "alloc"]
 bytemuck = ["copy", "dep:bytemuck", "dep:bytemuck_derive"]
 copy = []
 curve25519 = ["dep:curve25519-dalek", "sha2", "syscalls"]
 decode = ["dep:five8", "dep:five8_const", "error"]
 dev-context-only-utils = ["dep:arbitrary", "rand"]
-error = ["dep:solana-program-error"]
+error = ["dep:trezoa-program-error"]
 frozen-abi = [
-    "dep:solana-frozen-abi",
-    "dep:solana-frozen-abi-macro",
-    "dep:solana-program-error",
+    "dep:trezoa-frozen-abi",
+    "dep:trezoa-frozen-abi-macro",
+    "dep:trezoa-program-error",
     "std",
 ]
 rand = ["dep:rand", "atomic", "std"]
-sanitize = ["dep:solana-sanitize"]
+sanitize = ["dep:trezoa-sanitize"]
 serde = ["dep:serde", "dep:serde_derive"]
-sha2 = ["dep:solana-sha256-hasher", "error"]
+sha2 = ["dep:trezoa-sha256-hasher", "error"]
 std = ["decode", "borsh?/std", "serde?/std", "wincode?/std", "alloc"]
 alloc = ["wincode?/alloc"]
-syscalls = ["dep:solana-define-syscall", "error"]
+syscalls = ["dep:trezoa-define-syscall", "error"]
 wincode = ["dep:wincode"]
 
 [dependencies]
@@ -49,25 +49,25 @@ five8_const = { workspace = true, optional = true }
 rand = { workspace = true, optional = true }
 serde = { workspace = true, optional = true }
 serde_derive = { workspace = true, optional = true }
-solana-atomic-u64 = { workspace = true, optional = true }
-solana-frozen-abi = { workspace = true, features = ["frozen-abi"], optional = true }
-solana-frozen-abi-macro = { workspace = true, features = ["frozen-abi"], optional = true }
-solana-program-error = { workspace = true, optional = true }
-solana-sanitize = { workspace = true, optional = true }
+trezoa-atomic-u64 = { workspace = true, optional = true }
+trezoa-frozen-abi = { workspace = true, features = ["frozen-abi"], optional = true }
+trezoa-frozen-abi-macro = { workspace = true, features = ["frozen-abi"], optional = true }
+trezoa-program-error = { workspace = true, optional = true }
+trezoa-sanitize = { workspace = true, optional = true }
 wincode = { workspace = true, optional = true }
 
-[target.'cfg(any(target_os = "solana", target_arch = "bpf"))'.dependencies]
-solana-define-syscall = { workspace = true, optional = true }
-solana-sha256-hasher = { workspace = true, optional = true }
+[target.'cfg(any(target_os = "trezoa", target_arch = "bpf"))'.dependencies]
+trezoa-define-syscall = { workspace = true, optional = true }
+trezoa-sha256-hasher = { workspace = true, optional = true }
 
-[target.'cfg(not(any(target_os = "solana", target_arch = "bpf")))'.dependencies]
+[target.'cfg(not(any(target_os = "trezoa", target_arch = "bpf")))'.dependencies]
 curve25519-dalek = { workspace = true, optional = true }
-solana-sha256-hasher = { workspace = true, features = ["sha2"], optional = true }
+trezoa-sha256-hasher = { workspace = true, features = ["sha2"], optional = true }
 
 [dev-dependencies]
 anyhow = { workspace = true }
-solana-account-info = { path = "../account-info" }
-solana-address = { path = ".", features = [
+trezoa-account-info = { path = "../account-info" }
+trezoa-address = { path = ".", features = [
     "atomic",
     "borsh",
     "curve25519",
@@ -78,12 +78,12 @@ solana-address = { path = ".", features = [
     "std",
     "syscalls",
 ] }
-solana-cpi = { path = "../cpi" }
-solana-example-mocks = { path = "../example-mocks" }
-solana-hash = { workspace = true }
-solana-instruction = { path = "../instruction", features = ["borsh"] }
-solana-program-error = { workspace = true, features = ["borsh"] }
-solana-system-interface = { path = "../system-interface", features = ["bincode"] }
+trezoa-cpi = { path = "../cpi" }
+trezoa-example-mocks = { path = "../example-mocks" }
+trezoa-hash = { workspace = true }
+trezoa-instruction = { path = "../instruction", features = ["borsh"] }
+trezoa-program-error = { workspace = true, features = ["borsh"] }
+trezoa-system-interface = { path = "../system-interface", features = ["bincode"] }
 strum = { workspace = true }
 strum_macros = { workspace = true }
 

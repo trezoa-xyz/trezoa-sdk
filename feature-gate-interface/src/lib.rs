@@ -23,5 +23,5 @@ pub use crate::{
 };
 pub use {
     crate::state::Feature,
-    solana_sdk_ids::feature::{check_id, id, ID},
+    trezoa_sdk_ids::feature::{check_id, id, ID},
 };

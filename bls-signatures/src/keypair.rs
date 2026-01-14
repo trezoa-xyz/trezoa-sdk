@@ -5,8 +5,8 @@ use crate::{
     secret_key::{SecretKey, BLS_SECRET_KEY_SIZE},
     signature::{AsSignatureAffine, SignatureProjective},
 };
-#[cfg(feature = "solana-signer-derive")]
-use solana_signer::Signer;
+#[cfg(feature = "trezoa-signer-derive")]
+use trezoa_signer::Signer;
 #[cfg(feature = "std")]
 use std::{
     boxed::Box,
@@ -44,8 +44,8 @@ impl Keypair {
         Ok(Self { secret, public })
     }
 
-    /// Derive a `BlsSecretKey` from a Solana signer
-    #[cfg(feature = "solana-signer-derive")]
+    /// Derive a `BlsSecretKey` from a Trezoa signer
+    #[cfg(feature = "trezoa-signer-derive")]
     pub fn derive_from_signer(signer: &dyn Signer, public_seed: &[u8]) -> Result<Self, BlsError> {
         let secret = SecretKey::derive_from_signer(signer, public_seed)?;
         let public = PubkeyProjective::from_secret(&secret).into();
@@ -169,12 +169,12 @@ mod tests {
     }
 
     #[test]
-    #[cfg(feature = "solana-signer-derive")]
+    #[cfg(feature = "trezoa-signer-derive")]
     fn test_keygen_derive_from_signer() {
-        let solana_keypair = solana_keypair::Keypair::new();
-        let secret = SecretKey::derive_from_signer(&solana_keypair, b"alpenglow-vote").unwrap();
+        let trezoa_keypair = trezoa_keypair::Keypair::new();
+        let secret = SecretKey::derive_from_signer(&trezoa_keypair, b"alpenglow-vote").unwrap();
         let public: PubkeyAffine = PubkeyProjective::from_secret(&secret).into();
-        let keypair = Keypair::derive_from_signer(&solana_keypair, b"alpenglow-vote").unwrap();
+        let keypair = Keypair::derive_from_signer(&trezoa_keypair, b"alpenglow-vote").unwrap();
 
         assert_eq!(keypair.secret, secret);
         assert_eq!(keypair.public, public);

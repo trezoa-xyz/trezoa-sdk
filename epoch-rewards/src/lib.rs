@@ -1,6 +1,6 @@
 //! A type to hold data for the [`EpochRewards` sysvar][sv].
 //!
-//! [sv]: https://docs.solanalabs.com/runtime/sysvars#epochrewards
+//! [sv]: https://docs.trezoalabs.com/runtime/sysvars#epochrewards
 //!
 //! The sysvar ID is declared in [`sysvar`].
 //!
@@ -17,10 +17,10 @@ pub mod sysvar;
 extern crate std;
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
-use {solana_hash::Hash, solana_sdk_macro::CloneZeroed};
+use {trezoa_hash::Hash, trezoa_sdk_macro::CloneZeroed};
 
 #[repr(C, align(16))]
-#[cfg_attr(feature = "frozen-abi", derive(solana_frozen_abi_macro::AbiExample))]
+#[cfg_attr(feature = "frozen-abi", derive(trezoa_frozen_abi_macro::AbiExample))]
 #[cfg_attr(feature = "serde", derive(Deserialize, Serialize))]
 #[derive(Debug, PartialEq, Eq, Default, CloneZeroed)]
 pub struct EpochRewards {
@@ -53,7 +53,7 @@ pub struct EpochRewards {
     /// active
     ///
     /// SAFETY: upstream invariant: the sysvar data is created exclusively
-    /// by the Solana runtime and serializes bool as 0x00 or 0x01.
+    /// by the Trezoa runtime and serializes bool as 0x00 or 0x01.
     pub active: bool,
 }
 

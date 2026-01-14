@@ -1,7 +1,7 @@
 [package]
-name = "solana-account-view"
+name = "trezoa-account-view"
 description = "Lightweight representation of a runtime account"
-documentation = "https://docs.rs/solana-account-view"
+documentation = "https://docs.rs/trezoa-account-view"
 version = "1.0.0"
 rust-version = "1.81.0"
 authors = { workspace = true }
@@ -16,11 +16,11 @@ all-features = true
 rustdoc-args = ["--cfg=docsrs"]
 
 [features]
-copy = ["solana-address/copy"]
+copy = ["trezoa-address/copy"]
 
 [dependencies]
-solana-address = { workspace = true }
-solana-program-error = { workspace = true }
+trezoa-address = { workspace = true }
+trezoa-program-error = { workspace = true }
 
 [lints]
 workspace = true

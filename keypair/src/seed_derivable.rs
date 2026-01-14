@@ -3,8 +3,8 @@
 use {
     crate::{keypair_from_seed, keypair_from_seed_phrase_and_passphrase, Keypair},
     ed25519_dalek_bip32::Error as Bip32Error,
-    solana_derivation_path::DerivationPath,
-    solana_seed_derivable::SeedDerivable,
+    trezoa_derivation_path::DerivationPath,
+    trezoa_seed_derivable::SeedDerivable,
     std::error,
 };
 
@@ -29,7 +29,7 @@ impl SeedDerivable for Keypair {
 }
 
 /// Generates a Keypair using Bip32 Hierarchical Derivation if derivation-path is provided;
-/// otherwise generates the base Bip44 Solana keypair from the seed
+/// otherwise generates the base Bip44 Trezoa keypair from the seed
 pub fn keypair_from_seed_and_derivation_path(
     seed: &[u8],
     derivation_path: Option<DerivationPath>,

@@ -1,7 +1,7 @@
 [package]
-name = "solana-poh-config"
-description = "Definitions of Solana's proof of history."
-documentation = "https://docs.rs/solana-poh-config"
+name = "trezoa-poh-config"
+description = "Definitions of Trezoa's proof of history."
+documentation = "https://docs.rs/trezoa-poh-config"
 version = "3.0.0"
 authors = { workspace = true }
 repository = { workspace = true }
@@ -15,21 +15,21 @@ all-features = true
 rustdoc-args = ["--cfg=docsrs"]
 
 [features]
-frozen-abi = ["dep:solana-frozen-abi", "dep:solana-frozen-abi-macro"]
+frozen-abi = ["dep:trezoa-frozen-abi", "dep:trezoa-frozen-abi-macro"]
 serde = ["dep:serde", "dep:serde_derive"]
 
 [dependencies]
 serde = { workspace = true, optional = true }
 serde_derive = { workspace = true, optional = true }
-solana-frozen-abi = { workspace = true, optional = true, features = [
+trezoa-frozen-abi = { workspace = true, optional = true, features = [
     "frozen-abi",
 ] }
-solana-frozen-abi-macro = { workspace = true, optional = true, features = [
+trezoa-frozen-abi-macro = { workspace = true, optional = true, features = [
     "frozen-abi",
 ] }
 
 [dev-dependencies]
-solana-clock = { workspace = true }
+trezoa-clock = { workspace = true }
 static_assertions = { workspace = true }
 
 [lints]

@@ -1,6 +1,6 @@
 //! Configuration for network [rent].
 //!
-//! [rent]: https://docs.solanalabs.com/implemented-proposals/rent
+//! [rent]: https://docs.trezoalabs.com/implemented-proposals/rent
 
 #![allow(clippy::arithmetic_side_effects)]
 #![no_std]
@@ -12,19 +12,19 @@ extern crate std;
 #[cfg(feature = "sysvar")]
 pub mod sysvar;
 
-use solana_sdk_macro::CloneZeroed;
+use trezoa_sdk_macro::CloneZeroed;
 
-// inlined to avoid solana_clock dep
+// inlined to avoid trezoa_clock dep
 const DEFAULT_SLOTS_PER_EPOCH: u64 = 432_000;
 #[cfg(test)]
 static_assertions::const_assert_eq!(
     DEFAULT_SLOTS_PER_EPOCH,
-    solana_clock::DEFAULT_SLOTS_PER_EPOCH
+    trezoa_clock::DEFAULT_SLOTS_PER_EPOCH
 );
 
 /// Configuration of network rent.
 #[repr(C)]
-#[cfg_attr(feature = "frozen-abi", derive(solana_frozen_abi_macro::AbiExample))]
+#[cfg_attr(feature = "frozen-abi", derive(trezoa_frozen_abi_macro::AbiExample))]
 #[cfg_attr(
     feature = "serde",
     derive(serde_derive::Deserialize, serde_derive::Serialize)

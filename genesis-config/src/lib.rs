@@ -3,15 +3,15 @@
 #![cfg_attr(feature = "frozen-abi", feature(min_specialization))]
 #![cfg_attr(docsrs, feature(doc_cfg))]
 #[cfg(feature = "frozen-abi")]
-use solana_frozen_abi_macro::{frozen_abi, AbiExample};
+use trezoa_frozen_abi_macro::{frozen_abi, AbiExample};
 #[cfg(feature = "serde")]
 use {
     bincode::{deserialize, serialize},
     chrono::{TimeZone, Utc},
     memmap2::Mmap,
-    solana_hash::Hash,
-    solana_sha256_hasher::hash,
-    solana_shred_version::compute_shred_version,
+    trezoa_hash::Hash,
+    trezoa_sha256_hasher::hash,
+    trezoa_shred_version::compute_shred_version,
     std::{
         fmt,
         fs::{File, OpenOptions},
@@ -20,19 +20,19 @@ use {
     },
 };
 use {
-    solana_account::{Account, AccountSharedData},
-    solana_clock::{UnixTimestamp, DEFAULT_TICKS_PER_SLOT},
-    solana_cluster_type::ClusterType,
-    solana_epoch_schedule::EpochSchedule,
-    solana_fee_calculator::FeeRateGovernor,
-    solana_inflation::Inflation,
-    solana_keypair::Keypair,
-    solana_poh_config::PohConfig,
-    solana_pubkey::Pubkey,
-    solana_rent::Rent,
-    solana_sdk_ids::system_program,
-    solana_signer::Signer,
-    solana_time_utils::years_as_slots,
+    trezoa_account::{Account, AccountSharedData},
+    trezoa_clock::{UnixTimestamp, DEFAULT_TICKS_PER_SLOT},
+    trezoa_cluster_type::ClusterType,
+    trezoa_epoch_schedule::EpochSchedule,
+    trezoa_fee_calculator::FeeRateGovernor,
+    trezoa_inflation::Inflation,
+    trezoa_keypair::Keypair,
+    trezoa_poh_config::PohConfig,
+    trezoa_pubkey::Pubkey,
+    trezoa_rent::Rent,
+    trezoa_sdk_ids::system_program,
+    trezoa_signer::Signer,
+    trezoa_time_utils::years_as_slots,
     std::{
         collections::BTreeMap,
         time::{SystemTime, UNIX_EPOCH},
@@ -70,7 +70,7 @@ pub struct GenesisConfig {
     /// network speed configuration
     pub poh_config: PohConfig,
     /// this field exists only to ensure that the binary layout of GenesisConfig remains compatible
-    /// with the Solana v0.23 release line
+    /// with the Trezoa v0.23 release line
     pub __backwards_compat_with_v0_23: u64,
     /// transaction fee config
     pub fee_rate_governor: FeeRateGovernor,
@@ -272,7 +272,7 @@ impl fmt::Display for GenesisConfig {
 mod tests {
     use {
         super::*,
-        solana_signer::Signer,
+        trezoa_signer::Signer,
         std::{path::PathBuf, str::FromStr},
     };
 
@@ -321,10 +321,10 @@ mod tests {
             AccountSharedData::new(10_000, 0, &Pubkey::default()),
         );
         config.add_account(
-            solana_pubkey::new_rand(),
+            trezoa_pubkey::new_rand(),
             AccountSharedData::new(1, 0, &Pubkey::default()),
         );
-        config.add_native_instruction_processor("hi".to_string(), solana_pubkey::new_rand());
+        config.add_native_instruction_processor("hi".to_string(), trezoa_pubkey::new_rand());
 
         assert_eq!(config.accounts.len(), 2);
         assert!(config

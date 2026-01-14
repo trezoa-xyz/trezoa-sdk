@@ -5,47 +5,47 @@
 //! introspection][in], which is required for correctly interoperating with
 //! native programs like the [secp256k1] and [ed25519] programs.
 //!
-//! [in]: https://docs.solanalabs.com/implemented-proposals/instruction_introspection
-//! [secp256k1]: https://docs.rs/solana-secp256k1-program/latest/solana_secp256k1_program/
-//! [ed25519]: https://docs.rs/solana-ed25519-program/latest/solana_ed25519_program/
+//! [in]: https://docs.trezoalabs.com/implemented-proposals/instruction_introspection
+//! [secp256k1]: https://docs.rs/trezoa-secp256k1-program/latest/trezoa_secp256k1_program/
+//! [ed25519]: https://docs.rs/trezoa-ed25519-program/latest/trezoa_ed25519_program/
 //!
 //! Unlike other sysvars, the data in the instructions sysvar is not accessed
 //! through a type that implements the [`Sysvar`] trait. Instead, the
 //! instruction sysvar is accessed through several free functions within this
 //! module.
 //!
-//! [`Sysvar`]: https://docs.rs/solana-sysvar/latest/solana_sysvar/trait.Sysvar.html
+//! [`Sysvar`]: https://docs.rs/trezoa-sysvar/latest/trezoa_sysvar/trait.Sysvar.html
 //!
-//! See also the Solana [documentation on the instructions sysvar][sdoc].
+//! See also the Trezoa [documentation on the instructions sysvar][sdoc].
 //!
-//! [sdoc]: https://docs.solanalabs.com/runtime/sysvars#instructions
+//! [sdoc]: https://docs.trezoalabs.com/runtime/sysvars#instructions
 //!
 //! # Examples
 //!
 //! For a complete example of how the instructions sysvar is used see the
-//! documentation for [`secp256k1_instruction`] in the `solana-sdk` crate.
+//! documentation for [`secp256k1_instruction`] in the `trezoa-sdk` crate.
 //!
-//! [`secp256k1_instruction`]: https://docs.rs/solana-sdk/latest/solana_sdk/secp256k1_instruction/index.html
+//! [`secp256k1_instruction`]: https://docs.rs/trezoa-sdk/latest/trezoa_sdk/secp256k1_instruction/index.html
 
 #![cfg_attr(docsrs, feature(doc_cfg))]
 #![allow(clippy::arithmetic_side_effects)]
 
 #[cfg(feature = "dev-context-only-utils")]
 use qualifier_attr::qualifiers;
-pub use solana_sdk_ids::sysvar::instructions::{check_id, id, ID};
-#[cfg(not(target_os = "solana"))]
+pub use trezoa_sdk_ids::sysvar::instructions::{check_id, id, ID};
+#[cfg(not(target_os = "trezoa"))]
 use {
     bitflags::bitflags,
-    solana_instruction::BorrowedInstruction,
-    solana_serialize_utils::{append_slice, append_u16, append_u8},
+    trezoa_instruction::BorrowedInstruction,
+    trezoa_serialize_utils::{append_slice, append_u16, append_u8},
 };
 use {
-    solana_account_info::AccountInfo,
-    solana_instruction::{AccountMeta, Instruction},
-    solana_instruction_error::InstructionError,
-    solana_program_error::ProgramError,
-    solana_sanitize::SanitizeError,
-    solana_serialize_utils::{read_pubkey, read_slice, read_u16, read_u8},
+    trezoa_account_info::AccountInfo,
+    trezoa_instruction::{AccountMeta, Instruction},
+    trezoa_instruction_error::InstructionError,
+    trezoa_program_error::ProgramError,
+    trezoa_sanitize::SanitizeError,
+    trezoa_serialize_utils::{read_pubkey, read_slice, read_u16, read_u8},
 };
 
 /// Instructions sysvar, dummy type.
@@ -54,18 +54,18 @@ use {
 /// type that does not contain sysvar data. It implements the [`SysvarId`] trait
 /// but does not implement the [`Sysvar`] trait.
 ///
-/// [`SysvarId`]: https://docs.rs/solana-sysvar-id/latest/solana_sysvar_id/trait.SysvarId.html
-/// [`Sysvar`]: https://docs.rs/solana-sysvar/latest/solana_sysvar/trait.Sysvar.html
+/// [`SysvarId`]: https://docs.rs/trezoa-sysvar-id/latest/trezoa_sysvar_id/trait.SysvarId.html
+/// [`Sysvar`]: https://docs.rs/trezoa-sysvar/latest/trezoa_sysvar/trait.Sysvar.html
 ///
 /// Use the free functions in this module to access the instructions sysvar.
 pub struct Instructions();
 
-solana_sysvar_id::impl_sysvar_id!(Instructions);
+trezoa_sysvar_id::impl_sysvar_id!(Instructions);
 
 /// Construct the account data for the instructions sysvar.
 ///
-/// This function is used by the runtime and not available to Solana programs.
-#[cfg(not(target_os = "solana"))]
+/// This function is used by the runtime and not available to Trezoa programs.
+#[cfg(not(target_os = "trezoa"))]
 pub fn construct_instructions_data(instructions: &[BorrowedInstruction]) -> Vec<u8> {
     let mut data = serialize_instructions(instructions);
     // add room for current instruction index.
@@ -74,7 +74,7 @@ pub fn construct_instructions_data(instructions: &[BorrowedInstruction]) -> Vec<
     data
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 bitflags! {
     struct InstructionsSysvarAccountMeta: u8 {
         const IS_SIGNER = 0b00000001;
@@ -106,7 +106,7 @@ bitflags! {
 // - N = num_instructions
 // - A = number of accounts in a particular instruction
 // - D = data_len
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 #[cfg_attr(feature = "dev-context-only-utils", qualifiers(pub))]
 fn serialize_instructions(instructions: &[BorrowedInstruction]) -> Vec<u8> {
     // 64 bytes is a reasonable guess, calculating exactly is slower in benchmarks
@@ -297,12 +297,12 @@ pub fn get_instruction_relative(
 mod tests {
     use {
         super::*,
-        solana_account_info::AccountInfo,
-        solana_address::Address,
-        solana_instruction::{AccountMeta, BorrowedAccountMeta, BorrowedInstruction, Instruction},
-        solana_program_error::ProgramError,
-        solana_sanitize::SanitizeError,
-        solana_sdk_ids::sysvar::instructions::id,
+        trezoa_account_info::AccountInfo,
+        trezoa_address::Address,
+        trezoa_instruction::{AccountMeta, BorrowedAccountMeta, BorrowedInstruction, Instruction},
+        trezoa_program_error::ProgramError,
+        trezoa_sanitize::SanitizeError,
+        trezoa_sdk_ids::sysvar::instructions::id,
     };
 
     #[test]
@@ -391,7 +391,7 @@ mod tests {
         let key = id();
         let mut lamports = 0;
         let mut data = construct_instructions_data(&[borrowed_instruction0, borrowed_instruction1]);
-        let owner = solana_sdk_ids::sysvar::id();
+        let owner = trezoa_sdk_ids::sysvar::id();
         let mut account_info =
             AccountInfo::new(&key, false, false, &mut lamports, &mut data, &owner, false);
 
@@ -442,7 +442,7 @@ mod tests {
         let mut data = construct_instructions_data(&[borrowed_instruction0, borrowed_instruction1]);
         let res = store_current_index_checked(&mut data, 1);
         assert!(res.is_ok());
-        let owner = solana_sdk_ids::sysvar::id();
+        let owner = trezoa_sdk_ids::sysvar::id();
         let mut account_info =
             AccountInfo::new(&key, false, false, &mut lamports, &mut data, &owner, false);
 
@@ -504,7 +504,7 @@ mod tests {
         ]);
         let res = store_current_index_checked(&mut data, 1);
         assert!(res.is_ok());
-        let owner = solana_sdk_ids::sysvar::id();
+        let owner = trezoa_sdk_ids::sysvar::id();
         let mut account_info =
             AccountInfo::new(&key, false, false, &mut lamports, &mut data, &owner, false);
 

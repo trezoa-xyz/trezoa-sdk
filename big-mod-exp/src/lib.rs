@@ -11,7 +11,7 @@ pub struct BigModExpParams {
 
 /// Big integer modular exponentiation
 pub fn big_mod_exp(base: &[u8], exponent: &[u8], modulus: &[u8]) -> Vec<u8> {
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "trezoa"))]
     {
         use {
             num_bigint::BigUint,
@@ -34,7 +34,7 @@ pub fn big_mod_exp(base: &[u8], exponent: &[u8], modulus: &[u8]) -> Vec<u8> {
         return_value
     }
 
-    #[cfg(target_os = "solana")]
+    #[cfg(target_os = "trezoa")]
     {
         let mut return_value = vec![0_u8; modulus.len()];
 
@@ -47,7 +47,7 @@ pub fn big_mod_exp(base: &[u8], exponent: &[u8], modulus: &[u8]) -> Vec<u8> {
             modulus_len: modulus.len() as u64,
         };
         unsafe {
-            solana_define_syscall::definitions::sol_big_mod_exp(
+            trezoa_define_syscall::definitions::sol_big_mod_exp(
                 &param as *const _ as *const u8,
                 return_value.as_mut_slice() as *mut _ as *mut u8,
             )

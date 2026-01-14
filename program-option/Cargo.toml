@@ -1,7 +1,7 @@
 [package]
-name = "solana-program-option"
-description = "A C representation of Rust's Option, used in Solana programs."
-documentation = "https://docs.rs/solana-program-option"
+name = "trezoa-program-option"
+description = "A C representation of Rust's Option, used in Trezoa programs."
+documentation = "https://docs.rs/trezoa-program-option"
 version = "3.0.0"
 authors = { workspace = true }
 repository = { workspace = true }

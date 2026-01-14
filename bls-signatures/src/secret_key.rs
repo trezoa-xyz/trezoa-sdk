@@ -12,8 +12,8 @@ use {
     ff::Field,
     rand::rngs::OsRng,
 };
-#[cfg(feature = "solana-signer-derive")]
-use {solana_signature::Signature, solana_signer::Signer, subtle::ConstantTimeEq};
+#[cfg(feature = "trezoa-signer-derive")]
+use {trezoa_signature::Signature, trezoa_signer::Signer, subtle::ConstantTimeEq};
 
 /// Size of BLS secret key in bytes
 pub const BLS_SECRET_KEY_SIZE: usize = 32;
@@ -48,8 +48,8 @@ impl SecretKey {
             .map_err(|_| BlsError::FieldDecode)
     }
 
-    /// Derive a `BlsSecretKey` from a Solana signer
-    #[cfg(feature = "solana-signer-derive")]
+    /// Derive a `BlsSecretKey` from a Trezoa signer
+    #[cfg(feature = "trezoa-signer-derive")]
     pub fn derive_from_signer(signer: &dyn Signer, public_seed: &[u8]) -> Result<Self, BlsError> {
         let message = [b"bls-key-derive-", public_seed].concat();
         let signature = signer

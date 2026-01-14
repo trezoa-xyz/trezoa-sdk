@@ -1,7 +1,7 @@
 [package]
-name = "solana-account-info"
-description = "Solana AccountInfo and related definitions."
-documentation = "https://docs.rs/solana-account-info"
+name = "trezoa-account-info"
+description = "Trezoa AccountInfo and related definitions."
+documentation = "https://docs.rs/trezoa-account-info"
 version = "3.1.0"
 authors = { workspace = true }
 repository = { workspace = true }
@@ -20,9 +20,9 @@ bincode = ["dep:bincode", "dep:serde_core"]
 [dependencies]
 bincode = { workspace = true, optional = true }
 serde_core = { workspace = true, optional = true }
-solana-address = { workspace = true, features = ["decode"] }
-solana-program-error = { workspace = true }
-solana-program-memory = { workspace = true }
+trezoa-address = { workspace = true, features = ["decode"] }
+trezoa-program-error = { workspace = true }
+trezoa-program-memory = { workspace = true }
 
 [dev-dependencies]
-solana-address = { workspace = true, features = ["atomic"] }
+trezoa-address = { workspace = true, features = ["atomic"] }

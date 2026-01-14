@@ -1,4 +1,4 @@
-use solana_pubkey::Pubkey;
+use trezoa_pubkey::Pubkey;
 
 /// Describes a single account read or written by a program during instruction
 /// execution.
@@ -8,7 +8,7 @@ use solana_pubkey::Pubkey;
 /// Any account that may be mutated by the program during execution, either its
 /// data or metadata such as held lamports, must be writable.
 ///
-/// Note that because the Solana runtime schedules parallel transaction
+/// Note that because the Trezoa runtime schedules parallel transaction
 /// execution around which accounts are writable, care should be taken that only
 /// accounts which actually may be mutated are specified as writable. As the
 /// default [`AccountMeta::new`] constructor creates writable accounts, this is
@@ -37,8 +37,8 @@ impl AccountMeta {
     /// # Examples
     ///
     /// ```
-    /// # use solana_pubkey::Pubkey;
-    /// # use solana_instruction::{AccountMeta, Instruction};
+    /// # use trezoa_pubkey::Pubkey;
+    /// # use trezoa_instruction::{AccountMeta, Instruction};
     /// # use borsh::{BorshSerialize, BorshDeserialize};
     /// #
     /// # #[derive(BorshSerialize, BorshDeserialize)]
@@ -71,8 +71,8 @@ impl AccountMeta {
     /// # Examples
     ///
     /// ```
-    /// # use solana_pubkey::Pubkey;
-    /// # use solana_instruction::{AccountMeta, Instruction};
+    /// # use trezoa_pubkey::Pubkey;
+    /// # use trezoa_instruction::{AccountMeta, Instruction};
     /// # use borsh::{BorshSerialize, BorshDeserialize};
     /// #
     /// # #[derive(BorshSerialize, BorshDeserialize)]

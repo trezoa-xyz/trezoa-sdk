@@ -1,7 +1,7 @@
 [package]
-name = "solana-signer"
-description = "Abstractions for Solana transaction signers. See `solana-keypair` for a concrete implementation."
-documentation = "https://docs.rs/solana-signer"
+name = "trezoa-signer"
+description = "Abstractions for Trezoa transaction signers. See `trezoa-keypair` for a concrete implementation."
+documentation = "https://docs.rs/trezoa-signer"
 version = "3.0.0"
 rust-version = "1.81.0"
 authors = { workspace = true }
@@ -16,6 +16,6 @@ all-features = true
 rustdoc-args = ["--cfg=docsrs"]
 
 [dependencies]
-solana-pubkey = { workspace = true }
-solana-signature = { workspace = true }
-solana-transaction-error = { workspace = true }
+trezoa-pubkey = { workspace = true }
+trezoa-signature = { workspace = true }
+trezoa-transaction-error = { workspace = true }

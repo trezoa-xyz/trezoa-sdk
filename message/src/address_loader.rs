@@ -1,6 +1,6 @@
 use {
     crate::v0::{LoadedAddresses, MessageAddressTableLookup},
-    solana_transaction_error::AddressLoaderError,
+    trezoa_transaction_error::AddressLoaderError,
 };
 
 pub trait AddressLoader: Clone {

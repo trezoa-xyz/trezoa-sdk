@@ -54,7 +54,7 @@ pub fn derive_stable_abi(item: TokenStream) -> TokenStream {
 
     let expanded = quote! {
         #[automatically_derived]
-        impl ::solana_frozen_abi::stable_abi::StableAbi for #ident {}
+        impl ::trezoa_frozen_abi::stable_abi::StableAbi for #ident {}
     };
     expanded.into()
 }
@@ -176,7 +176,7 @@ fn derive_abi_sample_enum_type(input: ItemEnum) -> TokenStream {
     let result = quote! {
         #[automatically_derived]
         #( #attrs )*
-        impl #impl_generics ::solana_frozen_abi::abi_example::AbiExample for #type_name #ty_generics #where_clause {
+        impl #impl_generics ::trezoa_frozen_abi::abi_example::AbiExample for #type_name #ty_generics #where_clause {
             fn example() -> Self {
                 ::std::println!(
                     "AbiExample for enum: {}",
@@ -224,13 +224,13 @@ fn derive_abi_sample_struct_type(input: ItemStruct) -> TokenStream {
     let result = quote! {
         #[automatically_derived]
         #( #attrs )*
-        impl #impl_generics ::solana_frozen_abi::abi_example::AbiExample for #type_name #ty_generics #where_clause {
+        impl #impl_generics ::trezoa_frozen_abi::abi_example::AbiExample for #type_name #ty_generics #where_clause {
             fn example() -> Self {
                 ::std::println!(
                     "AbiExample::example for struct: {}",
                     std::any::type_name::<#type_name #ty_generics>()
                 );
-                use ::solana_frozen_abi::abi_example::AbiExample;
+                use ::trezoa_frozen_abi::abi_example::AbiExample;
 
                 #type_name #turbofish #sample_fields
             }
@@ -279,11 +279,11 @@ fn do_derive_abi_enum_visitor(input: ItemEnum) -> TokenStream {
 
     let type_str = format!("{type_name}");
     (quote! {
-        impl #impl_generics ::solana_frozen_abi::abi_example::AbiEnumVisitor for #type_name #ty_generics #where_clause {
-            fn visit_for_abi(&self, digester: &mut ::solana_frozen_abi::abi_digester::AbiDigester) -> ::solana_frozen_abi::abi_digester::DigestResult {
+        impl #impl_generics ::trezoa_frozen_abi::abi_example::AbiEnumVisitor for #type_name #ty_generics #where_clause {
+            fn visit_for_abi(&self, digester: &mut ::trezoa_frozen_abi::abi_digester::AbiDigester) -> ::trezoa_frozen_abi::abi_digester::DigestResult {
                 let enum_name = #type_str;
                 use ::serde::ser::Serialize;
-                use ::solana_frozen_abi::abi_example::AbiExample;
+                use ::trezoa_frozen_abi::abi_example::AbiExample;
                 digester.update_with_string(::std::format!("enum {} (variants = {})", enum_name, #variant_count));
                 #serialized_variants
                 digester.create_child()
@@ -315,9 +315,9 @@ fn quote_for_test(
     let test_api = quote! {
             #[test]
             fn test_api_digest() {
-                use ::solana_frozen_abi::abi_example::{AbiExample, AbiEnumVisitor};
+                use ::trezoa_frozen_abi::abi_example::{AbiExample, AbiEnumVisitor};
 
-                let mut digester = ::solana_frozen_abi::abi_digester::AbiDigester::create();
+                let mut digester = ::trezoa_frozen_abi::abi_digester::AbiDigester::create();
                 let example = <#type_name>::example();
                 let result = <_>::visit_for_abi(&&example, &mut digester);
                 let mut hash = digester.finalize();
@@ -326,16 +326,16 @@ fn quote_for_test(
                 }
                 result.unwrap();
                 let actual_digest = ::std::format!("{}", hash);
-                if ::std::env::var("SOLANA_ABI_BULK_UPDATE").is_ok() {
+                if ::std::env::var("TREZOA_ABI_BULK_UPDATE").is_ok() {
                     if #expected_api_digest != actual_digest {
                         ::std::eprintln!("sed -i -e 's/{}/{}/g' $(git grep --files-with-matches frozen_abi)", #expected_api_digest, hash);
                     }
-                    ::std::eprintln!("Warning: Not testing the abi digest under SOLANA_ABI_BULK_UPDATE!");
+                    ::std::eprintln!("Warning: Not testing the abi digest under TREZOA_ABI_BULK_UPDATE!");
                 } else {
-                    if let Ok(dir) = ::std::env::var("SOLANA_ABI_DUMP_DIR") {
-                        assert_eq!(#expected_api_digest, actual_digest, "Possibly API changed? Examine the diff in SOLANA_ABI_DUMP_DIR!: \n$ diff -u {}/*{}* {}/*{}*", dir, #expected_api_digest, dir, actual_digest);
+                    if let Ok(dir) = ::std::env::var("TREZOA_ABI_DUMP_DIR") {
+                        assert_eq!(#expected_api_digest, actual_digest, "Possibly API changed? Examine the diff in TREZOA_ABI_DUMP_DIR!: \n$ diff -u {}/*{}* {}/*{}*", dir, #expected_api_digest, dir, actual_digest);
                     } else {
-                        assert_eq!(#expected_api_digest, actual_digest, "Possibly API changed? Confirm the diff by rerunning before and after this test failed with SOLANA_ABI_DUMP_DIR!");
+                        assert_eq!(#expected_api_digest, actual_digest, "Possibly API changed? Confirm the diff by rerunning before and after this test failed with TREZOA_ABI_DUMP_DIR!");
                     }
                 }
             }
@@ -345,13 +345,13 @@ fn quote_for_test(
         quote! {
             #[test]
             fn test_abi_digest() {
-                use ::solana_frozen_abi::rand::{SeedableRng, RngCore};
-                use ::solana_frozen_abi::rand_chacha::ChaCha8Rng;
-                use ::solana_frozen_abi::bincode;
-                use ::solana_frozen_abi::stable_abi::StableAbi;
+                use ::trezoa_frozen_abi::rand::{SeedableRng, RngCore};
+                use ::trezoa_frozen_abi::rand_chacha::ChaCha8Rng;
+                use ::trezoa_frozen_abi::bincode;
+                use ::trezoa_frozen_abi::stable_abi::StableAbi;
 
                 let mut rng = ChaCha8Rng::seed_from_u64(20666175621446498);
-                let mut digester = ::solana_frozen_abi::hash::Hasher::default();
+                let mut digester = ::trezoa_frozen_abi::hash::Hasher::default();
 
                 for _ in 0..10_000 {
                     let val = <#type_name>::random(&mut rng);

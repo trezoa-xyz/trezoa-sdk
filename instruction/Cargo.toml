@@ -1,7 +1,7 @@
 [package]
-name = "solana-instruction"
-description = "Types for directing the execution of Solana programs."
-documentation = "https://docs.rs/solana-instruction"
+name = "trezoa-instruction"
+description = "Types for directing the execution of Trezoa programs."
+documentation = "https://docs.rs/trezoa-instruction"
 version = "3.1.0"
 authors = { workspace = true }
 repository = { workspace = true }
@@ -18,8 +18,8 @@ rustdoc-args = ["--cfg=docsrs"]
 bincode = ["dep:bincode", "dep:serde"]
 borsh = ["dep:borsh"]
 default = ["std"]
-frozen-abi = ["dep:solana-frozen-abi", "dep:solana-frozen-abi-macro", "serde", "std"]
-serde = ["dep:serde", "dep:serde_derive", "solana-pubkey/serde"]
+frozen-abi = ["dep:trezoa-frozen-abi", "dep:trezoa-frozen-abi-macro", "serde", "std"]
+serde = ["dep:serde", "dep:serde_derive", "trezoa-pubkey/serde"]
 std = ["serde?/std", "borsh?/std"]
 syscalls = ["std"]
 
@@ -28,17 +28,17 @@ bincode = { workspace = true, optional = true }
 borsh = { workspace = true, optional = true }
 serde = { workspace = true, optional = true }
 serde_derive = { workspace = true, optional = true }
-solana-frozen-abi = { workspace = true, optional = true }
-solana-frozen-abi-macro = { workspace = true, optional = true }
-solana-instruction-error = { workspace = true, features = ["num-traits"] }
-solana-pubkey = { workspace = true, default-features = false }
+trezoa-frozen-abi = { workspace = true, optional = true }
+trezoa-frozen-abi-macro = { workspace = true, optional = true }
+trezoa-instruction-error = { workspace = true, features = ["num-traits"] }
+trezoa-pubkey = { workspace = true, default-features = false }
 
-[target.'cfg(target_os = "solana")'.dependencies]
-solana-define-syscall = { workspace = true }
+[target.'cfg(target_os = "trezoa")'.dependencies]
+trezoa-define-syscall = { workspace = true }
 
 [dev-dependencies]
-solana-instruction = { path = ".", features = ["borsh"] }
-solana-pubkey = { workspace = true, features = ["std"] }
+trezoa-instruction = { path = ".", features = ["borsh"] }
+trezoa-pubkey = { workspace = true, features = ["std"] }
 
 [lints]
 workspace = true

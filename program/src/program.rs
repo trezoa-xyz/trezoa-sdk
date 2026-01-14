@@ -1,33 +1,33 @@
-//! Wrappers around [`solana-cpi`] with support for overwriting
+//! Wrappers around [`trezoa-cpi`] with support for overwriting
 //! syscall stubs
 //!
-//! Solana programs may call other programs, termed [_cross-program
+//! Trezoa programs may call other programs, termed [_cross-program
 //! invocations_][cpi] (CPI), with the [`invoke`] and [`invoke_signed`]
 //! functions.
 //!
-//! [`solana-cpi`]: https://docs.rs/solana-cpi/latest/solana_cpi/
+//! [`trezoa-cpi`]: https://docs.rs/trezoa-cpi/latest/trezoa_cpi/
 //! [`invoke`]: invoke
 //! [`invoke_signed`]: invoke_signed
-//! [cpi]: https://solana.com/docs/core/cpi
+//! [cpi]: https://trezoa.com/docs/core/cpi
 
 use crate::{
     account_info::AccountInfo, entrypoint::ProgramResult, instruction::Instruction, pubkey::Pubkey,
     stable_layout::stable_instruction::StableInstruction,
 };
-pub use solana_cpi::MAX_RETURN_DATA;
+pub use trezoa_cpi::MAX_RETURN_DATA;
 
-/// Like [`solana_cpi::invoke`], but with support
+/// Like [`trezoa_cpi::invoke`], but with support
 /// for overwriting the `sol_invoke_signed` syscall stub.
 ///
-/// [`solana_cpi::invoke`]: https://docs.rs/solana-cpi/latest/solana_cpi/fn.invoke.html
+/// [`trezoa_cpi::invoke`]: https://docs.rs/trezoa-cpi/latest/trezoa_cpi/fn.invoke.html
 pub fn invoke(instruction: &Instruction, account_infos: &[AccountInfo]) -> ProgramResult {
     invoke_signed(instruction, account_infos, &[])
 }
 
-/// Like [`solana_cpi::invoke_unchecked`], but with support
+/// Like [`trezoa_cpi::invoke_unchecked`], but with support
 /// for overwriting the `sol_invoke_signed` syscall stub.
 ///
-/// [`solana_cpi::invoke_unchecked`]: https://docs.rs/solana-cpi/latest/solana_cpi/fn.invoke_unchecked.html
+/// [`trezoa_cpi::invoke_unchecked`]: https://docs.rs/trezoa-cpi/latest/trezoa_cpi/fn.invoke_unchecked.html
 ///
 /// # Safety
 ///
@@ -41,10 +41,10 @@ pub fn invoke_unchecked(instruction: &Instruction, account_infos: &[AccountInfo]
     invoke_signed_unchecked(instruction, account_infos, &[])
 }
 
-/// Like [`solana_cpi::invoke_signed`], but with support
+/// Like [`trezoa_cpi::invoke_signed`], but with support
 /// for overwriting the `sol_invoke_signed` syscall stub.
 ///
-/// [`solana_cpi::invoke_signed`]: https://docs.rs/solana-cpi/latest/solana_cpi/fn.invoke_signed.html
+/// [`trezoa_cpi::invoke_signed`]: https://docs.rs/trezoa-cpi/latest/trezoa_cpi/fn.invoke_signed.html
 pub fn invoke_signed(
     instruction: &Instruction,
     account_infos: &[AccountInfo],
@@ -69,10 +69,10 @@ pub fn invoke_signed(
     invoke_signed_unchecked(instruction, account_infos, signers_seeds)
 }
 
-/// Like [`solana_cpi::invoke_signed_unchecked`], but with support
+/// Like [`trezoa_cpi::invoke_signed_unchecked`], but with support
 /// for overwriting the `sol_invoke_signed` syscall stub.
 ///
-/// [`solana_cpi::invoke_signed_unchecked`]: https://docs.rs/solana-cpi/latest/solana_cpi/fn.invoke_signed_unchecked.html
+/// [`trezoa_cpi::invoke_signed_unchecked`]: https://docs.rs/trezoa-cpi/latest/trezoa_cpi/fn.invoke_signed_unchecked.html
 ///
 /// # Safety
 ///
@@ -87,40 +87,40 @@ pub fn invoke_signed_unchecked(
     account_infos: &[AccountInfo],
     signers_seeds: &[&[&[u8]]],
 ) -> ProgramResult {
-    #[cfg(target_os = "solana")]
+    #[cfg(target_os = "trezoa")]
     {
-        solana_cpi::invoke_signed_unchecked(instruction, account_infos, signers_seeds)
+        trezoa_cpi::invoke_signed_unchecked(instruction, account_infos, signers_seeds)
     }
 
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "trezoa"))]
     crate::program_stubs::sol_invoke_signed(instruction, account_infos, signers_seeds)
 }
 
-/// Like [`solana_cpi::set_return_data`], but with support
+/// Like [`trezoa_cpi::set_return_data`], but with support
 /// for overwriting the `sol_set_return_data` syscall stub.
 ///
-/// [`solana_cpi::set_return_data`]: https://docs.rs/solana-cpi/latest/solana_cpi/fn.set_return_data.html
+/// [`trezoa_cpi::set_return_data`]: https://docs.rs/trezoa-cpi/latest/trezoa_cpi/fn.set_return_data.html
 pub fn set_return_data(data: &[u8]) {
-    #[cfg(target_os = "solana")]
+    #[cfg(target_os = "trezoa")]
     {
-        solana_cpi::set_return_data(data);
+        trezoa_cpi::set_return_data(data);
     }
 
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "trezoa"))]
     crate::program_stubs::sol_set_return_data(data)
 }
 
-/// Like [`solana_cpi::get_return_data`], but with support
+/// Like [`trezoa_cpi::get_return_data`], but with support
 /// for overwriting the `sol_get_return_data` syscall stub.
 ///
-/// [`solana_cpi::get_return_data`]: https://docs.rs/solana-cpi/latest/solana_cpi/fn.get_return_data.html
+/// [`trezoa_cpi::get_return_data`]: https://docs.rs/trezoa-cpi/latest/trezoa_cpi/fn.get_return_data.html
 pub fn get_return_data() -> Option<(Pubkey, Vec<u8>)> {
-    #[cfg(target_os = "solana")]
+    #[cfg(target_os = "trezoa")]
     {
-        solana_cpi::get_return_data()
+        trezoa_cpi::get_return_data()
     }
 
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "trezoa"))]
     crate::program_stubs::sol_get_return_data()
 }
 
@@ -203,7 +203,7 @@ pub fn check_type_assumptions() {
         }
     }
 
-    solana_account_info::check_type_assumptions();
+    trezoa_account_info::check_type_assumptions();
 }
 
 #[cfg(test)]

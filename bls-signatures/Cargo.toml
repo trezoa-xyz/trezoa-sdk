@@ -1,7 +1,7 @@
 [package]
-name = "solana-bls-signatures"
-description = "Solana BLS Signatures"
-documentation = "https://docs.rs/solana-bls-signatures"
+name = "trezoa-bls-signatures"
+description = "Trezoa BLS Signatures"
+documentation = "https://docs.rs/trezoa-bls-signatures"
 version = "3.0.0"
 rust-version = "1.81.0"
 authors = { workspace = true }
@@ -21,10 +21,10 @@ crate-type = ["rlib"]
 [features]
 bytemuck = ["dep:bytemuck"]
 default = ["std"]
-frozen-abi = ["dep:solana-frozen-abi", "dep:solana-frozen-abi-macro", "std"]
+frozen-abi = ["dep:trezoa-frozen-abi", "dep:trezoa-frozen-abi-macro", "std"]
 parallel = ["dep:rayon"]
 serde = ["dep:cfg_eval", "dep:serde", "dep:serde_with"]
-solana-signer-derive = ["dep:solana-signer", "dep:solana-signature", "dep:subtle"]
+trezoa-signer-derive = ["dep:trezoa-signer", "dep:trezoa-signature", "dep:subtle"]
 std = ["dep:serde_json"]
 
 [dependencies]
@@ -35,30 +35,30 @@ pairing = { workspace = true }
 serde = { workspace = true, features = ["derive"], optional = true }
 serde_json = { workspace = true, optional = true }
 serde_with = { workspace = true, features = ["macros"], optional = true }
-solana-frozen-abi = { workspace = true, optional = true, features = [
+trezoa-frozen-abi = { workspace = true, optional = true, features = [
     "frozen-abi",
 ] }
-solana-frozen-abi-macro = { workspace = true, optional = true, features = [
+trezoa-frozen-abi-macro = { workspace = true, optional = true, features = [
     "frozen-abi",
 ] }
 thiserror = { workspace = true }
 
-[target.'cfg(not(target_os = "solana"))'.dependencies]
+[target.'cfg(not(target_os = "trezoa"))'.dependencies]
 blst = { workspace = true }
 blstrs = { workspace = true }
 ff = { workspace = true }
 group = { workspace = true }
 rand = "0.8" # blstrs is still on rand_core v0.6, so pin this for now
 rayon = { workspace = true, optional = true }
-solana-signature = { workspace = true, optional = true }
-solana-signer = { workspace = true, optional = true }
+trezoa-signature = { workspace = true, optional = true }
+trezoa-signer = { workspace = true, optional = true }
 subtle = { workspace = true, optional = true }
 
 [dev-dependencies]
 bincode = { workspace = true }
 criterion = { workspace = true }
-solana-bls-signatures = { path = ".", features = ["std"] }
-solana-keypair = { workspace = true }
+trezoa-bls-signatures = { path = ".", features = ["std"] }
+trezoa-keypair = { workspace = true }
 tempfile = { workspace = true }
 
 [lints]

@@ -3,33 +3,33 @@
 //! The _slot hashes sysvar_ provides access to the [`SlotHashes`] type.
 //!
 //! The [`SysvarSerialize::from_account_info`] and [`Sysvar::get`] methods always return
-//! [`solana_program_error::ProgramError::UnsupportedSysvar`] because this sysvar account is too large
+//! [`trezoa_program_error::ProgramError::UnsupportedSysvar`] because this sysvar account is too large
 //! to process on-chain. Thus this sysvar cannot be accessed on chain, though
 //! one can still use the [`SysvarId::id`], [`SysvarId::check_id`] and
 //! [`SysvarSerialize::size_of`] methods in an on-chain program, and it can be accessed
 //! off-chain through RPC.
 //!
-//! [`SysvarId::id`]: https://docs.rs/solana-sysvar-id/latest/solana_sysvar_id/trait.SysvarId.html#tymethod.id
-//! [`SysvarId::check_id`]: https://docs.rs/solana-sysvar-id/latest/solana_sysvar_id/trait.SysvarId.html#tymethod.check_id
+//! [`SysvarId::id`]: https://docs.rs/trezoa-sysvar-id/latest/trezoa_sysvar_id/trait.SysvarId.html#tymethod.id
+//! [`SysvarId::check_id`]: https://docs.rs/trezoa-sysvar-id/latest/trezoa_sysvar_id/trait.SysvarId.html#tymethod.check_id
 //!
 //! # Examples
 //!
 //! Calling via the RPC client:
 //!
 //! ```
-//! # use solana_example_mocks::solana_account;
-//! # use solana_example_mocks::solana_rpc_client;
-//! # use solana_account::Account;
-//! # use solana_rpc_client::rpc_client::RpcClient;
-//! # use solana_sdk_ids::sysvar::slot_hashes;
-//! # use solana_slot_hashes::SlotHashes;
+//! # use trezoa_example_mocks::trezoa_account;
+//! # use trezoa_example_mocks::trezoa_rpc_client;
+//! # use trezoa_account::Account;
+//! # use trezoa_rpc_client::rpc_client::RpcClient;
+//! # use trezoa_sdk_ids::sysvar::slot_hashes;
+//! # use trezoa_slot_hashes::SlotHashes;
 //! # use anyhow::Result;
 //! #
 //! fn print_sysvar_slot_hashes(client: &RpcClient) -> Result<()> {
 //! #   client.set_get_account_response(slot_hashes::ID, Account {
 //! #       lamports: 1009200,
 //! #       data: vec![1, 0, 0, 0, 0, 0, 0, 0, 86, 190, 235, 7, 0, 0, 0, 0, 133, 242, 94, 158, 223, 253, 207, 184, 227, 194, 235, 27, 176, 98, 73, 3, 175, 201, 224, 111, 21, 65, 73, 27, 137, 73, 229, 19, 255, 192, 193, 126],
-//! #       owner: solana_sdk_ids::system_program::ID,
+//! #       owner: trezoa_sdk_ids::system_program::ID,
 //! #       executable: false,
 //! # });
 //! #
@@ -46,9 +46,9 @@
 //! ```
 #[cfg(feature = "bytemuck")]
 use bytemuck_derive::{Pod, Zeroable};
-use {crate::Sysvar, solana_clock::Slot, solana_hash::Hash};
+use {crate::Sysvar, trezoa_clock::Slot, trezoa_hash::Hash};
 #[cfg(feature = "bincode")]
-use {crate::SysvarSerialize, solana_account_info::AccountInfo};
+use {crate::SysvarSerialize, trezoa_account_info::AccountInfo};
 
 #[cfg(feature = "bytemuck")]
 const U64_SIZE: usize = std::mem::size_of::<u64>();
@@ -57,9 +57,9 @@ const U64_SIZE: usize = std::mem::size_of::<u64>();
 const SYSVAR_LEN: usize = 20_488; // golden, update if MAX_ENTRIES changes
 
 pub use {
-    solana_sdk_ids::sysvar::slot_hashes::{check_id, id, ID},
-    solana_slot_hashes::SlotHashes,
-    solana_sysvar_id::SysvarId,
+    trezoa_sdk_ids::sysvar::slot_hashes::{check_id, id, ID},
+    trezoa_slot_hashes::SlotHashes,
+    trezoa_sysvar_id::SysvarId,
 };
 
 impl Sysvar for SlotHashes {}
@@ -72,9 +72,9 @@ impl SysvarSerialize for SlotHashes {
     }
     fn from_account_info(
         _account_info: &AccountInfo,
-    ) -> Result<Self, solana_program_error::ProgramError> {
+    ) -> Result<Self, trezoa_program_error::ProgramError> {
         // This sysvar is too large to bincode::deserialize in-program
-        Err(solana_program_error::ProgramError::UnsupportedSysvar)
+        Err(trezoa_program_error::ProgramError::UnsupportedSysvar)
     }
 }
 
@@ -102,14 +102,14 @@ pub struct PodSlotHashes {
 #[cfg(feature = "bytemuck")]
 impl PodSlotHashes {
     /// Fetch all of the raw sysvar data using the `sol_get_sysvar` syscall.
-    pub fn fetch() -> Result<Self, solana_program_error::ProgramError> {
+    pub fn fetch() -> Result<Self, trezoa_program_error::ProgramError> {
         // Allocate an uninitialized buffer for the raw sysvar data.
         let sysvar_len = SYSVAR_LEN;
         let mut data = vec![0; sysvar_len];
 
         // Ensure the created buffer is aligned to 8.
         if data.as_ptr().align_offset(8) != 0 {
-            return Err(solana_program_error::ProgramError::InvalidAccountData);
+            return Err(trezoa_program_error::ProgramError::InvalidAccountData);
         }
 
         // Populate the buffer by fetching all sysvar data using the
@@ -131,7 +131,7 @@ impl PodSlotHashes {
             .and_then(|bytes| bytes.try_into().ok())
             .map(u64::from_le_bytes)
             .and_then(|length| length.checked_mul(std::mem::size_of::<PodSlotHash>() as u64))
-            .ok_or(solana_program_error::ProgramError::InvalidAccountData)?;
+            .ok_or(trezoa_program_error::ProgramError::InvalidAccountData)?;
 
         let slot_hashes_start = U64_SIZE;
         let slot_hashes_end = slot_hashes_start.saturating_add(length as usize);
@@ -145,16 +145,16 @@ impl PodSlotHashes {
 
     /// Return the `SlotHashes` sysvar data as a slice of `PodSlotHash`.
     /// Returns a slice of only the initialized sysvar data.
-    pub fn as_slice(&self) -> Result<&[PodSlotHash], solana_program_error::ProgramError> {
+    pub fn as_slice(&self) -> Result<&[PodSlotHash], trezoa_program_error::ProgramError> {
         self.data
             .get(self.slot_hashes_start..self.slot_hashes_end)
             .and_then(|data| bytemuck::try_cast_slice(data).ok())
-            .ok_or(solana_program_error::ProgramError::InvalidAccountData)
+            .ok_or(trezoa_program_error::ProgramError::InvalidAccountData)
     }
 
     /// Given a slot, get its corresponding hash in the `SlotHashes` sysvar
     /// data. Returns `None` if the slot is not found.
-    pub fn get(&self, slot: &Slot) -> Result<Option<Hash>, solana_program_error::ProgramError> {
+    pub fn get(&self, slot: &Slot) -> Result<Option<Hash>, trezoa_program_error::ProgramError> {
         self.as_slice().map(|pod_hashes| {
             pod_hashes
                 .binary_search_by(|PodSlotHash { slot: this, .. }| slot.cmp(this))
@@ -168,7 +168,7 @@ impl PodSlotHashes {
     pub fn position(
         &self,
         slot: &Slot,
-    ) -> Result<Option<usize>, solana_program_error::ProgramError> {
+    ) -> Result<Option<usize>, trezoa_program_error::ProgramError> {
         self.as_slice().map(|pod_hashes| {
             pod_hashes
                 .binary_search_by(|PodSlotHash { slot: this, .. }| slot.cmp(this))
@@ -180,8 +180,8 @@ impl PodSlotHashes {
 #[cfg(test)]
 mod tests {
     use {
-        super::*, crate::tests::mock_get_sysvar_syscall, serial_test::serial, solana_hash::Hash,
-        solana_sha256_hasher::hash, solana_slot_hashes::MAX_ENTRIES, test_case::test_case,
+        super::*, crate::tests::mock_get_sysvar_syscall, serial_test::serial, trezoa_hash::Hash,
+        trezoa_sha256_hasher::hash, trezoa_slot_hashes::MAX_ENTRIES, test_case::test_case,
     };
 
     #[test]

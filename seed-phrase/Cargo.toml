@@ -1,7 +1,7 @@
 [package]
-name = "solana-seed-phrase"
-description = "Solana functions for generating keypairs from seed phrases."
-documentation = "https://docs.rs/solana-seed-phrase"
+name = "trezoa-seed-phrase"
+description = "Trezoa functions for generating keypairs from seed phrases."
+documentation = "https://docs.rs/trezoa-seed-phrase"
 version = "3.0.0"
 authors = { workspace = true }
 repository = { workspace = true }

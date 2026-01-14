@@ -6,15 +6,15 @@ use {
         Vote, VoteAuthorize, VoteAuthorizeCheckedWithSeedArgs, VoteAuthorizeWithSeedArgs, VoteInit,
         VoteInitV2, VoteStateUpdate, VoteStateV4,
     },
-    solana_clock::{Slot, UnixTimestamp},
-    solana_hash::Hash,
-    solana_pubkey::Pubkey,
+    trezoa_clock::{Slot, UnixTimestamp},
+    trezoa_hash::Hash,
+    trezoa_pubkey::Pubkey,
 };
 #[cfg(feature = "bincode")]
 use {
     crate::program::id,
-    solana_instruction::{AccountMeta, Instruction},
-    solana_sdk_ids::sysvar,
+    trezoa_instruction::{AccountMeta, Instruction},
+    trezoa_sdk_ids::sysvar,
 };
 #[cfg(feature = "serde")]
 use {
@@ -360,7 +360,7 @@ pub fn create_account_with_config(
     config: CreateVoteAccountConfig,
 ) -> Vec<Instruction> {
     let create_ix = if let Some((base, seed)) = config.with_seed {
-        solana_system_interface::instruction::create_account_with_seed(
+        trezoa_system_interface::instruction::create_account_with_seed(
             from_pubkey,
             vote_pubkey,
             base,
@@ -370,7 +370,7 @@ pub fn create_account_with_config(
             &id(),
         )
     } else {
-        solana_system_interface::instruction::create_account(
+        trezoa_system_interface::instruction::create_account(
             from_pubkey,
             vote_pubkey,
             lamports,
@@ -391,7 +391,7 @@ pub fn create_account_with_config_v2(
     config: CreateVoteAccountConfig,
 ) -> Vec<Instruction> {
     let create_ix = if let Some((base, seed)) = config.with_seed {
-        solana_system_interface::instruction::create_account_with_seed(
+        trezoa_system_interface::instruction::create_account_with_seed(
             from_pubkey,
             vote_pubkey,
             base,
@@ -401,7 +401,7 @@ pub fn create_account_with_config_v2(
             &id(),
         )
     } else {
-        solana_system_interface::instruction::create_account(
+        trezoa_system_interface::instruction::create_account(
             from_pubkey,
             vote_pubkey,
             lamports,

@@ -1,13 +1,13 @@
 #[cfg(feature = "frozen-abi")]
-use solana_frozen_abi_macro::{frozen_abi, AbiExample};
+use trezoa_frozen_abi_macro::{frozen_abi, AbiExample};
 use {
     crate::state::{
         Lockout, BLS_PROOF_OF_POSSESSION_COMPRESSED_SIZE, BLS_PUBLIC_KEY_COMPRESSED_SIZE,
         MAX_LOCKOUT_HISTORY,
     },
-    solana_clock::{Slot, UnixTimestamp},
-    solana_hash::Hash,
-    solana_pubkey::Pubkey,
+    trezoa_clock::{Slot, UnixTimestamp},
+    trezoa_hash::Hash,
+    trezoa_pubkey::Pubkey,
     std::{collections::VecDeque, fmt::Debug},
 };
 #[cfg(feature = "serde")]

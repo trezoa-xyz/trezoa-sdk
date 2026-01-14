@@ -2,8 +2,8 @@
 use serde_derive::{Deserialize, Serialize};
 use {
     crate::{v0, AccountKeys},
-    solana_address::Address,
-    solana_sdk_ids::bpf_loader_upgradeable,
+    trezoa_address::Address,
+    trezoa_sdk_ids::bpf_loader_upgradeable,
     std::{borrow::Cow, collections::HashSet},
 };
 
@@ -190,7 +190,7 @@ mod tests {
         super::*,
         crate::{compiled_instruction::CompiledInstruction, MessageHeader},
         itertools::Itertools,
-        solana_sdk_ids::{system_program, sysvar},
+        trezoa_sdk_ids::{system_program, sysvar},
     };
 
     fn check_test_loaded_message() -> (LoadedMessage<'static>, [Address; 6]) {

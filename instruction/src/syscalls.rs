@@ -1,16 +1,16 @@
 #[cfg(feature = "syscalls")]
 use crate::Instruction;
-#[cfg(target_os = "solana")]
+#[cfg(target_os = "trezoa")]
 pub use {
     crate::{AccountMeta, ProcessedSiblingInstruction},
-    solana_define_syscall::definitions::sol_get_stack_height,
-    solana_pubkey::Pubkey,
+    trezoa_define_syscall::definitions::sol_get_stack_height,
+    trezoa_pubkey::Pubkey,
 };
 
-#[cfg(target_os = "solana")]
+#[cfg(target_os = "trezoa")]
 #[deprecated(
     since = "3.1.0",
-    note = "Use `solana_define_syscall::definitions::get_processed_sibling_instruction` instead"
+    note = "Use `trezoa_define_syscall::definitions::get_processed_sibling_instruction` instead"
 )]
 pub unsafe fn sol_get_processed_sibling_instruction(
     index: u64,
@@ -20,7 +20,7 @@ pub unsafe fn sol_get_processed_sibling_instruction(
     accounts: *mut AccountMeta,
 ) -> u64 {
     unsafe {
-        solana_define_syscall::definitions::sol_get_processed_sibling_instruction(
+        trezoa_define_syscall::definitions::sol_get_processed_sibling_instruction(
             index,
             meta as *mut u8,
             program_id as *mut u8,
@@ -44,14 +44,14 @@ pub unsafe fn sol_get_processed_sibling_instruction(
 /// Then F's processed sibling instruction list is: `[E, C]`
 #[cfg(feature = "syscalls")]
 pub fn get_processed_sibling_instruction(index: usize) -> Option<Instruction> {
-    #[cfg(target_os = "solana")]
+    #[cfg(target_os = "trezoa")]
     {
         let mut meta = ProcessedSiblingInstruction::default();
-        let mut program_id = solana_pubkey::Pubkey::default();
+        let mut program_id = trezoa_pubkey::Pubkey::default();
         let mut account_meta = AccountMeta::default();
 
         if 1 == unsafe {
-            solana_define_syscall::definitions::sol_get_processed_sibling_instruction(
+            trezoa_define_syscall::definitions::sol_get_processed_sibling_instruction(
                 index as u64,
                 &mut meta as *mut _ as *mut u8,
                 &mut program_id as *mut _ as *mut u8,
@@ -65,7 +65,7 @@ pub fn get_processed_sibling_instruction(index: usize) -> Option<Instruction> {
             accounts.resize_with(meta.accounts_len as usize, AccountMeta::default);
 
             let _ = unsafe {
-                solana_define_syscall::definitions::sol_get_processed_sibling_instruction(
+                trezoa_define_syscall::definitions::sol_get_processed_sibling_instruction(
                     index as u64,
                     &mut meta as *mut _ as *mut u8,
                     &mut program_id as *mut _ as *mut u8,
@@ -80,10 +80,10 @@ pub fn get_processed_sibling_instruction(index: usize) -> Option<Instruction> {
         }
     }
 
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "trezoa"))]
     {
         core::hint::black_box(index);
-        // Same value used in `solana_sysvar::program_stubs`.
+        // Same value used in `trezoa_sysvar::program_stubs`.
         None
     }
 }
@@ -95,12 +95,12 @@ pub fn get_processed_sibling_instruction(index: usize) -> Option<Instruction> {
 /// is height `TRANSACTION_LEVEL_STACK_HEIGHT + 1`, and so forth.
 #[cfg(feature = "syscalls")]
 pub fn get_stack_height() -> usize {
-    #[cfg(target_os = "solana")]
+    #[cfg(target_os = "trezoa")]
     unsafe {
         sol_get_stack_height() as usize
     }
 
-    #[cfg(not(target_os = "solana"))]
-    // Same value used in `solana_sysvar::program_stubs`.
+    #[cfg(not(target_os = "trezoa"))]
+    // Same value used in `trezoa_sysvar::program_stubs`.
     0
 }

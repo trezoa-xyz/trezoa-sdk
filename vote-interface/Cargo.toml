@@ -1,7 +1,7 @@
 [package]
-name = "solana-vote-interface"
-description = "Solana vote interface."
-documentation = "https://docs.rs/solana-vote-interface"
+name = "trezoa-vote-interface"
+description = "Trezoa vote interface."
+documentation = "https://docs.rs/trezoa-vote-interface"
 version = "5.0.0"
 rust-version = "1.81.0"
 authors = { workspace = true }
@@ -18,34 +18,34 @@ rustdoc-args = ["--cfg=docsrs"]
 [features]
 bincode = [
     "dep:bincode",
-    "dep:solana-serialize-utils",
-    "dep:solana-system-interface",
+    "dep:trezoa-serialize-utils",
+    "dep:trezoa-system-interface",
     "serde",
 ]
 dev-context-only-utils = [
     "bincode",
     "dep:arbitrary",
-    "solana-pubkey/dev-context-only-utils",
+    "trezoa-pubkey/dev-context-only-utils",
 ]
 frozen-abi = [
-    "dep:solana-frozen-abi",
-    "dep:solana-frozen-abi-macro",
+    "dep:trezoa-frozen-abi",
+    "dep:trezoa-frozen-abi-macro",
     "serde",
-    "solana-hash/frozen-abi",
-    "solana-pubkey/frozen-abi",
-    "solana-short-vec/frozen-abi",
+    "trezoa-hash/frozen-abi",
+    "trezoa-pubkey/frozen-abi",
+    "trezoa-short-vec/frozen-abi",
 ]
 serde = [
     "dep:cfg_eval",
     "dep:serde",
     "dep:serde_derive",
     "dep:serde_with",
-    "dep:solana-serde-varint",
-    "dep:solana-short-vec",
+    "dep:trezoa-serde-varint",
+    "dep:trezoa-short-vec",
     "serde/alloc",
-    "solana-hash/serde",
-    "solana-pubkey/serde",
-    "solana-short-vec/serde",
+    "trezoa-hash/serde",
+    "trezoa-pubkey/serde",
+    "trezoa-short-vec/serde",
 ]
 
 [dependencies]
@@ -57,29 +57,29 @@ num-traits = { workspace = true }
 serde = { workspace = true, optional = true }
 serde_derive = { workspace = true, optional = true }
 serde_with = { workspace = true, features = ["macros"], optional = true }
-solana-clock = { workspace = true }
-solana-frozen-abi = { workspace = true, features = ["frozen-abi"], optional = true }
-solana-frozen-abi-macro = { workspace = true, features = ["frozen-abi"], optional = true }
-solana-hash = { workspace = true, features = ["decode"] }
-solana-instruction = { workspace = true, features = ["std"] }
-solana-instruction-error = { workspace = true, features = ["num-traits"] }
-solana-pubkey = { workspace = true }
-solana-rent = { workspace = true }
-solana-sdk-ids = { workspace = true }
-solana-serde-varint = { workspace = true, optional = true }
-solana-serialize-utils = { workspace = true, optional = true }
-solana-short-vec = { workspace = true, optional = true }
-solana-system-interface = { workspace = true, features = ["bincode"], optional = true }
+trezoa-clock = { workspace = true }
+trezoa-frozen-abi = { workspace = true, features = ["frozen-abi"], optional = true }
+trezoa-frozen-abi-macro = { workspace = true, features = ["frozen-abi"], optional = true }
+trezoa-hash = { workspace = true, features = ["decode"] }
+trezoa-instruction = { workspace = true, features = ["std"] }
+trezoa-instruction-error = { workspace = true, features = ["num-traits"] }
+trezoa-pubkey = { workspace = true }
+trezoa-rent = { workspace = true }
+trezoa-sdk-ids = { workspace = true }
+trezoa-serde-varint = { workspace = true, optional = true }
+trezoa-serialize-utils = { workspace = true, optional = true }
+trezoa-short-vec = { workspace = true, optional = true }
+trezoa-system-interface = { workspace = true, features = ["bincode"], optional = true }
 
-[target.'cfg(target_os = "solana")'.dependencies]
-solana-serialize-utils = { workspace = true }
+[target.'cfg(target_os = "trezoa")'.dependencies]
+trezoa-serialize-utils = { workspace = true }
 
 [dev-dependencies]
 itertools = { workspace = true }
 rand = { workspace = true }
-solana-epoch-schedule = { workspace = true }
-solana-pubkey = { workspace = true, features = ["dev-context-only-utils"] }
-solana-vote-interface = { path = ".", features = ["dev-context-only-utils"] }
+trezoa-epoch-schedule = { workspace = true }
+trezoa-pubkey = { workspace = true, features = ["dev-context-only-utils"] }
+trezoa-vote-interface = { path = ".", features = ["dev-context-only-utils"] }
 
 [lints]
 workspace = true

@@ -1,17 +1,17 @@
 //! A type to hold data for the [`SlotHashes` sysvar][sv].
 //!
-//! [sv]: https://docs.solanalabs.com/runtime/sysvars#slothashes
+//! [sv]: https://docs.trezoalabs.com/runtime/sysvars#slothashes
 //!
-//! The sysvar ID is declared in [`solana_program::sysvar::slot_hashes`].
+//! The sysvar ID is declared in [`trezoa_program::sysvar::slot_hashes`].
 //!
-//! [`solana_program::sysvar::slot_hashes`]: https://docs.rs/solana-program/latest/solana_program/sysvar/slot_hashes/index.html
+//! [`trezoa_program::sysvar::slot_hashes`]: https://docs.rs/trezoa-program/latest/trezoa_program/sysvar/slot_hashes/index.html
 #![cfg_attr(docsrs, feature(doc_cfg))]
 
 #[cfg(feature = "sysvar")]
 pub mod sysvar;
 
 use {
-    solana_hash::Hash,
+    trezoa_hash::Hash,
     std::{
         iter::FromIterator,
         ops::Deref,
@@ -85,7 +85,7 @@ impl Deref for SlotHashes {
 
 #[cfg(test)]
 mod tests {
-    use {super::*, solana_sha256_hasher::hash};
+    use {super::*, trezoa_sha256_hasher::hash};
 
     #[test]
     fn test() {

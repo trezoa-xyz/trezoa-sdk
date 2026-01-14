@@ -6,15 +6,15 @@
 #![cfg_attr(docsrs, feature(doc_cfg))]
 #![no_std]
 
-use solana_pubkey::Pubkey;
+use trezoa_pubkey::Pubkey;
 
 fn get_epoch_stake(var_addr: *const u8) -> u64 {
-    #[cfg(target_os = "solana")]
+    #[cfg(target_os = "trezoa")]
     {
-        unsafe { solana_define_syscall::definitions::sol_get_epoch_stake(var_addr) }
+        unsafe { trezoa_define_syscall::definitions::sol_get_epoch_stake(var_addr) }
     }
 
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "trezoa"))]
     {
         core::hint::black_box(var_addr);
         0

@@ -1,36 +1,36 @@
 #[cfg(all(
-    not(any(target_os = "solana", target_arch = "bpf")),
+    not(any(target_os = "trezoa", target_arch = "bpf")),
     feature = "curve25519"
 ))]
 use crate::bytes_are_curve_point;
-#[cfg(any(target_os = "solana", target_arch = "bpf", feature = "curve25519"))]
+#[cfg(any(target_os = "trezoa", target_arch = "bpf", feature = "curve25519"))]
 use crate::error::AddressError;
 use crate::Address;
-/// Syscall definitions used by `solana_address`.
-#[cfg(any(target_os = "solana", target_arch = "bpf"))]
-pub use solana_define_syscall::definitions::{
+/// Syscall definitions used by `trezoa_address`.
+#[cfg(any(target_os = "trezoa", target_arch = "bpf"))]
+pub use trezoa_define_syscall::definitions::{
     sol_create_program_address, sol_log_pubkey, sol_try_find_program_address,
 };
 
-/// Copied from `solana_program::entrypoint::SUCCESS`
-/// to avoid a `solana_program` dependency
-#[cfg(any(target_os = "solana", target_arch = "bpf"))]
+/// Copied from `trezoa_program::entrypoint::SUCCESS`
+/// to avoid a `trezoa_program` dependency
+#[cfg(any(target_os = "trezoa", target_arch = "bpf"))]
 const SUCCESS: u64 = 0;
 
 impl Address {
     /// Log an `Address` value.
-    #[cfg(any(target_os = "solana", target_arch = "bpf"))]
+    #[cfg(any(target_os = "trezoa", target_arch = "bpf"))]
     pub fn log(&self) {
         unsafe { sol_log_pubkey(self.as_ref() as *const _ as *const u8) };
     }
 
     /// Find a valid [program derived address][pda] and its corresponding bump seed.
     ///
-    /// [pda]: https://solana.com/docs/core/cpi#program-derived-addresses
+    /// [pda]: https://trezoa.com/docs/core/cpi#program-derived-addresses
     ///
     /// Program derived addresses (PDAs) are account keys that only the program,
     /// `program_id`, has the authority to sign. The address is of the same form
-    /// as a Solana `Address`, except they are ensured to not be on the ed25519
+    /// as a Trezoa `Address`, except they are ensured to not be on the ed25519
     /// curve and thus have no associated private key. When performing
     /// cross-program invocations the program can "sign" for the key by calling
     /// [`invoke_signed`] and passing the same seeds used to generate the
@@ -39,7 +39,7 @@ impl Address {
     /// program associated with this address is the caller and thus authorized
     /// to be the signer.
     ///
-    /// [`invoke_signed`]: https://docs.rs/solana-program/latest/solana_program/program/fn.invoke_signed.html
+    /// [`invoke_signed`]: https://docs.rs/trezoa-program/latest/trezoa_program/program/fn.invoke_signed.html
     ///
     /// The `seeds` are application-specific, and must be carefully selected to
     /// uniquely derive accounts per application requirements. It is common to
@@ -62,7 +62,7 @@ impl Address {
     /// there is a chance that the program's budget may be occasionally
     /// and unpredictably exceeded.
     ///
-    /// As all account addresses accessed by an on-chain Solana program must be
+    /// As all account addresses accessed by an on-chain Trezoa program must be
     /// explicitly passed to the program, it is typical for the PDAs to be
     /// derived in off-chain client programs, avoiding the compute cost of
     /// generating the address on-chain. The address may or may not then be
@@ -100,24 +100,24 @@ impl Address {
     /// This example illustrates a simple case of creating a "vault" account
     /// which is derived from the payer account, but owned by an on-chain
     /// program. The program derived address is derived in an off-chain client
-    /// program, which invokes an on-chain Solana program that uses the address
+    /// program, which invokes an on-chain Trezoa program that uses the address
     /// to create a new account owned and controlled by the program itself.
     ///
     /// By convention, the on-chain program will be compiled for use in two
     /// different contexts: both on-chain, to interpret a custom program
-    /// instruction as a Solana transaction; and off-chain, as a library, so
+    /// instruction as a Trezoa transaction; and off-chain, as a library, so
     /// that clients can share the instruction data structure, constructors, and
     /// other common code.
     ///
-    /// First the on-chain Solana program:
+    /// First the on-chain Trezoa program:
     ///
     /// ```
     /// # use borsh::{BorshSerialize, BorshDeserialize};
-    /// # use solana_account_info::{next_account_info, AccountInfo};
-    /// # use solana_program_error::ProgramResult;
-    /// # use solana_cpi::invoke_signed;
-    /// # use solana_address::Address;
-    /// # use solana_system_interface::instruction::create_account;
+    /// # use trezoa_account_info::{next_account_info, AccountInfo};
+    /// # use trezoa_program_error::ProgramResult;
+    /// # use trezoa_cpi::invoke_signed;
+    /// # use trezoa_address::Address;
+    /// # use trezoa_system_interface::instruction::create_account;
     /// // The custom instruction processed by our program. It includes the
     /// // PDA's bump seed, which is derived by the client program. This
     /// // definition is also imported into the off-chain client program.
@@ -188,16 +188,16 @@ impl Address {
     ///
     /// ```
     /// # use borsh::{BorshSerialize, BorshDeserialize};
-    /// # use solana_example_mocks::{solana_sdk, solana_rpc_client};
-    /// # use solana_address::Address;
-    /// # use solana_instruction::{AccountMeta, Instruction};
-    /// # use solana_hash::Hash;
-    /// # use solana_sdk::{
+    /// # use trezoa_example_mocks::{trezoa_sdk, trezoa_rpc_client};
+    /// # use trezoa_address::Address;
+    /// # use trezoa_instruction::{AccountMeta, Instruction};
+    /// # use trezoa_hash::Hash;
+    /// # use trezoa_sdk::{
     /// #     signature::Keypair,
     /// #     signature::{Signer, Signature},
     /// #     transaction::Transaction,
     /// # };
-    /// # use solana_rpc_client::rpc_client::RpcClient;
+    /// # use trezoa_rpc_client::rpc_client::RpcClient;
     /// # use std::convert::TryFrom;
     /// # use anyhow::Result;
     /// #
@@ -237,7 +237,7 @@ impl Address {
     ///     let accounts = vec![
     ///         AccountMeta::new(payer.pubkey(), true),
     ///         AccountMeta::new(vault_address, false),
-    ///         AccountMeta::new(solana_system_interface::program::ID, false),
+    ///         AccountMeta::new(trezoa_system_interface::program::ID, false),
     ///     ];
     ///
     ///     // Create the instruction by serializing our instruction data via borsh
@@ -268,10 +268,10 @@ impl Address {
     /// #
     /// # Ok::<(), anyhow::Error>(())
     /// ```
-    // If target_os = "solana" or target_arch = "bpf", then the function
+    // If target_os = "trezoa" or target_arch = "bpf", then the function
     // will use syscalls which bring no dependencies; otherwise, this should
     // be opt-in so users don't need the curve25519 dependency.
-    #[cfg(any(target_os = "solana", target_arch = "bpf", feature = "curve25519"))]
+    #[cfg(any(target_os = "trezoa", target_arch = "bpf", feature = "curve25519"))]
     #[inline(always)]
     pub fn find_program_address(seeds: &[&[u8]], program_id: &Address) -> (Address, u8) {
         Self::try_find_program_address(seeds, program_id)
@@ -280,7 +280,7 @@ impl Address {
 
     /// Find a valid [program derived address][pda] and its corresponding bump seed.
     ///
-    /// [pda]: https://solana.com/docs/core/cpi#program-derived-addresses
+    /// [pda]: https://trezoa.com/docs/core/cpi#program-derived-addresses
     ///
     /// The only difference between this method and [`find_program_address`]
     /// is that this one returns `None` in the statistically improbable event
@@ -290,10 +290,10 @@ impl Address {
     /// See the documentation for [`find_program_address`] for a full description.
     ///
     /// [`find_program_address`]: Address::find_program_address
-    // If target_os = "solana" or target_arch = "bpf", then the function
+    // If target_os = "trezoa" or target_arch = "bpf", then the function
     // will use syscalls which bring no dependencies; otherwise, this should
     // be opt-in so users don't need the curve25519 dependency.
-    #[cfg(any(target_os = "solana", target_arch = "bpf", feature = "curve25519"))]
+    #[cfg(any(target_os = "trezoa", target_arch = "bpf", feature = "curve25519"))]
     #[allow(clippy::same_item_push)]
     #[inline(always)]
     pub fn try_find_program_address(
@@ -302,7 +302,7 @@ impl Address {
     ) -> Option<(Address, u8)> {
         // Perform the calculation inline, calling this from within a program is
         // not supported
-        #[cfg(not(any(target_os = "solana", target_arch = "bpf")))]
+        #[cfg(not(any(target_os = "trezoa", target_arch = "bpf")))]
         {
             let mut bump_seed = [u8::MAX];
             for _ in 0..u8::MAX {
@@ -320,7 +320,7 @@ impl Address {
             None
         }
         // Call via a system call to perform the calculation
-        #[cfg(any(target_os = "solana", target_arch = "bpf"))]
+        #[cfg(any(target_os = "trezoa", target_arch = "bpf"))]
         {
             let mut bytes = core::mem::MaybeUninit::<Address>::uninit();
             let mut bump_seed = u8::MAX;
@@ -343,7 +343,7 @@ impl Address {
 
     /// Create a valid [program derived address][pda] without searching for a bump seed.
     ///
-    /// [pda]: https://solana.com/docs/core/cpi#program-derived-addresses
+    /// [pda]: https://trezoa.com/docs/core/cpi#program-derived-addresses
     ///
     /// Because this function does not create a bump seed, it may unpredictably
     /// return an error for any given set of seeds and is not generally suitable
@@ -376,17 +376,17 @@ impl Address {
     /// that the returned `Address` has the expected value.
     ///
     /// ```
-    /// # use solana_address::Address;
+    /// # use trezoa_address::Address;
     /// # let program_id = Address::new_unique();
     /// let (expected_pda, bump_seed) = Address::find_program_address(&[b"vault"], &program_id);
     /// let actual_pda = Address::create_program_address(&[b"vault", &[bump_seed]], &program_id)?;
     /// assert_eq!(expected_pda, actual_pda);
     /// # Ok::<(), anyhow::Error>(())
     /// ```
-    // If target_os = "solana" or target_arch = "bpf", then the function
+    // If target_os = "trezoa" or target_arch = "bpf", then the function
     // will use syscalls which bring no dependencies; otherwise, this should
     // be opt-in so users don't need the curve25519 dependency.
-    #[cfg(any(target_os = "solana", target_arch = "bpf", feature = "curve25519"))]
+    #[cfg(any(target_os = "trezoa", target_arch = "bpf", feature = "curve25519"))]
     #[inline(always)]
     pub fn create_program_address(
         seeds: &[&[u8]],
@@ -403,11 +403,11 @@ impl Address {
 
         // Perform the calculation inline, calling this from within a program is
         // not supported
-        #[cfg(not(any(target_os = "solana", target_arch = "bpf")))]
+        #[cfg(not(any(target_os = "trezoa", target_arch = "bpf")))]
         {
             use crate::PDA_MARKER;
 
-            let mut hasher = solana_sha256_hasher::Hasher::default();
+            let mut hasher = trezoa_sha256_hasher::Hasher::default();
             for seed in seeds.iter() {
                 hasher.hash(seed);
             }
@@ -421,7 +421,7 @@ impl Address {
             Ok(Address::from(hash.to_bytes()))
         }
         // Call via a system call to perform the calculation
-        #[cfg(any(target_os = "solana", target_arch = "bpf"))]
+        #[cfg(any(target_os = "trezoa", target_arch = "bpf"))]
         {
             let mut bytes = core::mem::MaybeUninit::<Address>::uninit();
             let result = unsafe {

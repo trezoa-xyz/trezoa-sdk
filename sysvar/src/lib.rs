@@ -12,34 +12,34 @@
 //! directly from the runtime, as in this example that logs the `clock` sysvar:
 //!
 //! ```
-//! use solana_account_info::AccountInfo;
-//! use solana_msg::msg;
-//! use solana_sysvar::Sysvar;
-//! use solana_program_error::ProgramResult;
-//! use solana_pubkey::Pubkey;
+//! use trezoa_account_info::AccountInfo;
+//! use trezoa_msg::msg;
+//! use trezoa_sysvar::Sysvar;
+//! use trezoa_program_error::ProgramResult;
+//! use trezoa_pubkey::Pubkey;
 //!
 //! fn process_instruction(
 //!     program_id: &Pubkey,
 //!     accounts: &[AccountInfo],
 //!     instruction_data: &[u8],
 //! ) -> ProgramResult {
-//!     let clock = solana_clock::Clock::get()?;
+//!     let clock = trezoa_clock::Clock::get()?;
 //!     msg!("clock: {:#?}", clock);
 //!     Ok(())
 //! }
 //! ```
 //!
-//! Since Solana sysvars are accounts, if the `AccountInfo` is provided to the
+//! Since Trezoa sysvars are accounts, if the `AccountInfo` is provided to the
 //! program, then the program can deserialize the sysvar with
 //! [`SysvarSerialize::from_account_info`] to access its data, as in this example that
 //! again logs the [`clock`] sysvar.
 //!
 //! ```
-//! use solana_account_info::{AccountInfo, next_account_info};
-//! use solana_msg::msg;
-//! use solana_sysvar::{Sysvar, SysvarSerialize};
-//! use solana_program_error::ProgramResult;
-//! use solana_pubkey::Pubkey;
+//! use trezoa_account_info::{AccountInfo, next_account_info};
+//! use trezoa_msg::msg;
+//! use trezoa_sysvar::{Sysvar, SysvarSerialize};
+//! use trezoa_program_error::ProgramResult;
+//! use trezoa_pubkey::Pubkey;
 //!
 //! fn process_instruction(
 //!     program_id: &Pubkey,
@@ -48,7 +48,7 @@
 //! ) -> ProgramResult {
 //!     let account_info_iter = &mut accounts.iter();
 //!     let clock_account = next_account_info(account_info_iter)?;
-//!     let clock = solana_clock::Clock::from_account_info(&clock_account)?;
+//!     let clock = trezoa_clock::Clock::from_account_info(&clock_account)?;
 //!     msg!("clock: {:#?}", clock);
 //!     Ok(())
 //! }
@@ -71,21 +71,21 @@
 //!
 //! All sysvar accounts are owned by the account identified by [`sysvar::ID`].
 //!
-//! [`sysvar::ID`]: https://docs.rs/solana-sdk-ids/latest/solana_sdk_ids/sysvar/constant.ID.html
+//! [`sysvar::ID`]: https://docs.rs/trezoa-sdk-ids/latest/trezoa_sdk_ids/sysvar/constant.ID.html
 //!
-//! For more details see the Solana [documentation on sysvars][sysvardoc].
+//! For more details see the Trezoa [documentation on sysvars][sysvardoc].
 //!
-//! [sysvardoc]: https://docs.solanalabs.com/runtime/sysvars
+//! [sysvardoc]: https://docs.trezoalabs.com/runtime/sysvars
 
 // hidden re-exports to make macros work
 pub mod __private {
-    #[cfg(target_os = "solana")]
-    pub use solana_define_syscall::definitions;
-    pub use {solana_program_entrypoint::SUCCESS, solana_program_error::ProgramError};
+    #[cfg(target_os = "trezoa")]
+    pub use trezoa_define_syscall::definitions;
+    pub use {trezoa_program_entrypoint::SUCCESS, trezoa_program_error::ProgramError};
 }
 #[cfg(feature = "bincode")]
-use {solana_account_info::AccountInfo, solana_sysvar_id::SysvarId};
-use {solana_program_error::ProgramError, solana_pubkey::Pubkey};
+use {trezoa_account_info::AccountInfo, trezoa_sysvar_id::SysvarId};
+use {trezoa_program_error::ProgramError, trezoa_pubkey::Pubkey};
 
 pub mod clock;
 pub mod epoch_rewards;
@@ -102,12 +102,12 @@ pub mod slot_history;
 /// Return value indicating that the  `offset + length` is greater than the length of
 /// the sysvar data.
 //
-// Defined in the bpf loader as [`OFFSET_LENGTH_EXCEEDS_SYSVAR`](https://github.com/anza-xyz/agave/blob/master/programs/bpf_loader/src/syscalls/sysvar.rs#L172).
+// Defined in the bpf loader as [`OFFSET_LENGTH_EXCEEDS_SYSVAR`](https://github.com/trezoa-xyz/trezoa/blob/master/programs/bpf_loader/src/syscalls/sysvar.rs#L172).
 const OFFSET_LENGTH_EXCEEDS_SYSVAR: u64 = 1;
 
 /// Return value indicating that the sysvar was not found.
 //
-// Defined in the bpf loader as [`SYSVAR_NOT_FOUND`](https://github.com/anza-xyz/agave/blob/master/programs/bpf_loader/src/syscalls/sysvar.rs#L171).
+// Defined in the bpf loader as [`SYSVAR_NOT_FOUND`](https://github.com/trezoa-xyz/trezoa/blob/master/programs/bpf_loader/src/syscalls/sysvar.rs#L171).
 const SYSVAR_NOT_FOUND: u64 = 2;
 
 /// Interface for loading a sysvar.
@@ -169,10 +169,10 @@ macro_rules! impl_sysvar_get {
             let mut var = Self::default();
             let var_addr = &mut var as *mut _ as *mut u8;
 
-            #[cfg(target_os = "solana")]
+            #[cfg(target_os = "trezoa")]
             let result = unsafe { $crate::__private::definitions::$syscall_name(var_addr) };
 
-            #[cfg(not(target_os = "solana"))]
+            #[cfg(not(target_os = "trezoa"))]
             let result = $crate::program_stubs::$syscall_name(var_addr);
 
             match result {
@@ -220,28 +220,28 @@ pub fn get_sysvar(
     sysvar_id: &Pubkey,
     offset: u64,
     length: u64,
-) -> Result<(), solana_program_error::ProgramError> {
+) -> Result<(), trezoa_program_error::ProgramError> {
     // Check that the provided destination buffer is large enough to hold the
     // requested data.
     if dst.len() < length as usize {
-        return Err(solana_program_error::ProgramError::InvalidArgument);
+        return Err(trezoa_program_error::ProgramError::InvalidArgument);
     }
 
     let sysvar_id = sysvar_id as *const _ as *const u8;
     let var_addr = dst as *mut _ as *mut u8;
 
-    #[cfg(target_os = "solana")]
+    #[cfg(target_os = "trezoa")]
     let result = unsafe {
-        solana_define_syscall::definitions::sol_get_sysvar(sysvar_id, var_addr, offset, length)
+        trezoa_define_syscall::definitions::sol_get_sysvar(sysvar_id, var_addr, offset, length)
     };
 
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "trezoa"))]
     let result = crate::program_stubs::sol_get_sysvar(sysvar_id, var_addr, offset, length);
 
     match result {
-        solana_program_entrypoint::SUCCESS => Ok(()),
-        OFFSET_LENGTH_EXCEEDS_SYSVAR => Err(solana_program_error::ProgramError::InvalidArgument),
-        _ => Err(solana_program_error::ProgramError::UnsupportedSysvar),
+        trezoa_program_entrypoint::SUCCESS => Ok(()),
+        OFFSET_LENGTH_EXCEEDS_SYSVAR => Err(trezoa_program_error::ProgramError::InvalidArgument),
+        _ => Err(trezoa_program_error::ProgramError::UnsupportedSysvar),
     }
 }
 
@@ -259,20 +259,20 @@ pub unsafe fn get_sysvar_unchecked(
     sysvar_id: *const u8,
     offset: u64,
     length: u64,
-) -> Result<(), solana_program_error::ProgramError> {
-    #[cfg(target_os = "solana")]
+) -> Result<(), trezoa_program_error::ProgramError> {
+    #[cfg(target_os = "trezoa")]
     let result =
-        solana_define_syscall::definitions::sol_get_sysvar(sysvar_id, var_addr, offset, length);
+        trezoa_define_syscall::definitions::sol_get_sysvar(sysvar_id, var_addr, offset, length);
 
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "trezoa"))]
     let result = crate::program_stubs::sol_get_sysvar(sysvar_id, var_addr, offset, length);
 
     match result {
-        solana_program_entrypoint::SUCCESS => Ok(()),
-        OFFSET_LENGTH_EXCEEDS_SYSVAR => Err(solana_program_error::ProgramError::InvalidArgument),
-        SYSVAR_NOT_FOUND => Err(solana_program_error::ProgramError::UnsupportedSysvar),
+        trezoa_program_entrypoint::SUCCESS => Ok(()),
+        OFFSET_LENGTH_EXCEEDS_SYSVAR => Err(trezoa_program_error::ProgramError::InvalidArgument),
+        SYSVAR_NOT_FOUND => Err(trezoa_program_error::ProgramError::UnsupportedSysvar),
         // Unexpected errors are folded into `UnsupportedSysvar`.
-        _ => Err(solana_program_error::ProgramError::UnsupportedSysvar),
+        _ => Err(trezoa_program_error::ProgramError::UnsupportedSysvar),
     }
 }
 
@@ -282,9 +282,9 @@ mod tests {
         super::*,
         crate::program_stubs::{set_syscall_stubs, SyscallStubs},
         serde_derive::{Deserialize, Serialize},
-        solana_program_entrypoint::SUCCESS,
-        solana_program_error::ProgramError,
-        solana_pubkey::Pubkey,
+        trezoa_program_entrypoint::SUCCESS,
+        trezoa_program_error::ProgramError,
+        trezoa_pubkey::Pubkey,
         std::{cell::RefCell, rc::Rc},
     };
 
@@ -293,13 +293,13 @@ mod tests {
     struct TestSysvar {
         something: Pubkey,
     }
-    solana_pubkey::declare_id!("TestSysvar111111111111111111111111111111111");
-    impl solana_sysvar_id::SysvarId for TestSysvar {
-        fn id() -> solana_pubkey::Pubkey {
+    trezoa_pubkey::declare_id!("TestSysvar111111111111111111111111111111111");
+    impl trezoa_sysvar_id::SysvarId for TestSysvar {
+        fn id() -> trezoa_pubkey::Pubkey {
             id()
         }
 
-        fn check_id(pubkey: &solana_pubkey::Pubkey) -> bool {
+        fn check_id(pubkey: &trezoa_pubkey::Pubkey) -> bool {
             check_id(pubkey)
         }
     }

@@ -2,7 +2,7 @@
 
 #![cfg_attr(docsrs, feature(doc_cfg))]
 #![allow(clippy::arithmetic_side_effects)]
-use {solana_pubkey::Pubkey, solana_sanitize::SanitizeError};
+use {trezoa_pubkey::Pubkey, trezoa_sanitize::SanitizeError};
 
 pub mod cursor;
 

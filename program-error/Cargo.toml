@@ -1,7 +1,7 @@
 [package]
-name = "solana-program-error"
-description = "Solana ProgramError type and related definitions."
-documentation = "https://docs.rs/solana-program-error"
+name = "trezoa-program-error"
+description = "Trezoa ProgramError type and related definitions."
+documentation = "https://docs.rs/trezoa-program-error"
 version = "3.0.0"
 rust-version = "1.81.0"
 authors = { workspace = true }

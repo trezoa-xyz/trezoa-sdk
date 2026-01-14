@@ -9,12 +9,12 @@
 //! determined with the [`getFeeForMessage`] RPC method. For additional context
 //! see the [Comprehensive Compute Fees proposal][ccf].
 //!
-//! [`getFeeForMessage`]: https://solana.com/docs/rpc/http/getfeeformessage
-//! [ccf]: https://docs.solanalabs.com/proposals/comprehensive-compute-fees
+//! [`getFeeForMessage`]: https://trezoa.com/docs/rpc/http/getfeeformessage
+//! [ccf]: https://docs.trezoalabs.com/proposals/comprehensive-compute-fees
 //!
-//! See also the Solana [documentation on the recent blockhashes sysvar][sdoc].
+//! See also the Trezoa [documentation on the recent blockhashes sysvar][sdoc].
 //!
-//! [sdoc]: https://docs.solanalabs.com/runtime/sysvars#recentblockhashes
+//! [sdoc]: https://docs.trezoalabs.com/runtime/sysvars#recentblockhashes
 
 #![allow(deprecated)]
 #![allow(clippy::arithmetic_side_effects)]
@@ -22,12 +22,12 @@
 use crate::SysvarSerialize;
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
-pub use solana_sdk_ids::sysvar::recent_blockhashes::{check_id, id, ID};
+pub use trezoa_sdk_ids::sysvar::recent_blockhashes::{check_id, id, ID};
 use {
     crate::Sysvar,
-    solana_fee_calculator::FeeCalculator,
-    solana_hash::Hash,
-    solana_sysvar_id::impl_sysvar_id,
+    trezoa_fee_calculator::FeeCalculator,
+    trezoa_hash::Hash,
+    trezoa_sysvar_id::impl_sysvar_id,
     std::{cmp::Ordering, collections::BinaryHeap, iter::FromIterator, ops::Deref},
 };
 
@@ -170,7 +170,7 @@ impl Deref for RecentBlockhashes {
 
 #[cfg(test)]
 mod tests {
-    use {super::*, solana_clock::MAX_PROCESSING_AGE};
+    use {super::*, trezoa_clock::MAX_PROCESSING_AGE};
 
     #[test]
     #[allow(clippy::assertions_on_constants)]

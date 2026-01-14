@@ -1,20 +1,20 @@
-//! The original and current Solana message format.
+//! The original and current Trezoa message format.
 //!
 //! This crate defines two versions of `Message` in their own modules:
-//! [`legacy`] and [`v0`]. `legacy` is the current version as of Solana 1.10.0.
+//! [`legacy`] and [`v0`]. `legacy` is the current version as of Trezoa 1.10.0.
 //! `v0` is a [future message format] that encodes more account keys into a
 //! transaction than the legacy format.
 //!
 //! [`legacy`]: crate::legacy
 //! [`v0`]: crate::v0
-//! [future message format]: https://docs.solanalabs.com/proposals/versioned-transactions
+//! [future message format]: https://docs.trezoalabs.com/proposals/versioned-transactions
 
 #![allow(clippy::arithmetic_side_effects)]
 
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
 #[cfg(feature = "frozen-abi")]
-use solana_frozen_abi_macro::{frozen_abi, AbiExample};
+use trezoa_frozen_abi_macro::{frozen_abi, AbiExample};
 #[cfg(feature = "wincode")]
 use wincode::{containers, len::ShortU16Len, SchemaRead, SchemaWrite};
 use {
@@ -22,11 +22,11 @@ use {
         compiled_instruction::CompiledInstruction, compiled_keys::CompiledKeys,
         inline_nonce::advance_nonce_account_instruction, MessageHeader,
     },
-    solana_address::Address,
-    solana_hash::Hash,
-    solana_instruction::Instruction,
-    solana_sanitize::{Sanitize, SanitizeError},
-    solana_sdk_ids::bpf_loader_upgradeable,
+    trezoa_address::Address,
+    trezoa_hash::Hash,
+    trezoa_instruction::Instruction,
+    trezoa_sanitize::{Sanitize, SanitizeError},
+    trezoa_sdk_ids::bpf_loader_upgradeable,
     std::{collections::HashSet, convert::TryFrom},
 };
 
@@ -52,7 +52,7 @@ fn compile_instructions(ixs: &[Instruction], keys: &[Address]) -> Vec<CompiledIn
     ixs.iter().map(|ix| compile_instruction(ix, keys)).collect()
 }
 
-/// A Solana transaction message (legacy).
+/// A Trezoa transaction message (legacy).
 ///
 /// See the crate documentation for further description.
 ///
@@ -88,7 +88,7 @@ pub struct Message {
     pub header: MessageHeader,
 
     /// All the account keys used by this transaction.
-    #[cfg_attr(feature = "serde", serde(with = "solana_short_vec"))]
+    #[cfg_attr(feature = "serde", serde(with = "trezoa_short_vec"))]
     #[cfg_attr(feature = "wincode", wincode(with = "containers::Vec<_, ShortU16Len>"))]
     pub account_keys: Vec<Address>,
 
@@ -97,7 +97,7 @@ pub struct Message {
 
     /// Programs that will be executed in sequence and committed in one atomic transaction if all
     /// succeed.
-    #[cfg_attr(feature = "serde", serde(with = "solana_short_vec"))]
+    #[cfg_attr(feature = "serde", serde(with = "trezoa_short_vec"))]
     #[cfg_attr(feature = "wincode", wincode(with = "containers::Vec<_, ShortU16Len>"))]
     pub instructions: Vec<CompiledInstruction>,
 }
@@ -143,24 +143,24 @@ impl Message {
     ///
     /// # Examples
     ///
-    /// This example uses the [`solana_sdk`], [`solana_rpc_client`] and [`anyhow`] crates.
+    /// This example uses the [`trezoa_sdk`], [`trezoa_rpc_client`] and [`anyhow`] crates.
     ///
-    /// [`solana_sdk`]: https://docs.rs/solana-sdk
-    /// [`solana_rpc_client`]: https://docs.rs/solana-rpc-client
+    /// [`trezoa_sdk`]: https://docs.rs/trezoa-sdk
+    /// [`trezoa_rpc_client`]: https://docs.rs/trezoa-rpc-client
     /// [`anyhow`]: https://docs.rs/anyhow
     ///
     /// ```
-    /// # use solana_example_mocks::{solana_keypair, solana_signer, solana_transaction};
-    /// # use solana_example_mocks::solana_rpc_client;
+    /// # use trezoa_example_mocks::{trezoa_keypair, trezoa_signer, trezoa_transaction};
+    /// # use trezoa_example_mocks::trezoa_rpc_client;
     /// use anyhow::Result;
     /// use borsh::{BorshSerialize, BorshDeserialize};
-    /// use solana_instruction::Instruction;
-    /// use solana_keypair::Keypair;
-    /// use solana_message::Message;
-    /// use solana_address::Address;
-    /// use solana_rpc_client::rpc_client::RpcClient;
-    /// use solana_signer::Signer;
-    /// use solana_transaction::Transaction;
+    /// use trezoa_instruction::Instruction;
+    /// use trezoa_keypair::Keypair;
+    /// use trezoa_message::Message;
+    /// use trezoa_address::Address;
+    /// use trezoa_rpc_client::rpc_client::RpcClient;
+    /// use trezoa_signer::Signer;
+    /// use trezoa_transaction::Transaction;
     ///
     /// // A custom program instruction. This would typically be defined in
     /// // another crate so it can be shared between the on-chain program and
@@ -214,24 +214,24 @@ impl Message {
     ///
     /// # Examples
     ///
-    /// This example uses the [`solana_sdk`], [`solana_rpc_client`] and [`anyhow`] crates.
+    /// This example uses the [`trezoa_sdk`], [`trezoa_rpc_client`] and [`anyhow`] crates.
     ///
-    /// [`solana_sdk`]: https://docs.rs/solana-sdk
-    /// [`solana_rpc_client`]: https://docs.rs/solana-rpc-client
+    /// [`trezoa_sdk`]: https://docs.rs/trezoa-sdk
+    /// [`trezoa_rpc_client`]: https://docs.rs/trezoa-rpc-client
     /// [`anyhow`]: https://docs.rs/anyhow
     ///
     /// ```
-    /// # use solana_example_mocks::{solana_keypair, solana_signer, solana_transaction};
-    /// # use solana_example_mocks::solana_rpc_client;
+    /// # use trezoa_example_mocks::{trezoa_keypair, trezoa_signer, trezoa_transaction};
+    /// # use trezoa_example_mocks::trezoa_rpc_client;
     /// use anyhow::Result;
     /// use borsh::{BorshSerialize, BorshDeserialize};
-    /// use solana_instruction::Instruction;
-    /// use solana_keypair::Keypair;
-    /// use solana_message::Message;
-    /// use solana_address::Address;
-    /// use solana_rpc_client::rpc_client::RpcClient;
-    /// use solana_signer::Signer;
-    /// use solana_transaction::Transaction;
+    /// use trezoa_instruction::Instruction;
+    /// use trezoa_keypair::Keypair;
+    /// use trezoa_message::Message;
+    /// use trezoa_address::Address;
+    /// use trezoa_rpc_client::rpc_client::RpcClient;
+    /// use trezoa_signer::Signer;
+    /// use trezoa_transaction::Transaction;
     ///
     /// // A custom program instruction. This would typically be defined in
     /// // another crate so it can be shared between the on-chain program and
@@ -302,7 +302,7 @@ impl Message {
 
     /// Create a new message for a [nonced transaction].
     ///
-    /// [nonced transaction]: https://docs.solanalabs.com/implemented-proposals/durable-tx-nonces
+    /// [nonced transaction]: https://docs.trezoalabs.com/implemented-proposals/durable-tx-nonces
     ///
     /// In this type of transaction, the blockhash is replaced with a _durable
     /// transaction nonce_, allowing for extended time to pass between the
@@ -310,26 +310,26 @@ impl Message {
     ///
     /// # Examples
     ///
-    /// This example uses the [`solana_sdk`], [`solana_rpc_client`] and [`anyhow`] crates.
+    /// This example uses the [`trezoa_sdk`], [`trezoa_rpc_client`] and [`anyhow`] crates.
     ///
-    /// [`solana_sdk`]: https://docs.rs/solana-sdk
-    /// [`solana_rpc_client`]: https://docs.rs/solana-client
+    /// [`trezoa_sdk`]: https://docs.rs/trezoa-sdk
+    /// [`trezoa_rpc_client`]: https://docs.rs/trezoa-client
     /// [`anyhow`]: https://docs.rs/anyhow
     ///
     /// ```
-    /// # use solana_example_mocks::{solana_keypair, solana_signer, solana_transaction};
-    /// # use solana_example_mocks::solana_rpc_client;
+    /// # use trezoa_example_mocks::{trezoa_keypair, trezoa_signer, trezoa_transaction};
+    /// # use trezoa_example_mocks::trezoa_rpc_client;
     /// use anyhow::Result;
     /// use borsh::{BorshSerialize, BorshDeserialize};
-    /// use solana_hash::Hash;
-    /// use solana_instruction::Instruction;
-    /// use solana_keypair::Keypair;
-    /// use solana_message::Message;
-    /// use solana_address::Address;
-    /// use solana_rpc_client::rpc_client::RpcClient;
-    /// use solana_signer::Signer;
-    /// use solana_transaction::Transaction;
-    /// use solana_system_interface::instruction::create_nonce_account;
+    /// use trezoa_hash::Hash;
+    /// use trezoa_instruction::Instruction;
+    /// use trezoa_keypair::Keypair;
+    /// use trezoa_message::Message;
+    /// use trezoa_address::Address;
+    /// use trezoa_rpc_client::rpc_client::RpcClient;
+    /// use trezoa_signer::Signer;
+    /// use trezoa_transaction::Transaction;
+    /// use trezoa_system_interface::instruction::create_nonce_account;
     ///
     /// // A custom program instruction. This would typically be defined in
     /// // another crate so it can be shared between the on-chain program and
@@ -379,7 +379,7 @@ impl Message {
     ///     -> Result<Address>
     /// {
     ///     let nonce_account_address = Keypair::new();
-    ///     let nonce_account_size = solana_nonce::state::State::size();
+    ///     let nonce_account_size = trezoa_nonce::state::State::size();
     ///     let nonce_rent = client.get_minimum_balance_for_rent_exemption(nonce_account_size)?;
     ///
     ///     // Assigning the nonce authority to the payer so they can sign for the withdrawal,
@@ -438,18 +438,18 @@ impl Message {
     }
 
     /// Compute the blake3 hash of this transaction's message.
-    #[cfg(all(not(target_os = "solana"), feature = "bincode", feature = "blake3"))]
+    #[cfg(all(not(target_os = "trezoa"), feature = "bincode", feature = "blake3"))]
     pub fn hash(&self) -> Hash {
         let message_bytes = self.serialize();
         Self::hash_raw_message(&message_bytes)
     }
 
     /// Compute the blake3 hash of a raw transaction message.
-    #[cfg(all(not(target_os = "solana"), feature = "blake3"))]
+    #[cfg(all(not(target_os = "trezoa"), feature = "blake3"))]
     pub fn hash_raw_message(message_bytes: &[u8]) -> Hash {
-        use {blake3::traits::digest::Digest, solana_hash::HASH_BYTES};
+        use {blake3::traits::digest::Digest, trezoa_hash::HASH_BYTES};
         let mut hasher = blake3::Hasher::new();
-        hasher.update(b"solana-tx-message-v1");
+        hasher.update(b"trezoa-tx-message-v1");
         hasher.update(message_bytes);
         let hash_bytes: [u8; HASH_BYTES] = hasher.finalize().into();
         hash_bytes.into()
@@ -602,7 +602,7 @@ mod tests {
     use {
         super::*,
         crate::MESSAGE_HEADER_LENGTH,
-        solana_instruction::AccountMeta,
+        trezoa_instruction::AccountMeta,
         std::{collections::HashSet, str::FromStr},
     };
 
@@ -788,7 +788,7 @@ mod tests {
     #[test]
     fn test_message_hash() {
         // when this test fails, it's most likely due to a new serialized format of a message.
-        // in this case, the domain prefix `solana-tx-message-v1` should be updated.
+        // in this case, the domain prefix `trezoa-tx-message-v1` should be updated.
         let program_id0 = Address::from_str("4uQeVj5tqViQh7yWWGStvkEG1Zmhx6uasJtWCJziofM").unwrap();
         let program_id1 = Address::from_str("8opHzTAnfzRpPEx21XtnrVTX28YQuCpAjcn1PczScKh").unwrap();
         let id0 = Address::from_str("CiDwVBFgWV9E5MvXWoLgnEgn2hK7rJikbvfWavzAQz3").unwrap();

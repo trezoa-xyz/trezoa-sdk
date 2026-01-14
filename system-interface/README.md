@@ -1,12 +1,12 @@
 <p align="center">
-  <a href="https://solana.com">
-    <img alt="Solana" src="https://github.com/user-attachments/assets/534af75d-6347-48dc-8943-129423b2ba63" height="80" />
+  <a href="https://trezoa.com">
+    <img alt="Trezoa" src="https://github.com/user-attachments/assets/534af75d-6347-48dc-8943-129423b2ba63" height="80" />
   </a>
 </p>
 
-# Solana System Interface
+# Trezoa System Interface
 
-This crate contains instructions and constructors for interacting with the [System program](https://solana.com/docs/core/programs#core-programs).
+This crate contains instructions and constructors for interacting with the [System program](https://trezoa.com/docs/core/programs#core-programs).
 
 The System program can be used to create new accounts, allocate account data, assign accounts to owning programs, transfer lamports from System Program owned accounts and pay transaction fees.
 
@@ -15,22 +15,22 @@ The System program can be used to create new accounts, allocate account data, as
 From your project folder:
 
 ```bash
-cargo add solana-system-interface --features bincode
+cargo add trezoa-system-interface --features bincode
 ```
 
-This will add the `solana-system-interface` dependency with the `bincode` feature enabled to your `Cargo.toml` file. The `bincode` feature contains the instruction constructors to create instructions for the System program.
+This will add the `trezoa-system-interface` dependency with the `bincode` feature enabled to your `Cargo.toml` file. The `bincode` feature contains the instruction constructors to create instructions for the System program.
 
 ## Examples
 
 Creating an account:
 
 ```rust
-use solana_rpc_client::rpc_client::RpcClient;
-use solana_sdk::{
+use trezoa_rpc_client::rpc_client::RpcClient;
+use trezoa_sdk::{
     signature::{Keypair, Signer},
     transaction::Transaction,
 };
-use solana_system_interface::instruction;
+use trezoa_system_interface::instruction;
 use anyhow::Result;
 
 fn create_account(
@@ -66,13 +66,13 @@ fn create_account(
 Transfer lamports between accounts:
 
 ```rust
-use solana_rpc_client::rpc_client::RpcClient;
-use solana_pubkey::Pubkey;
-use solana_sdk::{
+use trezoa_rpc_client::rpc_client::RpcClient;
+use trezoa_pubkey::Pubkey;
+use trezoa_sdk::{
     signature::{Keypair, Signer},
     transaction::Transaction,
 };
-use solana_system_interface::instruction;
+use trezoa_system_interface::instruction;
 use anyhow::Result;
 
 fn transfer(
@@ -101,4 +101,4 @@ fn transfer(
 }
 ```
 
-More examples can be found on the crate [documentation](https://docs.rs/solana-system-interface/latest/solana-system-interface/).
+More examples can be found on the crate [documentation](https://docs.rs/trezoa-system-interface/latest/trezoa-system-interface/).

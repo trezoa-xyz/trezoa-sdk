@@ -1,7 +1,7 @@
 use {
     crate::{Signer, SignerError},
-    solana_pubkey::Pubkey,
-    solana_signature::Signature,
+    trezoa_pubkey::Pubkey,
+    trezoa_signature::Signature,
 };
 
 /// NullSigner - A `Signer` implementation that always produces `Signature::default()`.

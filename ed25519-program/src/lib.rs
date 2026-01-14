@@ -1,12 +1,12 @@
 //! Instructions for the [ed25519 native program][np].
 //!
-//! [np]: https://docs.solanalabs.com/runtime/programs#ed25519-program
+//! [np]: https://docs.trezoalabs.com/runtime/programs#ed25519-program
 #![cfg_attr(docsrs, feature(doc_cfg))]
 
 use {
     bytemuck::bytes_of,
     bytemuck_derive::{Pod, Zeroable},
-    solana_instruction::Instruction,
+    trezoa_instruction::Instruction,
 };
 
 pub const PUBKEY_SERIALIZED_SIZE: usize = 32;
@@ -51,7 +51,7 @@ pub fn offsets_to_ed25519_instruction(offsets: &[Ed25519SignatureOffsets]) -> In
     }
 
     Instruction {
-        program_id: solana_sdk_ids::ed25519_program::id(),
+        program_id: trezoa_sdk_ids::ed25519_program::id(),
         accounts: vec![],
         data: instruction_data,
     }
@@ -102,7 +102,7 @@ pub fn new_ed25519_instruction_with_signature(
     instruction_data.extend_from_slice(message);
 
     Instruction {
-        program_id: solana_sdk_ids::ed25519_program::id(),
+        program_id: trezoa_sdk_ids::ed25519_program::id(),
         accounts: vec![],
         data: instruction_data,
     }

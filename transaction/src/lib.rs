@@ -2,9 +2,9 @@
 #![cfg_attr(docsrs, feature(doc_cfg))]
 //! Atomically-committed sequences of instructions.
 //!
-//! While [`Instruction`]s are the basic unit of computation in Solana, they are
+//! While [`Instruction`]s are the basic unit of computation in Trezoa, they are
 //! submitted by clients in [`Transaction`]s containing one or more
-//! instructions, and signed by one or more [`Signer`]s. Solana executes the
+//! instructions, and signed by one or more [`Signer`]s. Trezoa executes the
 //! instructions in a transaction in order, and only commits any changes if all
 //! instructions terminate without producing an error or exception.
 //!
@@ -12,7 +12,7 @@
 //! a [`Message`], a precompiled representation of a sequence of instructions.
 //! `Message`'s constructors handle the complex task of reordering the
 //! individual lists of accounts required by each instruction into a single flat
-//! list of deduplicated accounts required by the Solana runtime. The
+//! list of deduplicated accounts required by the Trezoa runtime. The
 //! `Transaction` type has constructors that build the `Message` so that clients
 //! don't need to interact with them directly.
 //!
@@ -20,12 +20,12 @@
 //! more keypairs, and this signing is typically performed by an abstract
 //! [`Signer`], which may be a [`Keypair`] but may also be other types of
 //! signers including remote wallets, such as Ledger devices, as represented by
-//! the [`RemoteKeypair`] type in the [`solana-remote-wallet`] crate.
+//! the [`RemoteKeypair`] type in the [`trezoa-remote-wallet`] crate.
 //!
-//! [`Signer`]: https://docs.rs/solana-signer/latest/solana_signer/trait.Signer.html
-//! [`Keypair`]: https://docs.rs/solana-keypair/latest/solana_keypair/struct.Keypair.html
-//! [`solana-remote-wallet`]: https://docs.rs/solana-remote-wallet/latest/
-//! [`RemoteKeypair`]: https://docs.rs/solana-remote-wallet/latest/solana_remote_wallet/remote_keypair/struct.RemoteKeypair.html
+//! [`Signer`]: https://docs.rs/trezoa-signer/latest/trezoa_signer/trait.Signer.html
+//! [`Keypair`]: https://docs.rs/trezoa-keypair/latest/trezoa_keypair/struct.Keypair.html
+//! [`trezoa-remote-wallet`]: https://docs.rs/trezoa-remote-wallet/latest/
+//! [`RemoteKeypair`]: https://docs.rs/trezoa-remote-wallet/latest/trezoa_remote_wallet/remote_keypair/struct.RemoteKeypair.html
 //!
 //! Every transaction must be signed by a fee-paying account, the account from
 //! which the cost of executing the transaction is withdrawn. Other required
@@ -44,27 +44,27 @@
 //! transaction nonce]_ mechanism instead of a recent blockhash to ensure unique
 //! transactions.
 //!
-//! [`RpcClient::get_latest_blockhash`]: https://docs.rs/solana-rpc-client/latest/solana_rpc_client/rpc_client/struct.RpcClient.html#method.get_latest_blockhash
-//! [durable transaction nonce]: https://docs.solanalabs.com/implemented-proposals/durable-tx-nonces
+//! [`RpcClient::get_latest_blockhash`]: https://docs.rs/trezoa-rpc-client/latest/trezoa_rpc_client/rpc_client/struct.RpcClient.html#method.get_latest_blockhash
+//! [durable transaction nonce]: https://docs.trezoalabs.com/implemented-proposals/durable-tx-nonces
 //!
 //! # Examples
 //!
-//! This example uses the [`solana_rpc_client`] and [`anyhow`] crates.
+//! This example uses the [`trezoa_rpc_client`] and [`anyhow`] crates.
 //!
-//! [`solana_rpc_client`]: https://docs.rs/solana-rpc-client
+//! [`trezoa_rpc_client`]: https://docs.rs/trezoa-rpc-client
 //! [`anyhow`]: https://docs.rs/anyhow
 //!
 //! ```
-//! # use solana_example_mocks::{solana_keypair, solana_rpc_client, solana_signer, solana_transaction};
+//! # use trezoa_example_mocks::{trezoa_keypair, trezoa_rpc_client, trezoa_signer, trezoa_transaction};
 //! use anyhow::Result;
 //! use borsh::{BorshSerialize, BorshDeserialize};
-//! use solana_instruction::Instruction;
-//! use solana_keypair::Keypair;
-//! use solana_message::Message;
-//! use solana_pubkey::Pubkey;
-//! use solana_rpc_client::rpc_client::RpcClient;
-//! use solana_signer::Signer;
-//! use solana_transaction::Transaction;
+//! use trezoa_instruction::Instruction;
+//! use trezoa_keypair::Keypair;
+//! use trezoa_message::Message;
+//! use trezoa_pubkey::Pubkey;
+//! use trezoa_rpc_client::rpc_client::RpcClient;
+//! use trezoa_signer::Signer;
+//! use trezoa_transaction::Transaction;
 //!
 //! // A custom program instruction. This would typically be defined in
 //! // another crate so it can be shared between the on-chain program and
@@ -113,25 +113,25 @@
 #[cfg(feature = "serde")]
 use {
     serde_derive::{Deserialize, Serialize},
-    solana_short_vec as short_vec,
+    trezoa_short_vec as short_vec,
 };
 pub use {
-    solana_address::Address,
-    solana_instruction::{AccountMeta, Instruction},
-    solana_instruction_error::InstructionError,
-    solana_message::{compiled_instruction::CompiledInstruction, Message, VersionedMessage},
-    solana_signature::Signature,
-    solana_transaction_error::{TransactionError, TransactionResult},
+    trezoa_address::Address,
+    trezoa_instruction::{AccountMeta, Instruction},
+    trezoa_instruction_error::InstructionError,
+    trezoa_message::{compiled_instruction::CompiledInstruction, Message, VersionedMessage},
+    trezoa_signature::Signature,
+    trezoa_transaction_error::{TransactionError, TransactionResult},
 };
 #[cfg(feature = "bincode")]
 pub use {
-    solana_hash::Hash,
-    solana_signer::{signers::Signers, SignerError},
+    trezoa_hash::Hash,
+    trezoa_signer::{signers::Signers, SignerError},
 };
 use {
-    solana_message::inline_nonce::is_advance_nonce_instruction_data,
-    solana_sanitize::{Sanitize, SanitizeError},
-    solana_sdk_ids::system_program,
+    trezoa_message::inline_nonce::is_advance_nonce_instruction_data,
+    trezoa_sanitize::{Sanitize, SanitizeError},
+    trezoa_sdk_ids::system_program,
     std::result,
 };
 
@@ -146,21 +146,21 @@ pub enum TransactionVerificationMode {
     FullVerification,
 }
 
-// inlined to avoid solana-nonce dep
+// inlined to avoid trezoa-nonce dep
 #[cfg(test)]
 static_assertions::const_assert_eq!(
     NONCED_TX_MARKER_IX_INDEX,
-    solana_nonce::NONCED_TX_MARKER_IX_INDEX
+    trezoa_nonce::NONCED_TX_MARKER_IX_INDEX
 );
 const NONCED_TX_MARKER_IX_INDEX: u8 = 0;
 
 /// An atomically-committed sequence of instructions.
 ///
-/// While [`Instruction`]s are the basic unit of computation in Solana,
+/// While [`Instruction`]s are the basic unit of computation in Trezoa,
 /// they are submitted by clients in [`Transaction`]s containing one or
 /// more instructions, and signed by one or more [`Signer`]s.
 ///
-/// [`Signer`]: https://docs.rs/solana-signer/latest/solana_signer/trait.Signer.html
+/// [`Signer`]: https://docs.rs/trezoa-signer/latest/trezoa_signer/trait.Signer.html
 ///
 /// See the [module documentation] for more details about transactions.
 ///
@@ -176,8 +176,8 @@ const NONCED_TX_MARKER_IX_INDEX: u8 = 0;
 /// redundantly specifying the fee-payer is not strictly required.
 #[cfg_attr(
     feature = "frozen-abi",
-    derive(solana_frozen_abi_macro::AbiExample),
-    solana_frozen_abi_macro::frozen_abi(digest = "BLig4G2ysd7dcensK9bhKtnKvCQc1n65XdanyzsdWGXN")
+    derive(trezoa_frozen_abi_macro::AbiExample),
+    trezoa_frozen_abi_macro::frozen_abi(digest = "BLig4G2ysd7dcensK9bhKtnKvCQc1n65XdanyzsdWGXN")
 )]
 #[cfg_attr(feature = "serde", derive(Deserialize, Serialize))]
 #[derive(Debug, PartialEq, Default, Eq, Clone)]
@@ -187,9 +187,9 @@ pub struct Transaction {
     /// is equal to [`num_required_signatures`] of the `Message`'s
     /// [`MessageHeader`].
     ///
-    /// [`account_keys`]: https://docs.rs/solana-message/latest/solana_message/legacy/struct.Message.html#structfield.account_keys
-    /// [`MessageHeader`]: https://docs.rs/solana-message/latest/solana_message/struct.MessageHeader.html
-    /// [`num_required_signatures`]: https://docs.rs/solana-message/latest/solana_message/struct.MessageHeader.html#structfield.num_required_signatures
+    /// [`account_keys`]: https://docs.rs/trezoa-message/latest/trezoa_message/legacy/struct.Message.html#structfield.account_keys
+    /// [`MessageHeader`]: https://docs.rs/trezoa-message/latest/trezoa_message/struct.MessageHeader.html
+    /// [`num_required_signatures`]: https://docs.rs/trezoa-message/latest/trezoa_message/struct.MessageHeader.html#structfield.num_required_signatures
     // NOTE: Serialization-related changes must be paired with the direct read at sigverify.
     #[cfg_attr(feature = "serde", serde(with = "short_vec"))]
     pub signatures: Vec<Signature>,
@@ -215,22 +215,22 @@ impl Transaction {
     ///
     /// # Examples
     ///
-    /// This example uses the [`solana_rpc_client`] and [`anyhow`] crates.
+    /// This example uses the [`trezoa_rpc_client`] and [`anyhow`] crates.
     ///
-    /// [`solana_rpc_client`]: https://docs.rs/solana-rpc-client
+    /// [`trezoa_rpc_client`]: https://docs.rs/trezoa-rpc-client
     /// [`anyhow`]: https://docs.rs/anyhow
     ///
     /// ```
-    /// # use solana_example_mocks::{solana_keypair, solana_rpc_client, solana_signer, solana_transaction};
+    /// # use trezoa_example_mocks::{trezoa_keypair, trezoa_rpc_client, trezoa_signer, trezoa_transaction};
     /// use anyhow::Result;
     /// use borsh::{BorshSerialize, BorshDeserialize};
-    /// use solana_instruction::Instruction;
-    /// use solana_keypair::Keypair;
-    /// use solana_message::Message;
-    /// use solana_pubkey::Pubkey;
-    /// use solana_rpc_client::rpc_client::RpcClient;
-    /// use solana_signer::Signer;
-    /// use solana_transaction::Transaction;
+    /// use trezoa_instruction::Instruction;
+    /// use trezoa_keypair::Keypair;
+    /// use trezoa_message::Message;
+    /// use trezoa_pubkey::Pubkey;
+    /// use trezoa_rpc_client::rpc_client::RpcClient;
+    /// use trezoa_signer::Signer;
+    /// use trezoa_transaction::Transaction;
     ///
     /// // A custom program instruction. This would typically be defined in
     /// // another crate so it can be shared between the on-chain program and
@@ -293,22 +293,22 @@ impl Transaction {
     ///
     /// # Examples
     ///
-    /// This example uses the [`solana_rpc_client`] and [`anyhow`] crates.
+    /// This example uses the [`trezoa_rpc_client`] and [`anyhow`] crates.
     ///
-    /// [`solana_rpc_client`]: https://docs.rs/solana-rpc-client
+    /// [`trezoa_rpc_client`]: https://docs.rs/trezoa-rpc-client
     /// [`anyhow`]: https://docs.rs/anyhow
     ///
     /// ```
-    /// # use solana_example_mocks::{solana_keypair, solana_rpc_client, solana_signer, solana_transaction};
+    /// # use trezoa_example_mocks::{trezoa_keypair, trezoa_rpc_client, trezoa_signer, trezoa_transaction};
     /// use anyhow::Result;
     /// use borsh::{BorshSerialize, BorshDeserialize};
-    /// use solana_instruction::Instruction;
-    /// use solana_keypair::Keypair;
-    /// use solana_message::Message;
-    /// use solana_pubkey::Pubkey;
-    /// use solana_rpc_client::rpc_client::RpcClient;
-    /// use solana_signer::Signer;
-    /// use solana_transaction::Transaction;
+    /// use trezoa_instruction::Instruction;
+    /// use trezoa_keypair::Keypair;
+    /// use trezoa_message::Message;
+    /// use trezoa_pubkey::Pubkey;
+    /// use trezoa_rpc_client::rpc_client::RpcClient;
+    /// use trezoa_signer::Signer;
+    /// use trezoa_transaction::Transaction;
     ///
     /// // A custom program instruction. This would typically be defined in
     /// // another crate so it can be shared between the on-chain program and
@@ -372,22 +372,22 @@ impl Transaction {
     ///
     /// # Examples
     ///
-    /// This example uses the [`solana_rpc_client`] and [`anyhow`] crates.
+    /// This example uses the [`trezoa_rpc_client`] and [`anyhow`] crates.
     ///
-    /// [`solana_rpc_client`]: https://docs.rs/solana-rpc-client
+    /// [`trezoa_rpc_client`]: https://docs.rs/trezoa-rpc-client
     /// [`anyhow`]: https://docs.rs/anyhow
     ///
     /// ```
-    /// # use solana_example_mocks::{solana_keypair, solana_rpc_client, solana_signer, solana_transaction};
+    /// # use trezoa_example_mocks::{trezoa_keypair, trezoa_rpc_client, trezoa_signer, trezoa_transaction};
     /// use anyhow::Result;
     /// use borsh::{BorshSerialize, BorshDeserialize};
-    /// use solana_instruction::Instruction;
-    /// use solana_keypair::Keypair;
-    /// use solana_message::Message;
-    /// use solana_pubkey::Pubkey;
-    /// use solana_rpc_client::rpc_client::RpcClient;
-    /// use solana_signer::Signer;
-    /// use solana_transaction::Transaction;
+    /// use trezoa_instruction::Instruction;
+    /// use trezoa_keypair::Keypair;
+    /// use trezoa_message::Message;
+    /// use trezoa_pubkey::Pubkey;
+    /// use trezoa_rpc_client::rpc_client::RpcClient;
+    /// use trezoa_signer::Signer;
+    /// use trezoa_transaction::Transaction;
     ///
     /// // A custom program instruction. This would typically be defined in
     /// // another crate so it can be shared between the on-chain program and
@@ -447,22 +447,22 @@ impl Transaction {
     ///
     /// # Examples
     ///
-    /// This example uses the [`solana_rpc_client`] and [`anyhow`] crates.
+    /// This example uses the [`trezoa_rpc_client`] and [`anyhow`] crates.
     ///
-    /// [`solana_rpc_client`]: https://docs.rs/solana-rpc-client
+    /// [`trezoa_rpc_client`]: https://docs.rs/trezoa-rpc-client
     /// [`anyhow`]: https://docs.rs/anyhow
     ///
     /// ```
-    /// # use solana_example_mocks::{solana_keypair, solana_rpc_client, solana_signer, solana_transaction};
+    /// # use trezoa_example_mocks::{trezoa_keypair, trezoa_rpc_client, trezoa_signer, trezoa_transaction};
     /// use anyhow::Result;
     /// use borsh::{BorshSerialize, BorshDeserialize};
-    /// use solana_instruction::Instruction;
-    /// use solana_keypair::Keypair;
-    /// use solana_message::Message;
-    /// use solana_pubkey::Pubkey;
-    /// use solana_rpc_client::rpc_client::RpcClient;
-    /// use solana_signer::Signer;
-    /// use solana_transaction::Transaction;
+    /// use trezoa_instruction::Instruction;
+    /// use trezoa_keypair::Keypair;
+    /// use trezoa_message::Message;
+    /// use trezoa_pubkey::Pubkey;
+    /// use trezoa_rpc_client::rpc_client::RpcClient;
+    /// use trezoa_signer::Signer;
+    /// use trezoa_transaction::Transaction;
     ///
     /// // A custom program instruction. This would typically be defined in
     /// // another crate so it can be shared between the on-chain program and
@@ -657,22 +657,22 @@ impl Transaction {
     ///
     /// # Examples
     ///
-    /// This example uses the [`solana_rpc_client`] and [`anyhow`] crates.
+    /// This example uses the [`trezoa_rpc_client`] and [`anyhow`] crates.
     ///
-    /// [`solana_rpc_client`]: https://docs.rs/solana-rpc-client
+    /// [`trezoa_rpc_client`]: https://docs.rs/trezoa-rpc-client
     /// [`anyhow`]: https://docs.rs/anyhow
     ///
     /// ```
-    /// # use solana_example_mocks::{solana_keypair, solana_rpc_client, solana_signer, solana_transaction};
+    /// # use trezoa_example_mocks::{trezoa_keypair, trezoa_rpc_client, trezoa_signer, trezoa_transaction};
     /// use anyhow::Result;
     /// use borsh::{BorshSerialize, BorshDeserialize};
-    /// use solana_instruction::Instruction;
-    /// use solana_keypair::Keypair;
-    /// use solana_message::Message;
-    /// use solana_pubkey::Pubkey;
-    /// use solana_rpc_client::rpc_client::RpcClient;
-    /// use solana_signer::Signer;
-    /// use solana_transaction::Transaction;
+    /// use trezoa_instruction::Instruction;
+    /// use trezoa_keypair::Keypair;
+    /// use trezoa_message::Message;
+    /// use trezoa_pubkey::Pubkey;
+    /// use trezoa_rpc_client::rpc_client::RpcClient;
+    /// use trezoa_signer::Signer;
+    /// use trezoa_transaction::Transaction;
     ///
     /// // A custom program instruction. This would typically be defined in
     /// // another crate so it can be shared between the on-chain program and
@@ -797,22 +797,22 @@ impl Transaction {
     ///
     /// # Examples
     ///
-    /// This example uses the [`solana_rpc_client`] and [`anyhow`] crates.
+    /// This example uses the [`trezoa_rpc_client`] and [`anyhow`] crates.
     ///
-    /// [`solana_rpc_client`]: https://docs.rs/solana-rpc-client
+    /// [`trezoa_rpc_client`]: https://docs.rs/trezoa-rpc-client
     /// [`anyhow`]: https://docs.rs/anyhow
     ///
     /// ```
-    /// # use solana_example_mocks::{solana_keypair, solana_rpc_client, solana_signer, solana_transaction};
+    /// # use trezoa_example_mocks::{trezoa_keypair, trezoa_rpc_client, trezoa_signer, trezoa_transaction};
     /// use anyhow::Result;
     /// use borsh::{BorshSerialize, BorshDeserialize};
-    /// use solana_instruction::Instruction;
-    /// use solana_keypair::Keypair;
-    /// use solana_message::Message;
-    /// use solana_pubkey::Pubkey;
-    /// use solana_rpc_client::rpc_client::RpcClient;
-    /// use solana_signer::Signer;
-    /// use solana_transaction::Transaction;
+    /// use trezoa_instruction::Instruction;
+    /// use trezoa_keypair::Keypair;
+    /// use trezoa_message::Message;
+    /// use trezoa_pubkey::Pubkey;
+    /// use trezoa_rpc_client::rpc_client::RpcClient;
+    /// use trezoa_signer::Signer;
+    /// use trezoa_transaction::Transaction;
     ///
     /// // A custom program instruction. This would typically be defined in
     /// // another crate so it can be shared between the on-chain program and
@@ -907,16 +907,16 @@ impl Transaction {
     ///   - Some device-specific protocol error occurs ([`SignerError::Protocol`]).
     ///   - Some other error occurs ([`SignerError::Custom`]).
     ///
-    /// See the documentation for the [`solana-remote-wallet`] crate for details
+    /// See the documentation for the [`trezoa-remote-wallet`] crate for details
     /// on the operation of [`RemoteKeypair`] signers.
     ///
-    /// [`num_required_signatures`]: https://docs.rs/solana-message/latest/solana_message/struct.MessageHeader.html#structfield.num_required_signatures
-    /// [`account_keys`]: https://docs.rs/solana-message/latest/solana_message/legacy/struct.Message.html#structfield.account_keys
-    /// [`Presigner`]: https://docs.rs/solana-presigner/latest/solana_presigner/struct.Presigner.html
-    /// [`PresignerError`]: https://docs.rs/solana-signer/latest/solana_signer/enum.PresignerError.html
-    /// [`PresignerError::VerificationFailure`]: https://docs.rs/solana-signer/latest/solana_signer/enum.PresignerError.html#variant.WrongSize
-    /// [`solana-remote-wallet`]: https://docs.rs/solana-remote-wallet/latest/
-    /// [`RemoteKeypair`]: https://docs.rs/solana-remote-wallet/latest/solana_remote_wallet/remote_keypair/struct.RemoteKeypair.html
+    /// [`num_required_signatures`]: https://docs.rs/trezoa-message/latest/trezoa_message/struct.MessageHeader.html#structfield.num_required_signatures
+    /// [`account_keys`]: https://docs.rs/trezoa-message/latest/trezoa_message/legacy/struct.Message.html#structfield.account_keys
+    /// [`Presigner`]: https://docs.rs/trezoa-presigner/latest/trezoa_presigner/struct.Presigner.html
+    /// [`PresignerError`]: https://docs.rs/trezoa-signer/latest/trezoa_signer/enum.PresignerError.html
+    /// [`PresignerError::VerificationFailure`]: https://docs.rs/trezoa-signer/latest/trezoa_signer/enum.PresignerError.html#variant.WrongSize
+    /// [`trezoa-remote-wallet`]: https://docs.rs/trezoa-remote-wallet/latest/
+    /// [`RemoteKeypair`]: https://docs.rs/trezoa-remote-wallet/latest/trezoa_remote_wallet/remote_keypair/struct.RemoteKeypair.html
     #[cfg(feature = "bincode")]
     pub fn try_partial_sign<T: Signers + ?Sized>(
         &mut self,
@@ -1108,12 +1108,12 @@ mod tests {
     use {
         super::*,
         bincode::{deserialize, serialize, serialized_size},
-        solana_instruction::AccountMeta,
-        solana_keypair::Keypair,
-        solana_presigner::Presigner,
-        solana_sha256_hasher::hash,
-        solana_signer::Signer,
-        solana_system_interface::instruction as system_instruction,
+        trezoa_instruction::AccountMeta,
+        trezoa_keypair::Keypair,
+        trezoa_presigner::Presigner,
+        trezoa_sha256_hasher::hash,
+        trezoa_signer::Signer,
+        trezoa_system_interface::instruction as system_instruction,
         std::mem::size_of,
     };
 
@@ -1126,10 +1126,10 @@ mod tests {
     #[test]
     fn test_refs() {
         let key = Keypair::new();
-        let key1 = solana_pubkey::new_rand();
-        let key2 = solana_pubkey::new_rand();
-        let prog1 = solana_pubkey::new_rand();
-        let prog2 = solana_pubkey::new_rand();
+        let key1 = trezoa_pubkey::new_rand();
+        let key2 = trezoa_pubkey::new_rand();
+        let prog1 = trezoa_pubkey::new_rand();
+        let prog2 = trezoa_pubkey::new_rand();
         let instructions = vec![
             CompiledInstruction::new(3, &(), vec![0, 1]),
             CompiledInstruction::new(4, &(), vec![0, 2]),
@@ -1197,7 +1197,7 @@ mod tests {
     fn test_sanitize_txs() {
         let key = Keypair::new();
         let id0 = Address::default();
-        let program_id = solana_pubkey::new_rand();
+        let program_id = trezoa_pubkey::new_rand();
         let ix = Instruction::new_with_bincode(
             program_id,
             &0,
@@ -1299,7 +1299,7 @@ mod tests {
     fn test_transaction_minimum_serialized_size() {
         let alice_keypair = Keypair::new();
         let alice_pubkey = alice_keypair.pubkey();
-        let bob_pubkey = solana_pubkey::new_rand();
+        let bob_pubkey = trezoa_pubkey::new_rand();
         let ix = system_instruction::transfer(&alice_pubkey, &bob_pubkey, 42);
 
         let expected_data_size = size_of::<u32>() + size_of::<u64>();
@@ -1377,7 +1377,7 @@ mod tests {
     #[should_panic]
     fn test_partial_sign_mismatched_key() {
         let keypair = Keypair::new();
-        let fee_payer = solana_pubkey::new_rand();
+        let fee_payer = trezoa_pubkey::new_rand();
         let ix = Instruction::new_with_bincode(
             Address::default(),
             &0,
@@ -1460,7 +1460,7 @@ mod tests {
         let program_id = Address::default();
         let keypair0 = Keypair::new();
         let id0 = keypair0.pubkey();
-        let id1 = solana_pubkey::new_rand();
+        let id1 = trezoa_pubkey::new_rand();
         let ix = Instruction::new_with_bincode(
             program_id,
             &0,
@@ -1511,7 +1511,7 @@ mod tests {
         assert_eq!(tx.signatures[1], presigner_sig);
 
         // Wrong key should error, not panic
-        let another_pubkey = solana_pubkey::new_rand();
+        let another_pubkey = trezoa_pubkey::new_rand();
         let ix = Instruction::new_with_bincode(
             program_id,
             &0,

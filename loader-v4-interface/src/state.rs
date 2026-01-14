@@ -1,7 +1,7 @@
-use solana_pubkey::Pubkey;
+use trezoa_pubkey::Pubkey;
 
 #[repr(u64)]
-#[cfg_attr(feature = "frozen-abi", derive(solana_frozen_abi_macro::AbiExample))]
+#[cfg_attr(feature = "frozen-abi", derive(trezoa_frozen_abi_macro::AbiExample))]
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]
 pub enum LoaderV4Status {
     /// Program is in maintenance
@@ -14,7 +14,7 @@ pub enum LoaderV4Status {
 
 /// LoaderV4 account states
 #[repr(C)]
-#[cfg_attr(feature = "frozen-abi", derive(solana_frozen_abi_macro::AbiExample))]
+#[cfg_attr(feature = "frozen-abi", derive(trezoa_frozen_abi_macro::AbiExample))]
 #[derive(Debug, PartialEq, Eq, Clone, Copy)]
 pub struct LoaderV4State {
     /// Slot in which the program was last deployed, retracted or initialized.

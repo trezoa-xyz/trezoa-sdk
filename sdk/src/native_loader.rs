@@ -1,8 +1,8 @@
 //! The native loader native program.
-use solana_account::{
+use trezoa_account::{
     Account, AccountSharedData, InheritableAccountFields, DUMMY_INHERITABLE_ACCOUNT_FIELDS,
 };
-pub use solana_sdk_ids::native_loader::{check_id, id, ID};
+pub use trezoa_sdk_ids::native_loader::{check_id, id, ID};
 
 /// Create an executable account with the given shared object name.
 pub fn create_loadable_account_with_fields(

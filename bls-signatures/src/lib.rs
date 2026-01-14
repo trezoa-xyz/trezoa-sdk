@@ -6,7 +6,7 @@ extern crate alloc;
 
 #[cfg(feature = "std")]
 extern crate std;
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 pub use crate::{
     error::BlsError,
     keypair::Keypair,
@@ -31,14 +31,14 @@ pub use crate::{
 };
 
 pub mod error;
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 pub mod keypair;
 #[macro_use]
 pub(crate) mod macros;
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 pub mod hash;
 pub mod proof_of_possession;
 pub mod pubkey;
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 pub mod secret_key;
 pub mod signature;

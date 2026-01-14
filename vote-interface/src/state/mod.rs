@@ -7,12 +7,12 @@ use arbitrary::Unstructured;
 #[cfg(feature = "serde")]
 use serde_derive::{Deserialize, Serialize};
 #[cfg(feature = "frozen-abi")]
-use solana_frozen_abi_macro::AbiExample;
+use trezoa_frozen_abi_macro::AbiExample;
 use {
     crate::authorized_voters::AuthorizedVoters,
-    solana_clock::{Epoch, Slot, UnixTimestamp},
-    solana_pubkey::Pubkey,
-    solana_rent::Rent,
+    trezoa_clock::{Epoch, Slot, UnixTimestamp},
+    trezoa_pubkey::Pubkey,
+    trezoa_rent::Rent,
     std::{collections::VecDeque, fmt::Debug},
 };
 
@@ -26,7 +26,7 @@ pub mod vote_state_v4;
 pub use vote_state_v4::VoteStateV4;
 mod vote_instruction_data;
 pub use vote_instruction_data::*;
-#[cfg(any(target_os = "solana", feature = "bincode"))]
+#[cfg(any(target_os = "trezoa", feature = "bincode"))]
 pub(crate) mod vote_state_deserialize;
 
 /// Size of a BLS public key in a compressed point representation
@@ -208,8 +208,8 @@ pub mod serde_compact_vote_state_update {
         super::*,
         crate::state::Lockout,
         serde::{Deserialize, Deserializer, Serialize, Serializer},
-        solana_hash::Hash,
-        solana_serde_varint as serde_varint, solana_short_vec as short_vec,
+        trezoa_hash::Hash,
+        trezoa_serde_varint as serde_varint, trezoa_short_vec as short_vec,
     };
 
     #[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
@@ -304,8 +304,8 @@ pub mod serde_tower_sync {
         super::*,
         crate::state::Lockout,
         serde::{Deserialize, Deserializer, Serialize, Serializer},
-        solana_hash::Hash,
-        solana_serde_varint as serde_varint, solana_short_vec as short_vec,
+        trezoa_hash::Hash,
+        trezoa_serde_varint as serde_varint, trezoa_short_vec as short_vec,
     };
 
     #[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
@@ -399,8 +399,8 @@ pub mod serde_tower_sync {
 mod tests {
     use {
         super::*, bincode::serialized_size, core::mem::MaybeUninit, itertools::Itertools,
-        rand::Rng, solana_clock::Clock, solana_hash::Hash,
-        solana_instruction::error::InstructionError,
+        rand::Rng, trezoa_clock::Clock, trezoa_hash::Hash,
+        trezoa_instruction::error::InstructionError,
     };
 
     // Test helper to create a VoteStateV4 with random data for testing
@@ -899,7 +899,7 @@ mod tests {
 
     #[test]
     fn test_minimum_balance() {
-        let rent = solana_rent::Rent::default();
+        let rent = trezoa_rent::Rent::default();
         let minimum_balance = rent.minimum_balance(VoteStateV3::size_of());
         // golden, may need updating when vote_state grows
         assert!(minimum_balance as f64 / 10f64.powf(9.0) < 0.04)

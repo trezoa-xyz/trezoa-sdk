@@ -1,4 +1,4 @@
-//! Lightweight types for directing the execution of Solana programs.
+//! Lightweight types for directing the execution of Trezoa programs.
 //!
 //! This crate offers views and zero-copy types to interact with program
 //! instructions and accounts. As a result, it reduces compute units
@@ -11,7 +11,7 @@
 #[cfg(feature = "cpi")]
 pub mod cpi;
 
-use {solana_account_view::AccountView, solana_address::Address};
+use {trezoa_account_view::AccountView, trezoa_address::Address};
 
 /// Information about an instruction.
 #[derive(Debug, Clone)]
@@ -36,7 +36,7 @@ where
 /// Any account that may be mutated by the program during execution, either its
 /// data or metadata such as held lamports, must be writable.
 ///
-/// Note that because the Solana runtime schedules parallel transaction
+/// Note that because the Trezoa runtime schedules parallel transaction
 /// execution around which accounts are writable, care should be taken that only
 /// accounts which actually may be mutated are specified as writable.
 #[repr(C)]

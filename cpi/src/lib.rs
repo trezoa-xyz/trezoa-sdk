@@ -1,24 +1,24 @@
 //! Cross-program invocation.
 //!
-//! Solana programs may call other programs, termed [_cross-program
+//! Trezoa programs may call other programs, termed [_cross-program
 //! invocations_][cpi] (CPI), with the [`invoke`] and [`invoke_signed`]
 //! functions.
 //!
 //! This crate does not support overwriting syscall stubs for offchain code.
 //! If you want to overwrite syscall stubs, use the wrapper functions in
-//! [`solana_program::program`].
+//! [`trezoa_program::program`].
 //!
 //! [`invoke`]: invoke
 //! [`invoke_signed`]: invoke_signed
-//! [cpi]: https://solana.com/docs/core/cpi
-//! [`solana_program::program`]: https://docs.rs/solana-program/latest/solana_program/program/
+//! [cpi]: https://trezoa.com/docs/core/cpi
+//! [`trezoa_program::program`]: https://docs.rs/trezoa-program/latest/trezoa_program/program/
 #![cfg_attr(docsrs, feature(doc_cfg))]
 
 use {
-    solana_account_info::AccountInfo, solana_instruction::Instruction,
-    solana_program_error::ProgramResult, solana_pubkey::Pubkey,
+    trezoa_account_info::AccountInfo, trezoa_instruction::Instruction,
+    trezoa_program_error::ProgramResult, trezoa_pubkey::Pubkey,
 };
-#[cfg(target_os = "solana")]
+#[cfg(target_os = "trezoa")]
 pub mod syscalls;
 
 /// Invoke a cross-program instruction.
@@ -33,7 +33,7 @@ pub mod syscalls;
 /// program, and provided by _its_ caller. The same is true of the program ID of
 /// the called program.
 ///
-/// [entrypoint!]: https://docs.rs/solana-entrypoint/latest/solana_entrypoint/macro.entrypoint.html
+/// [entrypoint!]: https://docs.rs/trezoa-entrypoint/latest/trezoa_entrypoint/macro.entrypoint.html
 ///
 /// The `Instruction` is usually built from within the calling program, but may
 /// be deserialized from an external source.
@@ -91,21 +91,21 @@ pub mod syscalls;
 /// borrowed in accordance with the call's requirements, an error of
 /// [`ProgramError::AccountBorrowFailed`] is returned.
 ///
-/// [`ProgramError`]: https://docs.rs/solana-program-error/latest/solana_program_error/enum.ProgramError.html
-/// [`ProgramError::AccountBorrowFailed`]: https://docs.rs/solana-program-error/latest/solana_program_error/enum.ProgramError.html#variant.AccountBorrowFailed
+/// [`ProgramError`]: https://docs.rs/trezoa-program-error/latest/trezoa_program_error/enum.ProgramError.html
+/// [`ProgramError::AccountBorrowFailed`]: https://docs.rs/trezoa-program-error/latest/trezoa_program_error/enum.ProgramError.html#variant.AccountBorrowFailed
 ///
 /// # Examples
 ///
 /// A simple example of transferring lamports via CPI:
 ///
 /// ```
-/// use solana_cpi::invoke;
-/// use solana_account_info::{next_account_info, AccountInfo};
-/// use solana_program_entrypoint::entrypoint;
-/// use solana_program_error::ProgramResult;
-/// use solana_pubkey::Pubkey;
-/// use solana_sdk_ids::system_program;
-/// use solana_system_interface::instruction as system_instruction;
+/// use trezoa_cpi::invoke;
+/// use trezoa_account_info::{next_account_info, AccountInfo};
+/// use trezoa_program_entrypoint::entrypoint;
+/// use trezoa_program_error::ProgramResult;
+/// use trezoa_pubkey::Pubkey;
+/// use trezoa_sdk_ids::system_program;
+/// use trezoa_system_interface::instruction as system_instruction;
 ///
 /// entrypoint!(process_instruction);
 ///
@@ -180,8 +180,8 @@ pub fn invoke_unchecked(instruction: &Instruction, account_infos: &[AccountInfo]
 /// PDA from the seeds and the calling program's ID, and if it matches one of
 /// the accounts in `account_info`, will consider that account "signed".
 ///
-/// [pda]: https://solana.com/docs/core/cpi#program-derived-addresses
-/// [`Pubkey::find_program_address`]: https://docs.rs/solana-pubkey/latest/solana_pubkey/struct.Pubkey.html#method.find_program_address
+/// [pda]: https://trezoa.com/docs/core/cpi#program-derived-addresses
+/// [`Pubkey::find_program_address`]: https://docs.rs/trezoa-pubkey/latest/trezoa_pubkey/struct.Pubkey.html#method.find_program_address
 ///
 /// See the documentation for [`Pubkey::find_program_address`] for more
 /// about program derived addresses.
@@ -191,13 +191,13 @@ pub fn invoke_unchecked(instruction: &Instruction, account_infos: &[AccountInfo]
 /// A simple example of creating an account for a PDA:
 ///
 /// ```
-/// use solana_cpi::invoke_signed;
-/// use solana_account_info::{next_account_info, AccountInfo};
-/// use solana_program_entrypoint::entrypoint;
-/// use solana_program_error::ProgramResult;
-/// use solana_pubkey::Pubkey;
-/// use solana_sdk_ids::system_program;
-/// use solana_system_interface::instruction as system_instruction;
+/// use trezoa_cpi::invoke_signed;
+/// use trezoa_account_info::{next_account_info, AccountInfo};
+/// use trezoa_program_entrypoint::entrypoint;
+/// use trezoa_program_error::ProgramResult;
+/// use trezoa_pubkey::Pubkey;
+/// use trezoa_sdk_ids::system_program;
+/// use trezoa_system_interface::instruction as system_instruction;
 ///
 /// entrypoint!(process_instruction);
 ///
@@ -273,11 +273,11 @@ pub fn invoke_signed(
     invoke_signed_unchecked(instruction, account_infos, signers_seeds)
 }
 
-/// Copied from `solana_program_entrypoint::SUCCESS`
-/// to avoid a `solana_program_entrypoint` dependency
+/// Copied from `trezoa_program_entrypoint::SUCCESS`
+/// to avoid a `trezoa_program_entrypoint` dependency
 const _SUCCESS: u64 = 0;
 #[cfg(test)]
-static_assertions::const_assert_eq!(_SUCCESS, solana_program_entrypoint::SUCCESS);
+static_assertions::const_assert_eq!(_SUCCESS, trezoa_program_entrypoint::SUCCESS);
 
 /// Invoke a cross-program instruction with signatures but don't enforce Rust's
 /// aliasing rules.
@@ -303,10 +303,10 @@ pub fn invoke_signed_unchecked(
     account_infos: &[AccountInfo],
     signers_seeds: &[&[&[u8]]],
 ) -> ProgramResult {
-    #[cfg(target_os = "solana")]
+    #[cfg(target_os = "trezoa")]
     {
         let instruction =
-            solana_stable_layout::stable_instruction::StableInstruction::from(instruction.clone());
+            trezoa_stable_layout::stable_instruction::StableInstruction::from(instruction.clone());
         let result = unsafe {
             crate::syscalls::sol_invoke_signed_rust(
                 &instruction as *const _ as *const u8,
@@ -322,7 +322,7 @@ pub fn invoke_signed_unchecked(
         }
     }
 
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "trezoa"))]
     Ok(())
 }
 
@@ -338,7 +338,7 @@ pub const MAX_RETURN_DATA: usize = 1024;
 /// retrieved by the caller with [`get_return_data`].
 #[allow(unused_variables)]
 pub fn set_return_data(data: &[u8]) {
-    #[cfg(target_os = "solana")]
+    #[cfg(target_os = "trezoa")]
     unsafe {
         crate::syscalls::sol_set_return_data(data.as_ptr(), data.len() as u64)
     };
@@ -372,9 +372,9 @@ pub fn set_return_data(data: &[u8]) {
 ///
 /// For more about return data see the [documentation for the return data proposal][rdp].
 ///
-/// [rdp]: https://docs.solanalabs.com/proposals/return-data
+/// [rdp]: https://docs.trezoalabs.com/proposals/return-data
 pub fn get_return_data() -> Option<(Pubkey, Vec<u8>)> {
-    #[cfg(target_os = "solana")]
+    #[cfg(target_os = "trezoa")]
     {
         use std::cmp::min;
 
@@ -382,7 +382,7 @@ pub fn get_return_data() -> Option<(Pubkey, Vec<u8>)> {
         let mut program_id = Pubkey::default();
 
         let size = unsafe {
-            solana_define_syscall::definitions::sol_get_return_data(
+            trezoa_define_syscall::definitions::sol_get_return_data(
                 buf.as_mut_ptr(),
                 buf.len() as u64,
                 &mut program_id as *mut _ as *mut u8,
@@ -397,6 +397,6 @@ pub fn get_return_data() -> Option<(Pubkey, Vec<u8>)> {
         }
     }
 
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "trezoa"))]
     None
 }

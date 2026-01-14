@@ -1,7 +1,7 @@
 [package]
-name = "solana-pubkey"
-description = "Solana account addresses"
-documentation = "https://docs.rs/solana-pubkey"
+name = "trezoa-pubkey"
+description = "Trezoa account addresses"
+documentation = "https://docs.rs/trezoa-pubkey"
 version = "4.0.0"
 rust-version = "1.81.0"
 authors = { workspace = true }
@@ -16,21 +16,21 @@ all-features = true
 rustdoc-args = ["--cfg=docsrs"]
 
 [features]
-borsh = ["solana-address/borsh"]
-bytemuck = ["solana-address/bytemuck"]
-curve25519 = ["solana-address/curve25519"]
+borsh = ["trezoa-address/borsh"]
+bytemuck = ["trezoa-address/bytemuck"]
+curve25519 = ["trezoa-address/curve25519"]
 default = ["std"]
-dev-context-only-utils = ["solana-address/dev-context-only-utils"]
-frozen-abi = ["solana-address/frozen-abi"]
-rand = ["dep:rand", "solana-address/rand"]
-serde = ["solana-address/serde"]
-sha2 = ["solana-address/sha2"]
-std = ["solana-address/atomic", "solana-address/std"]
-alloc = ["solana-address/alloc"]
+dev-context-only-utils = ["trezoa-address/dev-context-only-utils"]
+frozen-abi = ["trezoa-address/frozen-abi"]
+rand = ["dep:rand", "trezoa-address/rand"]
+serde = ["trezoa-address/serde"]
+sha2 = ["trezoa-address/sha2"]
+std = ["trezoa-address/atomic", "trezoa-address/std"]
+alloc = ["trezoa-address/alloc"]
 
 [dependencies]
 rand = { workspace = true, optional = true }
-solana-address = { workspace = true, features = [
+trezoa-address = { workspace = true, features = [
     "copy",
     "decode",
     "error",

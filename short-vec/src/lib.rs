@@ -3,7 +3,7 @@
 #![cfg_attr(docsrs, feature(doc_cfg))]
 #![allow(clippy::arithmetic_side_effects)]
 #[cfg(feature = "frozen-abi")]
-use solana_frozen_abi_macro::AbiExample;
+use trezoa_frozen_abi_macro::AbiExample;
 use std::convert::TryFrom;
 #[cfg(feature = "serde")]
 use {

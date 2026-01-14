@@ -1,4 +1,4 @@
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 use {
     crate::signature::{
         bytes::{
@@ -10,7 +10,7 @@ use {
     blstrs::{G2Affine, G2Projective},
 };
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 impl_bls_conversions!(
     SignatureProjective,
     SignatureAffine,

@@ -1,6 +1,6 @@
 [package]
-name = "solana-program-log"
-description = "Lightweight log utility for Solana programs"
+name = "trezoa-program-log"
+description = "Lightweight log utility for Trezoa programs"
 version = "1.1.0"
 authors = { workspace = true }
 repository = { workspace = true }
@@ -19,14 +19,14 @@ crate-type = ["rlib"]
 
 [features]
 default = ["macro"]
-macro = ["dep:solana-program-log-macro"]
+macro = ["dep:trezoa-program-log-macro"]
 std = []
 
 [dependencies]
-solana-program-log-macro = { workspace = true, optional = true }
+trezoa-program-log-macro = { workspace = true, optional = true }
 
-[target.'cfg(any(target_os = "solana", target_arch = "bpf"))'.dependencies]
-solana-define-syscall = { workspace = true }
+[target.'cfg(any(target_os = "trezoa", target_arch = "bpf"))'.dependencies]
+trezoa-define-syscall = { workspace = true }
 
 [lints]
 workspace = true

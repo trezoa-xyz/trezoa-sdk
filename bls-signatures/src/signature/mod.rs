@@ -6,7 +6,7 @@ pub use bytes::{
     Signature, SignatureCompressed, BLS_SIGNATURE_AFFINE_BASE64_SIZE, BLS_SIGNATURE_AFFINE_SIZE,
     BLS_SIGNATURE_COMPRESSED_BASE64_SIZE, BLS_SIGNATURE_COMPRESSED_SIZE,
 };
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 pub use points::{
     AddToSignatureProjective, AsSignatureAffine, AsSignatureProjective, SignatureAffine,
     SignatureProjective, VerifiableSignature,

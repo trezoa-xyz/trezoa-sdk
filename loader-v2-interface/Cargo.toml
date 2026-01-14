@@ -1,7 +1,7 @@
 [package]
-name = "solana-loader-v2-interface"
-description = "Solana non-upgradable BPF loader v2 instructions."
-documentation = "https://docs.rs/solana-loader-v2-interface"
+name = "trezoa-loader-v2-interface"
+description = "Trezoa non-upgradable BPF loader v2 instructions."
+documentation = "https://docs.rs/trezoa-loader-v2-interface"
 version = "3.0.0"
 authors = { workspace = true }
 repository = { workspace = true }
@@ -15,16 +15,16 @@ all-features = true
 rustdoc-args = ["--cfg=docsrs"]
 
 [features]
-bincode = ["dep:solana-instruction", "serde"]
+bincode = ["dep:trezoa-instruction", "serde"]
 serde = ["dep:serde", "dep:serde_bytes", "dep:serde_derive"]
 
 [dependencies]
 serde = { workspace = true, optional = true }
 serde_bytes = { workspace = true, optional = true }
 serde_derive = { workspace = true, optional = true }
-solana-instruction = { workspace = true, features = ["bincode", "std"], optional = true }
-solana-pubkey = { workspace = true }
-solana-sdk-ids = { workspace = true }
+trezoa-instruction = { workspace = true, features = ["bincode", "std"], optional = true }
+trezoa-pubkey = { workspace = true }
+trezoa-sdk-ids = { workspace = true }
 
 [lints]
 workspace = true

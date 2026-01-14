@@ -1,7 +1,7 @@
 [package]
-name = "solana-frozen-abi"
-description = "Solana Frozen ABI"
-documentation = "https://docs.rs/solana-frozen-abi"
+name = "trezoa-frozen-abi"
+description = "Trezoa Frozen ABI"
+documentation = "https://docs.rs/trezoa-frozen-abi"
 version = "3.1.2"
 authors = { workspace = true }
 repository = { workspace = true }
@@ -31,10 +31,10 @@ serde = { workspace = true, features = ["rc"] }
 serde_derive = { workspace = true }
 serde_with = { workspace = true }
 sha2 = { workspace = true }
-solana-frozen-abi-macro = { workspace = true }
+trezoa-frozen-abi-macro = { workspace = true }
 thiserror = { workspace = true }
 
-[target.'cfg(not(target_os = "solana"))'.dependencies]
+[target.'cfg(not(target_os = "trezoa"))'.dependencies]
 # These dependencies are used only to back `frozen-abi` StableAbi API,
 # to avoid version skew and keep digest computation stable regardless of consumer dependencies.
 bincode = "1.3.3"
@@ -45,7 +45,7 @@ memmap2 = { workspace = true }
 rand = { workspace = true }
 rand_chacha = { workspace = true }
 
-[target.'cfg(not(target_os = "solana"))'.dev-dependencies]
+[target.'cfg(not(target_os = "trezoa"))'.dev-dependencies]
 bitflags = { workspace = true, features = ["serde"] }
 serde_bytes = { workspace = true }
 serde_with = { workspace = true, features = ["macros"] }

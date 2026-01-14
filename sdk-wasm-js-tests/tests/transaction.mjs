@@ -1,13 +1,13 @@
 import { expect } from "chai";
 import {
-  solana_program_init,
+  trezoa_program_init,
   Address,
   Keypair,
   Hash,
   MyProgramInstruction,
   Transaction,
 } from "crate";
-solana_program_init();
+trezoa_program_init();
 
 describe("Transaction", function () {
   it("Instruction", () => {

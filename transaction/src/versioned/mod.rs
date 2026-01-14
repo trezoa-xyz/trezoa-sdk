@@ -1,21 +1,21 @@
 //! Defines a transaction which supports multiple versions of messages.
 
 #[cfg(feature = "bincode")]
-use solana_signer::{signers::Signers, SignerError};
+use trezoa_signer::{signers::Signers, SignerError};
 #[cfg(feature = "wincode")]
 use wincode::{containers, len::ShortU16Len, SchemaRead, SchemaWrite};
 use {
     crate::Transaction,
-    solana_message::{inline_nonce::is_advance_nonce_instruction_data, VersionedMessage},
-    solana_sanitize::SanitizeError,
-    solana_sdk_ids::system_program,
-    solana_signature::Signature,
+    trezoa_message::{inline_nonce::is_advance_nonce_instruction_data, VersionedMessage},
+    trezoa_sanitize::SanitizeError,
+    trezoa_sdk_ids::system_program,
+    trezoa_signature::Signature,
     std::cmp::Ordering,
 };
 #[cfg(feature = "serde")]
 use {
     serde_derive::{Deserialize, Serialize},
-    solana_short_vec as short_vec,
+    trezoa_short_vec as short_vec,
 };
 
 pub mod sanitized;
@@ -48,7 +48,7 @@ impl TransactionVersion {
 
 // NOTE: Serialization-related changes must be paired with the direct read at sigverify.
 /// An atomic transaction
-#[cfg_attr(feature = "frozen-abi", derive(solana_frozen_abi_macro::AbiExample))]
+#[cfg_attr(feature = "frozen-abi", derive(trezoa_frozen_abi_macro::AbiExample))]
 #[cfg_attr(feature = "serde", derive(Deserialize, Serialize))]
 #[cfg_attr(feature = "wincode", derive(SchemaWrite, SchemaRead))]
 #[derive(Debug, PartialEq, Default, Eq, Clone)]
@@ -178,14 +178,14 @@ impl VersionedTransaction {
     /// Verify the transaction and hash its message
     pub fn verify_and_hash_message(
         &self,
-    ) -> solana_transaction_error::TransactionResult<solana_hash::Hash> {
+    ) -> trezoa_transaction_error::TransactionResult<trezoa_hash::Hash> {
         let message_bytes = self.message.serialize();
         if !self
             ._verify_with_results(&message_bytes)
             .iter()
             .all(|verify_result| *verify_result)
         {
-            Err(solana_transaction_error::TransactionError::SignatureFailure)
+            Err(trezoa_transaction_error::TransactionError::SignatureFailure)
         } else {
             Ok(VersionedMessage::hash_raw_message(&message_bytes))
         }
@@ -228,13 +228,13 @@ impl VersionedTransaction {
 mod tests {
     use {
         super::*,
-        solana_hash::Hash,
-        solana_instruction::{AccountMeta, Instruction},
-        solana_keypair::Keypair,
-        solana_message::Message as LegacyMessage,
-        solana_pubkey::Pubkey,
-        solana_signer::Signer,
-        solana_system_interface::instruction as system_instruction,
+        trezoa_hash::Hash,
+        trezoa_instruction::{AccountMeta, Instruction},
+        trezoa_keypair::Keypair,
+        trezoa_message::Message as LegacyMessage,
+        trezoa_pubkey::Pubkey,
+        trezoa_signer::Signer,
+        trezoa_system_interface::instruction as system_instruction,
     };
 
     #[test]
@@ -381,14 +381,14 @@ mod tests {
         use {
             super::*,
             proptest::prelude::*,
-            solana_address::{Address, ADDRESS_BYTES},
-            solana_hash::{Hash, HASH_BYTES},
-            solana_message::{
+            trezoa_address::{Address, ADDRESS_BYTES},
+            trezoa_hash::{Hash, HASH_BYTES},
+            trezoa_message::{
                 compiled_instruction::CompiledInstruction,
                 v0::{self, MessageAddressTableLookup},
                 Message as LegacyMessage, MessageHeader,
             },
-            solana_signature::SIGNATURE_BYTES,
+            trezoa_signature::SIGNATURE_BYTES,
         };
 
         fn strat_byte_vec(max_len: usize) -> impl Strategy<Value = Vec<u8>> {

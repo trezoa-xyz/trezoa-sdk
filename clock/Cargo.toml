@@ -1,7 +1,7 @@
 [package]
-name = "solana-clock"
-description = "Solana Clock and Time Definitions"
-documentation = "https://docs.rs/solana-clock"
+name = "trezoa-clock"
+description = "Trezoa Clock and Time Definitions"
+documentation = "https://docs.rs/trezoa-clock"
 version = "3.0.0"
 authors = { workspace = true }
 repository = { workspace = true }
@@ -16,15 +16,15 @@ rustdoc-args = ["--cfg=docsrs"]
 
 [features]
 serde = ["dep:serde", "dep:serde_derive"]
-sysvar = ["dep:solana-sdk-ids", "dep:solana-sysvar-id"]
+sysvar = ["dep:trezoa-sdk-ids", "dep:trezoa-sysvar-id"]
 
 [dependencies]
 serde = { workspace = true, optional = true }
 serde_derive = { workspace = true, optional = true }
-solana-sdk-ids = { workspace = true, optional = true }
-solana-sdk-macro = { workspace = true }
-solana-sysvar-id = { workspace = true, optional = true }
+trezoa-sdk-ids = { workspace = true, optional = true }
+trezoa-sdk-macro = { workspace = true }
+trezoa-sysvar-id = { workspace = true, optional = true }
 
 [dev-dependencies]
-solana-clock = { path = ".", features = ["sysvar"] }
+trezoa-clock = { path = ".", features = ["sysvar"] }
 static_assertions = { workspace = true }

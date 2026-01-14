@@ -1,5 +1,5 @@
 [package]
-name = "solana-system-interface"
+name = "trezoa-system-interface"
 version = "3.0.0"
 description = "Instructions and constructors for the System program"
 readme = "README.md"
@@ -20,41 +20,41 @@ crate-type = ["rlib"]
 
 [features]
 alloc = []
-bincode = ["dep:solana-instruction", "alloc", "serde"]
+bincode = ["dep:trezoa-instruction", "alloc", "serde"]
 frozen-abi = [
-    "dep:solana-frozen-abi",
-    "dep:solana-frozen-abi-macro",
+    "dep:trezoa-frozen-abi",
+    "dep:trezoa-frozen-abi-macro",
     "serde",
     "std",
-    "solana-address/frozen-abi",
-    "solana-address/std",
+    "trezoa-address/frozen-abi",
+    "trezoa-address/std",
 ]
-serde = ["dep:serde", "dep:serde_derive", "serde/alloc", "solana-address/serde"]
+serde = ["dep:serde", "dep:serde_derive", "serde/alloc", "trezoa-address/serde"]
 std = []
 
 [dependencies]
 num-traits = { workspace = true }
 serde = { workspace = true, optional = true }
 serde_derive = { workspace = true, optional = true }
-solana-address = { workspace = true, features = ["decode"] }
-solana-frozen-abi = { workspace = true, features = ["frozen-abi"], optional = true }
-solana-frozen-abi-macro = { workspace = true, features = ["frozen-abi"], optional = true }
-solana-instruction = { workspace = true, features = ["bincode", "std"], optional = true }
-solana-msg = { workspace = true }
-solana-program-error = { workspace = true }
+trezoa-address = { workspace = true, features = ["decode"] }
+trezoa-frozen-abi = { workspace = true, features = ["frozen-abi"], optional = true }
+trezoa-frozen-abi-macro = { workspace = true, features = ["frozen-abi"], optional = true }
+trezoa-instruction = { workspace = true, features = ["bincode", "std"], optional = true }
+trezoa-msg = { workspace = true }
+trezoa-program-error = { workspace = true }
 
 [dev-dependencies]
 anyhow = { workspace = true }
 borsh = { workspace = true, features = ["derive", "unstable__schema"] }
-solana-account-info = { workspace = true }
-solana-cpi = { path = "../cpi" }
-solana-example-mocks = { path = "../example-mocks" }
-solana-nonce = { workspace = true }
-solana-program-entrypoint = { workspace = true }
-solana-program-error = { workspace = true, features = ["borsh"] }
-solana-system-interface = { path = ".", features = ["bincode"] }
-solana-sysvar = { workspace = true }
-solana-sysvar-id = { workspace = true }
+trezoa-account-info = { workspace = true }
+trezoa-cpi = { path = "../cpi" }
+trezoa-example-mocks = { path = "../example-mocks" }
+trezoa-nonce = { workspace = true }
+trezoa-program-entrypoint = { workspace = true }
+trezoa-program-error = { workspace = true, features = ["borsh"] }
+trezoa-system-interface = { path = ".", features = ["bincode"] }
+trezoa-sysvar = { workspace = true }
+trezoa-sysvar-id = { workspace = true }
 static_assertions = { workspace = true }
 strum = { workspace = true }
 strum_macros = { workspace = true }

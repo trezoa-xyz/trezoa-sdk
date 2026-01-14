@@ -1,18 +1,18 @@
-//! Definitions of Solana's proof of history.
+//! Definitions of Trezoa's proof of history.
 #![cfg_attr(docsrs, feature(doc_cfg))]
 #![cfg_attr(feature = "frozen-abi", feature(min_specialization))]
 
 use std::time::Duration;
 
-// inlined to avoid solana-clock dep
+// inlined to avoid trezoa-clock dep
 const DEFAULT_TICKS_PER_SECOND: u64 = 160;
 #[cfg(test)]
 static_assertions::const_assert_eq!(
     DEFAULT_TICKS_PER_SECOND,
-    solana_clock::DEFAULT_TICKS_PER_SECOND
+    trezoa_clock::DEFAULT_TICKS_PER_SECOND
 );
 
-#[cfg_attr(feature = "frozen-abi", derive(solana_frozen_abi_macro::AbiExample))]
+#[cfg_attr(feature = "frozen-abi", derive(trezoa_frozen_abi_macro::AbiExample))]
 #[cfg_attr(
     feature = "serde",
     derive(serde_derive::Deserialize, serde_derive::Serialize)

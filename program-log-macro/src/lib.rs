@@ -72,7 +72,7 @@ impl Parse for LogArgs {
     }
 }
 
-/// Companion `log!` macro for `solana-program-log`.
+/// Companion `log!` macro for `trezoa-program-log`.
 ///
 /// The macro automates the creation of a `Logger` object to log a message.
 /// It support a limited subset of the [`format!`](https://doc.rust-lang.org/std/fmt/) syntax.
@@ -168,7 +168,7 @@ pub fn log(input: TokenStream) -> TokenStream {
                         replaced_parts.push(quote! {
                             logger.append_with_args(
                                 #arg,
-                                &[solana_program_log::logger::Argument::Precision(#precision)]
+                                &[trezoa_program_log::logger::Argument::Precision(#precision)]
                             )
                         });
                     }
@@ -187,7 +187,7 @@ pub fn log(input: TokenStream) -> TokenStream {
                                 replaced_parts.push(quote! {
                                     logger.append_with_args(
                                         #arg,
-                                        &[solana_program_log::logger::Argument::TruncateStart(#size)]
+                                        &[trezoa_program_log::logger::Argument::TruncateStart(#size)]
                                     )
                                 });
                             }
@@ -195,7 +195,7 @@ pub fn log(input: TokenStream) -> TokenStream {
                                 replaced_parts.push(quote! {
                                     logger.append_with_args(
                                         #arg,
-                                        &[solana_program_log::logger::Argument::TruncateEnd(#size)]
+                                        &[trezoa_program_log::logger::Argument::TruncateEnd(#size)]
                                     )
                                 });
                             }
@@ -225,14 +225,14 @@ pub fn log(input: TokenStream) -> TokenStream {
         // Generate the output string as a compile-time constant
         TokenStream::from(quote! {
             {
-                let mut logger = ::solana_program_log::logger::Logger::<#buffer_len>::default();
+                let mut logger = ::trezoa_program_log::logger::Logger::<#buffer_len>::default();
                 #(#replaced_parts;)*
                 logger.log();
             }
         })
     } else {
         TokenStream::from(
-            quote! {::solana_program_log::logger::log_message(#format_string.as_bytes());},
+            quote! {::trezoa_program_log::logger::log_message(#format_string.as_bytes());},
         )
     }
 }
@@ -254,7 +254,7 @@ pub fn log(input: TokenStream) -> TokenStream {
 ///  # Example
 ///
 /// ```rust,ignore
-/// #[solana_program_log::log_cu_usage]
+/// #[trezoa_program_log::log_cu_usage]
 /// fn my_function() {
 ///     // Function body
 /// }
@@ -266,8 +266,8 @@ pub fn log(input: TokenStream) -> TokenStream {
 ///
 /// # References
 ///
-/// * [Logging syscall](https://github.com/anza-xyz/agave/blob/d88050cda335f87e872eddbdf8506bc063f039d3/programs/bpf_loader/src/syscalls/logging.rs#L70)
-/// * [Compute budget](https://github.com/anza-xyz/agave/blob/d88050cda335f87e872eddbdf8506bc063f039d3/program-runtime/src/compute_budget.rs#L150)
+/// * [Logging syscall](https://github.com/trezoa-xyz/trezoa/blob/d88050cda335f87e872eddbdf8506bc063f039d3/programs/bpf_loader/src/syscalls/logging.rs#L70)
+/// * [Compute budget](https://github.com/trezoa-xyz/trezoa/blob/d88050cda335f87e872eddbdf8506bc063f039d3/program-runtime/src/compute_budget.rs#L150)
 ///
 #[proc_macro_attribute]
 pub fn log_cu_usage(_attr: TokenStream, item: TokenStream) -> TokenStream {
@@ -276,16 +276,16 @@ pub fn log_cu_usage(_attr: TokenStream, item: TokenStream) -> TokenStream {
     let block = &input.block;
 
     input.block = syn::parse_quote!({
-        let cu_before = unsafe { ::solana_program_log::logger::remaining_compute_units() };
+        let cu_before = unsafe { ::trezoa_program_log::logger::remaining_compute_units() };
 
         let __result = (|| #block)();
 
-        let cu_after = unsafe { ::solana_program_log::logger::remaining_compute_units() };
+        let cu_after = unsafe { ::trezoa_program_log::logger::remaining_compute_units() };
         let introspection_cost = 102; // 100 - compute budget syscall_base_cost,  2 - extra calculations
 
         let consumed = cu_before - cu_after - introspection_cost;
 
-        ::solana_program_log::log!("Function {} consumed {} compute units", stringify!(#fn_name), consumed);
+        ::trezoa_program_log::log!("Function {} consumed {} compute units", stringify!(#fn_name), consumed);
 
         __result
     });

@@ -110,16 +110,16 @@ members = [
 resolver = "2"
 
 [workspace.package]
-authors = ["Anza Maintainers <maintainers@anza.xyz>"]
-repository = "https://github.com/anza-xyz/solana-sdk"
-homepage = "https://anza.xyz/"
+authors = ["Trezoa-team Maintainers <maintainers@trezoa.xyz>"]
+repository = "https://github.com/trezoa-xyz/trezoa-sdk"
+homepage = "https://trezoa.xyz/"
 license = "Apache-2.0"
 edition = "2021"
 
 [workspace.lints.rust.unexpected_cfgs]
 level = "warn"
 check-cfg = [
-    'cfg(target_os, values("solana"))',
+    'cfg(target_os, values("trezoa"))',
     'cfg(feature, values("frozen-abi", "no-entrypoint"))',
 ]
 
@@ -134,7 +134,7 @@ tag-message = "Publish {{crate_name}} v{{version}}"
 consolidate-commits = false
 
 [workspace.metadata.cli]
-solana = "2.2.11"
+trezoa = "2.2.11"
 
 [workspace.dependencies]
 ahash = "0.8.11"
@@ -220,111 +220,111 @@ sha2 = { version = "0.10.8", default-features = false }
 sha3 = "0.10.8"
 signal-hook = "0.3.17"
 siphasher = "0.3.11"
-solana-account = { path = "account", version = "3.0.0" }
-solana-account-info = { path = "account-info", version = "3.0.0" }
-solana-account-view = { path = "account-view", version = "1.0.0" }
-solana-address = { path = "address", version = "2.0.0" }
-solana-address-lookup-table-interface = { path = "address-lookup-table-interface", version = "3.0.0" }
-solana-atomic-u64 = { path = "atomic-u64", version = "3.0.0" }
-solana-big-mod-exp = { path = "big-mod-exp", version = "3.0.0" }
-solana-bincode = { path = "bincode", version = "3.0.0" }
-solana-blake3-hasher = { path = "blake3-hasher", version = "3.0.0" }
-solana-bls-signatures = { path = "bls-signatures", version = "3.0.0" }
-solana-bn254 = { path = "bn254", version = "3.0.0" }
-solana-borsh = { path = "borsh", version = "3.0.0" }
-solana-client-traits = { path = "client-traits", version = "3.0.0" }
-solana-clock = { path = "clock", version = "3.0.0" }
-solana-cluster-type = { path = "cluster-type", version = "3.0.0" }
-solana-commitment-config = { path = "commitment-config", version = "3.0.0" }
-solana-compute-budget-interface = { path = "compute-budget-interface", version = "3.0.0" }
-solana-cpi = { path = "cpi", version = "3.0.0" }
-solana-curve25519 = { path = "curve25519", version = "4.0.0" }
-solana-define-syscall = { path = "define-syscall", version = "5.0.0" }
-solana-derivation-path = { path = "derivation-path", version = "3.0.0" }
-solana-ed25519-program = { path = "ed25519-program", version = "3.0.0" }
-solana-epoch-info = { path = "epoch-info", version = "3.0.0" }
-solana-epoch-rewards = { path = "epoch-rewards", version = "3.0.0" }
-solana-epoch-rewards-hasher = { path = "epoch-rewards-hasher", version = "3.0.0" }
-solana-epoch-schedule = { path = "epoch-schedule", version = "3.0.0" }
-solana-epoch-stake = { path = "epoch-stake", version = "3.0.0" }
-solana-example-mocks = { path = "example-mocks", version = "3.0.0" }
-solana-feature-gate-interface = { path = "feature-gate-interface", version = "3.0.0" }
-solana-fee-calculator = { path = "fee-calculator", version = "3.0.0" }
-solana-fee-structure = { path = "fee-structure", version = "3.0.0" }
-solana-file-download = { path = "file-download", version = "3.0.0" }
-solana-frozen-abi = { path = "frozen-abi", version = "3.0.0" }
-solana-frozen-abi-macro = { path = "frozen-abi-macro", version = "3.0.1" }
-solana-genesis-config = { path = "genesis-config", version = "3.0.0" }
-solana-hard-forks = { path = "hard-forks", version = "3.0.0", default-features = false }
-solana-hash = { path = "hash", version = "4.0.0", default-features = false }
-solana-inflation = { path = "inflation", version = "3.0.0" }
-solana-instruction = { path = "instruction", version = "3.0.0", default-features = false }
-solana-instruction-error = { path = "instruction-error", version = "2.0.0" }
-solana-instruction-view = { path = "instruction-view", version = "1.0.0" }
-solana-instructions-sysvar = { path = "instructions-sysvar", version = "3.0.0" }
-solana-keccak-hasher = { path = "keccak-hasher", version = "3.0.0" }
-solana-keypair = { path = "keypair", version = "3.0.0" }
-solana-last-restart-slot = { path = "last-restart-slot", version = "3.0.0" }
-solana-loader-v2-interface = { path = "loader-v2-interface", version = "3.0.0" }
-solana-loader-v3-interface = { path = "loader-v3-interface", version = "6.0.0" }
-solana-loader-v4-interface = { path = "loader-v4-interface", version = "3.0.0" }
-solana-message = { path = "message", version = "3.0.0" }
-solana-msg = { path = "msg", version = "3.0.0", default-features = false }
-solana-native-token = { path = "native-token", version = "3.0.0" }
-solana-nonce = { path = "nonce", version = "3.0.0" }
-solana-nonce-account = { path = "nonce-account", version = "3.0.0" }
-solana-offchain-message = { path = "offchain-message", version = "3.0.0" }
-solana-package-metadata = { path = "package-metadata", version = "3.0.0" }
-solana-package-metadata-macro = { path = "package-metadata-macro", version = "3.0.0" }
-solana-packet = { path = "packet", version = "4.0.0" }
-solana-poh-config = { path = "poh-config", version = "3.0.0" }
-solana-poseidon = { path = "poseidon", version = "4.0.0" }
-solana-precompile-error = { path = "precompile-error", version = "3.0.0" }
-solana-presigner = { path = "presigner", version = "3.0.0" }
-solana-program = { path = "program", version = "3.0.0", default-features = false }
-solana-program-entrypoint = { path = "program-entrypoint", version = "3.0.0" }
-solana-program-error = { path = "program-error", version = "3.0.0" }
-solana-program-log = { path = "program-log", version = "1.0.0" }
-solana-program-log-macro = { path = "program-log-macro", version = "1.0.0" }
-solana-program-memory = { path = "program-memory", version = "3.0.0" }
-solana-program-option = { path = "program-option", version = "3.0.0" }
-solana-program-pack = { path = "program-pack", version = "3.0.0" }
-solana-pubkey = { path = "pubkey", version = "4.0.0", default-features = false }
-solana-quic-definitions = { path = "quic-definitions", version = "3.0.0" }
-solana-rent = { path = "rent", version = "3.0.0", default-features = false }
-solana-reward-info = { path = "reward-info", version = "4.0.0" }
-solana-sanitize = { path = "sanitize", version = "3.0.0" }
-solana-sdk = { path = "sdk", version = "3.0.0" }
-solana-sdk-ids = { path = "sdk-ids", version = "3.0.0" }
-solana-sdk-macro = { path = "sdk-macro", version = "3.0.0" }
-solana-sdk-wasm-js = { path = "sdk-wasm-js", version = "1.0.0" }
-solana-secp256k1-program = { path = "secp256k1-program", version = "3.0.0" }
-solana-secp256k1-recover = { path = "secp256k1-recover", version = "3.0.0" }
-solana-secp256r1-program = { path = "secp256r1-program", version = "3.0.0", default-features = false }
-solana-seed-derivable = { path = "seed-derivable", version = "3.0.0" }
-solana-seed-phrase = { path = "seed-phrase", version = "3.0.0" }
-solana-serde = { path = "serde", version = "3.0.0" }
-solana-serde-varint = { path = "serde-varint", version = "3.0.0" }
-solana-serialize-utils = { path = "serialize-utils", version = "3.1.0" }
-solana-sha256-hasher = { path = "sha256-hasher", version = "3.0.0" }
-solana-short-vec = { path = "short-vec", version = "3.0.0", default-features = false }
-solana-shred-version = { path = "shred-version", version = "3.0.0" }
-solana-signature = { path = "signature", version = "3.0.0", default-features = false }
-solana-signer = { path = "signer", version = "3.0.0" }
-solana-signer-store = { path = "signer-store", version = "0.1.0" }
-solana-slot-hashes = { path = "slot-hashes", version = "3.0.0" }
-solana-slot-history = { path = "slot-history", version = "3.0.0" }
-solana-stable-layout = { path = "stable-layout", version = "3.0.0" }
-solana-system-interface = { path = "system-interface", version = "3.0" }
-solana-system-transaction = { path = "system-transaction", version = "3.0.0" }
-solana-system-wasm-js = { path = "system-wasm-js", version = "1.0" }
-solana-sysvar = { path = "sysvar", version = "3.0.0" }
-solana-sysvar-id = { path = "sysvar-id", version = "3.0.0" }
-solana-time-utils = { path = "time-utils", version = "3.0.0" }
-solana-transaction = { path = "transaction", version = "3.0.0" }
-solana-transaction-error = { path = "transaction-error", version = "3.0.0" }
-solana-validator-exit = { path = "validator-exit", version = "3.0.0" }
-solana-vote-interface = { path = "vote-interface", version = "5.0.0" }
+trezoa-account = { path = "account", version = "3.0.0" }
+trezoa-account-info = { path = "account-info", version = "3.0.0" }
+trezoa-account-view = { path = "account-view", version = "1.0.0" }
+trezoa-address = { path = "address", version = "2.0.0" }
+trezoa-address-lookup-table-interface = { path = "address-lookup-table-interface", version = "3.0.0" }
+trezoa-atomic-u64 = { path = "atomic-u64", version = "3.0.0" }
+trezoa-big-mod-exp = { path = "big-mod-exp", version = "3.0.0" }
+trezoa-bincode = { path = "bincode", version = "3.0.0" }
+trezoa-blake3-hasher = { path = "blake3-hasher", version = "3.0.0" }
+trezoa-bls-signatures = { path = "bls-signatures", version = "3.0.0" }
+trezoa-bn254 = { path = "bn254", version = "3.0.0" }
+trezoa-borsh = { path = "borsh", version = "3.0.0" }
+trezoa-client-traits = { path = "client-traits", version = "3.0.0" }
+trezoa-clock = { path = "clock", version = "3.0.0" }
+trezoa-cluster-type = { path = "cluster-type", version = "3.0.0" }
+trezoa-commitment-config = { path = "commitment-config", version = "3.0.0" }
+trezoa-compute-budget-interface = { path = "compute-budget-interface", version = "3.0.0" }
+trezoa-cpi = { path = "cpi", version = "3.0.0" }
+trezoa-curve25519 = { path = "curve25519", version = "4.0.0" }
+trezoa-define-syscall = { path = "define-syscall", version = "5.0.0" }
+trezoa-derivation-path = { path = "derivation-path", version = "3.0.0" }
+trezoa-ed25519-program = { path = "ed25519-program", version = "3.0.0" }
+trezoa-epoch-info = { path = "epoch-info", version = "3.0.0" }
+trezoa-epoch-rewards = { path = "epoch-rewards", version = "3.0.0" }
+trezoa-epoch-rewards-hasher = { path = "epoch-rewards-hasher", version = "3.0.0" }
+trezoa-epoch-schedule = { path = "epoch-schedule", version = "3.0.0" }
+trezoa-epoch-stake = { path = "epoch-stake", version = "3.0.0" }
+trezoa-example-mocks = { path = "example-mocks", version = "3.0.0" }
+trezoa-feature-gate-interface = { path = "feature-gate-interface", version = "3.0.0" }
+trezoa-fee-calculator = { path = "fee-calculator", version = "3.0.0" }
+trezoa-fee-structure = { path = "fee-structure", version = "3.0.0" }
+trezoa-file-download = { path = "file-download", version = "3.0.0" }
+trezoa-frozen-abi = { path = "frozen-abi", version = "3.0.0" }
+trezoa-frozen-abi-macro = { path = "frozen-abi-macro", version = "3.0.1" }
+trezoa-genesis-config = { path = "genesis-config", version = "3.0.0" }
+trezoa-hard-forks = { path = "hard-forks", version = "3.0.0", default-features = false }
+trezoa-hash = { path = "hash", version = "4.0.0", default-features = false }
+trezoa-inflation = { path = "inflation", version = "3.0.0" }
+trezoa-instruction = { path = "instruction", version = "3.0.0", default-features = false }
+trezoa-instruction-error = { path = "instruction-error", version = "2.0.0" }
+trezoa-instruction-view = { path = "instruction-view", version = "1.0.0" }
+trezoa-instructions-sysvar = { path = "instructions-sysvar", version = "3.0.0" }
+trezoa-keccak-hasher = { path = "keccak-hasher", version = "3.0.0" }
+trezoa-keypair = { path = "keypair", version = "3.0.0" }
+trezoa-last-restart-slot = { path = "last-restart-slot", version = "3.0.0" }
+trezoa-loader-v2-interface = { path = "loader-v2-interface", version = "3.0.0" }
+trezoa-loader-v3-interface = { path = "loader-v3-interface", version = "6.0.0" }
+trezoa-loader-v4-interface = { path = "loader-v4-interface", version = "3.0.0" }
+trezoa-message = { path = "message", version = "3.0.0" }
+trezoa-msg = { path = "msg", version = "3.0.0", default-features = false }
+trezoa-native-token = { path = "native-token", version = "3.0.0" }
+trezoa-nonce = { path = "nonce", version = "3.0.0" }
+trezoa-nonce-account = { path = "nonce-account", version = "3.0.0" }
+trezoa-offchain-message = { path = "offchain-message", version = "3.0.0" }
+trezoa-package-metadata = { path = "package-metadata", version = "3.0.0" }
+trezoa-package-metadata-macro = { path = "package-metadata-macro", version = "3.0.0" }
+trezoa-packet = { path = "packet", version = "4.0.0" }
+trezoa-poh-config = { path = "poh-config", version = "3.0.0" }
+trezoa-poseidon = { path = "poseidon", version = "4.0.0" }
+trezoa-precompile-error = { path = "precompile-error", version = "3.0.0" }
+trezoa-presigner = { path = "presigner", version = "3.0.0" }
+trezoa-program = { path = "program", version = "3.0.0", default-features = false }
+trezoa-program-entrypoint = { path = "program-entrypoint", version = "3.0.0" }
+trezoa-program-error = { path = "program-error", version = "3.0.0" }
+trezoa-program-log = { path = "program-log", version = "1.0.0" }
+trezoa-program-log-macro = { path = "program-log-macro", version = "1.0.0" }
+trezoa-program-memory = { path = "program-memory", version = "3.0.0" }
+trezoa-program-option = { path = "program-option", version = "3.0.0" }
+trezoa-program-pack = { path = "program-pack", version = "3.0.0" }
+trezoa-pubkey = { path = "pubkey", version = "4.0.0", default-features = false }
+trezoa-quic-definitions = { path = "quic-definitions", version = "3.0.0" }
+trezoa-rent = { path = "rent", version = "3.0.0", default-features = false }
+trezoa-reward-info = { path = "reward-info", version = "4.0.0" }
+trezoa-sanitize = { path = "sanitize", version = "3.0.0" }
+trezoa-sdk = { path = "sdk", version = "3.0.0" }
+trezoa-sdk-ids = { path = "sdk-ids", version = "3.0.0" }
+trezoa-sdk-macro = { path = "sdk-macro", version = "3.0.0" }
+trezoa-sdk-wasm-js = { path = "sdk-wasm-js", version = "1.0.0" }
+trezoa-secp256k1-program = { path = "secp256k1-program", version = "3.0.0" }
+trezoa-secp256k1-recover = { path = "secp256k1-recover", version = "3.0.0" }
+trezoa-secp256r1-program = { path = "secp256r1-program", version = "3.0.0", default-features = false }
+trezoa-seed-derivable = { path = "seed-derivable", version = "3.0.0" }
+trezoa-seed-phrase = { path = "seed-phrase", version = "3.0.0" }
+trezoa-serde = { path = "serde", version = "3.0.0" }
+trezoa-serde-varint = { path = "serde-varint", version = "3.0.0" }
+trezoa-serialize-utils = { path = "serialize-utils", version = "3.1.0" }
+trezoa-sha256-hasher = { path = "sha256-hasher", version = "3.0.0" }
+trezoa-short-vec = { path = "short-vec", version = "3.0.0", default-features = false }
+trezoa-shred-version = { path = "shred-version", version = "3.0.0" }
+trezoa-signature = { path = "signature", version = "3.0.0", default-features = false }
+trezoa-signer = { path = "signer", version = "3.0.0" }
+trezoa-signer-store = { path = "signer-store", version = "0.1.0" }
+trezoa-slot-hashes = { path = "slot-hashes", version = "3.0.0" }
+trezoa-slot-history = { path = "slot-history", version = "3.0.0" }
+trezoa-stable-layout = { path = "stable-layout", version = "3.0.0" }
+trezoa-system-interface = { path = "system-interface", version = "3.0" }
+trezoa-system-transaction = { path = "system-transaction", version = "3.0.0" }
+trezoa-system-wasm-js = { path = "system-wasm-js", version = "1.0" }
+trezoa-sysvar = { path = "sysvar", version = "3.0.0" }
+trezoa-sysvar-id = { path = "sysvar-id", version = "3.0.0" }
+trezoa-time-utils = { path = "time-utils", version = "3.0.0" }
+trezoa-transaction = { path = "transaction", version = "3.0.0" }
+trezoa-transaction-error = { path = "transaction-error", version = "3.0.0" }
+trezoa-validator-exit = { path = "validator-exit", version = "3.0.0" }
+trezoa-vote-interface = { path = "vote-interface", version = "5.0.0" }
 static_assertions = "1.1.0"
 strum = "0.24"
 strum_macros = "0.24"

@@ -111,7 +111,7 @@ impl Default for FeeStructure {
 }
 
 #[cfg(feature = "frozen-abi")]
-impl ::solana_frozen_abi::abi_example::AbiExample for FeeStructure {
+impl ::trezoa_frozen_abi::abi_example::AbiExample for FeeStructure {
     fn example() -> Self {
         FeeStructure::default()
     }

@@ -4,8 +4,8 @@
 extern crate alloc;
 use {
     alloc::vec::Vec,
-    solana_account_info::AccountInfo,
-    solana_pubkey::Pubkey,
+    trezoa_account_info::AccountInfo,
+    trezoa_pubkey::Pubkey,
     std::{
         alloc::Layout,
         mem::{size_of, MaybeUninit},
@@ -15,12 +15,12 @@ use {
 };
 // need to re-export `AccountInfo` and `Pubkey` for entrypoint_no_alloc macro
 pub use {
-    solana_account_info::AccountInfo as __AccountInfo,
-    solana_account_info::MAX_PERMITTED_DATA_INCREASE,
+    trezoa_account_info::AccountInfo as __AccountInfo,
+    trezoa_account_info::MAX_PERMITTED_DATA_INCREASE,
     // Re-exporting for custom_panic
-    solana_define_syscall::definitions::{sol_log_ as __log, sol_panic_ as __panic},
-    solana_program_error::ProgramResult,
-    solana_pubkey::Pubkey as __Pubkey,
+    trezoa_define_syscall::definitions::{sol_log_ as __log, sol_panic_ as __panic},
+    trezoa_program_error::ProgramResult,
+    trezoa_pubkey::Pubkey as __Pubkey,
 };
 
 /// User implemented function to process an instruction
@@ -70,7 +70,7 @@ pub const NON_DUP_MARKER: u8 = u8::MAX;
 ///
 /// This macro emits symbols and definitions that may only be defined once
 /// globally. As such, if linked to other Rust crates it will cause compiler
-/// errors. To avoid this, it is common for Solana programs to define an
+/// errors. To avoid this, it is common for Trezoa programs to define an
 /// optional [Cargo feature] called `no-entrypoint`, and use it to conditionally
 /// disable the `entrypoint` macro invocation, as well as the
 /// `process_instruction` function. See a typical pattern for this in the
@@ -101,11 +101,11 @@ pub const NON_DUP_MARKER: u8 = u8::MAX;
 /// #[cfg(not(feature = "no-entrypoint"))]
 /// pub mod entrypoint {
 ///
-///     use solana_account_info::AccountInfo;
-///     use solana_program_entrypoint::entrypoint;
-///     use solana_program_entrypoint::ProgramResult;
-///     use solana_msg::msg;
-///     use solana_pubkey::Pubkey;
+///     use trezoa_account_info::AccountInfo;
+///     use trezoa_program_entrypoint::entrypoint;
+///     use trezoa_program_entrypoint::ProgramResult;
+///     use trezoa_msg::msg;
+///     use trezoa_pubkey::Pubkey;
 ///
 ///     entrypoint!(process_instruction);
 ///
@@ -203,7 +203,7 @@ macro_rules! entrypoint_no_alloc {
 /// for [BPF] targets.
 ///
 /// [Cargo features]: https://doc.rust-lang.org/cargo/reference/features.html
-/// [BPF]: https://solana.com/docs/programs/faq#berkeley-packet-filter-bpf
+/// [BPF]: https://trezoa.com/docs/programs/faq#berkeley-packet-filter-bpf
 ///
 /// # Cargo features
 ///
@@ -218,7 +218,7 @@ macro_rules! entrypoint_no_alloc {
 #[macro_export]
 macro_rules! custom_heap_default {
     () => {
-        #[cfg(all(not(feature = "custom-heap"), target_os = "solana"))]
+        #[cfg(all(not(feature = "custom-heap"), target_os = "trezoa"))]
         #[global_allocator]
         static A: $crate::BumpAllocator = unsafe {
             $crate::BumpAllocator::with_fixed_address_range(
@@ -240,7 +240,7 @@ macro_rules! custom_heap_default {
 /// for [BPF] targets.
 ///
 /// [Cargo features]: https://doc.rust-lang.org/cargo/reference/features.html
-/// [BPF]: https://solana.com/docs/programs/faq#berkeley-packet-filter-bpf
+/// [BPF]: https://trezoa.com/docs/programs/faq#berkeley-packet-filter-bpf
 ///
 /// # Cargo features
 ///
@@ -254,9 +254,9 @@ macro_rules! custom_heap_default {
 /// from a noop program. That number goes down the more the programs pulls in
 /// Rust's standard library for other purposes.
 ///
-/// # Defining a panic handler for Solana
+/// # Defining a panic handler for Trezoa
 ///
-/// _The mechanism for defining a Solana panic handler is different [from most
+/// _The mechanism for defining a Trezoa panic handler is different [from most
 /// Rust programs][rpanic]._
 ///
 /// [rpanic]: https://doc.rust-lang.org/nomicon/panic-handler.html
@@ -265,7 +265,7 @@ macro_rules! custom_heap_default {
 /// with the `#[no_mangle]` attribute, as below:
 ///
 /// ```ignore
-/// #[cfg(all(feature = "custom-panic", target_os = "solana"))]
+/// #[cfg(all(feature = "custom-panic", target_os = "trezoa"))]
 /// #[no_mangle]
 /// fn custom_panic(info: &core::panic::PanicInfo<'_>) {
 ///     $crate::msg!("{}", info);
@@ -274,7 +274,7 @@ macro_rules! custom_heap_default {
 #[macro_export]
 macro_rules! custom_panic_default {
     () => {
-        #[cfg(all(not(feature = "custom-panic"), target_os = "solana"))]
+        #[cfg(all(not(feature = "custom-panic"), target_os = "trezoa"))]
         #[no_mangle]
         fn custom_panic(info: &core::panic::PanicInfo<'_>) {
             if let Some(mm) = info.message().as_str() {
@@ -342,7 +342,7 @@ impl BumpAllocator {
     /// provided start address and length can be written to by the allocator,
     /// and that the memory will be usable for the lifespan of the allocator.
     ///
-    /// For Solana on-chain programs, a certain address range is reserved, so
+    /// For Trezoa on-chain programs, a certain address range is reserved, so
     /// the allocator can be given those addresses.
     pub const unsafe fn with_fixed_address_range(start: usize, len: usize) -> Self {
         Self { start, len }

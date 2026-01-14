@@ -1,12 +1,12 @@
 use crate::state::{vote_state_1_14_11::VoteState1_14_11, VoteStateV3, VoteStateV4};
 #[cfg(test)]
 use arbitrary::{Arbitrary, Unstructured};
-#[cfg(any(target_os = "solana", feature = "bincode"))]
-use solana_instruction_error::InstructionError;
+#[cfg(any(target_os = "trezoa", feature = "bincode"))]
+use trezoa_instruction_error::InstructionError;
 #[cfg(test)]
 use {
     crate::state::{LandedVote, Lockout},
-    solana_pubkey::Pubkey,
+    trezoa_pubkey::Pubkey,
     std::collections::VecDeque,
 };
 
@@ -137,7 +137,7 @@ impl VoteStateVersions {
     ///
     /// V0_23_5 is not supported. All other versions (V1_14_11, V3, V4) are deserialized as-is
     /// without any version coercion.
-    #[cfg(any(target_os = "solana", feature = "bincode"))]
+    #[cfg(any(target_os = "trezoa", feature = "bincode"))]
     pub fn deserialize(input: &[u8]) -> Result<Self, InstructionError> {
         use {
             crate::state::vote_state_deserialize::{
@@ -149,7 +149,7 @@ impl VoteStateVersions {
 
         let mut cursor = std::io::Cursor::new(input);
 
-        let variant = solana_serialize_utils::cursor::read_u32(&mut cursor)?;
+        let variant = trezoa_serialize_utils::cursor::read_u32(&mut cursor)?;
         match variant {
             // V0_23_5 not supported.
             0 => Err(InstructionError::InvalidAccountData),

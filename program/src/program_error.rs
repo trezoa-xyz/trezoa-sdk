@@ -1,5 +1,5 @@
 pub use {
-    solana_instruction_error::{
+    trezoa_instruction_error::{
         ACCOUNT_ALREADY_INITIALIZED, ACCOUNT_BORROW_FAILED, ACCOUNT_DATA_TOO_SMALL,
         ACCOUNT_NOT_RENT_EXEMPT, ARITHMETIC_OVERFLOW, BORSH_IO_ERROR,
         BUILTIN_PROGRAMS_MUST_CONSUME_COMPUTE_UNITS, CUSTOM_ZERO, ILLEGAL_OWNER, IMMUTABLE,
@@ -10,5 +10,5 @@ pub use {
         MISSING_REQUIRED_SIGNATURES, NOT_ENOUGH_ACCOUNT_KEYS, UNINITIALIZED_ACCOUNT,
         UNSUPPORTED_SYSVAR,
     },
-    solana_program_error::ProgramError,
+    trezoa_program_error::ProgramError,
 };

@@ -9,28 +9,28 @@ source "$here"/patch-crates-functions.sh
 usage() {
   cat <<EOF >&2
 USAGE:
-    $0 <AGAVE_PATH> <SOLANA_SDK_PATH> [<CRATE_PATH>]
+    $0 <TREZOA_PATH> <TREZOA_SDK_PATH> [<CRATE_PATH>]
 
 ARGS:
-    <AGAVE_PATH>        Path to the root of an agave repo
-    <SOLANA_SDK_PATH>   Path to the root of a solana-sdk repo
+    <TREZOA_PATH>        Path to the root of an trezoa repo
+    <TREZOA_SDK_PATH>   Path to the root of a trezoa-sdk repo
     [<CRATE_PATH>]      (Optional) Relative path to one crate to patch, ie. "address". By default, all crates are patched.
 EOF
 }
 
-agave_path="$1"
-if [ -z "$agave_path" ]; then
+trezoa_path="$1"
+if [ -z "$trezoa_path" ]; then
   usage
   exit 1
 fi
 
-solana_sdk_path="$2"
-if [ -z "$solana_sdk_path" ]; then
+trezoa_sdk_path="$2"
+if [ -z "$trezoa_sdk_path" ]; then
   usage
   exit 1
 fi
 
 crate_dir="$3"
 
-update_solana_sdk_dependencies "$agave_path" "$solana_sdk_path" "$crate_dir"
-patch_crates_io_solana_sdk_no_header "$agave_path"/Cargo.toml "$solana_sdk_path" "$crate_dir"
+update_trezoa_sdk_dependencies "$trezoa_path" "$trezoa_sdk_path" "$crate_dir"
+patch_crates_io_trezoa_sdk_no_header "$trezoa_path"/Cargo.toml "$trezoa_sdk_path" "$crate_dir"

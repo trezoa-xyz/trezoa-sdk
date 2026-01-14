@@ -1,7 +1,7 @@
 [package]
-name = "solana-reward-info"
-description = "Solana vote reward info types"
-documentation = "https://docs.rs/solana-reward-info"
+name = "trezoa-reward-info"
+description = "Trezoa vote reward info types"
+documentation = "https://docs.rs/trezoa-reward-info"
 version = "4.0.0"
 authors = { workspace = true }
 repository = { workspace = true }
@@ -13,11 +13,11 @@ edition = { workspace = true }
 targets = ["x86_64-unknown-linux-gnu"]
 
 [features]
-frozen-abi = ["dep:solana-frozen-abi", "dep:solana-frozen-abi-macro", "serde"]
+frozen-abi = ["dep:trezoa-frozen-abi", "dep:trezoa-frozen-abi-macro", "serde"]
 serde = ["dep:serde", "dep:serde_derive"]
 
 [dependencies]
 serde = { workspace = true, optional = true }
 serde_derive = { workspace = true, optional = true }
-solana-frozen-abi = { workspace = true, optional = true }
-solana-frozen-abi-macro = { workspace = true, optional = true }
+trezoa-frozen-abi = { workspace = true, optional = true }
+trezoa-frozen-abi-macro = { workspace = true, optional = true }

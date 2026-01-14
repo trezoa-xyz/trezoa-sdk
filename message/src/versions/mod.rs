@@ -1,13 +1,13 @@
 #[cfg(feature = "frozen-abi")]
-use solana_frozen_abi_macro::{frozen_abi, AbiEnumVisitor, AbiExample};
+use trezoa_frozen_abi_macro::{frozen_abi, AbiEnumVisitor, AbiExample};
 use {
     crate::{
         compiled_instruction::CompiledInstruction, legacy::Message as LegacyMessage,
         v0::MessageAddressTableLookup, MessageHeader,
     },
-    solana_address::Address,
-    solana_hash::Hash,
-    solana_sanitize::{Sanitize, SanitizeError},
+    trezoa_address::Address,
+    trezoa_hash::Hash,
+    trezoa_sanitize::{Sanitize, SanitizeError},
     std::collections::HashSet,
 };
 #[cfg(feature = "wincode")]
@@ -173,9 +173,9 @@ impl VersionedMessage {
     pub fn hash_raw_message(message_bytes: &[u8]) -> Hash {
         use blake3::traits::digest::Digest;
         let mut hasher = blake3::Hasher::new();
-        hasher.update(b"solana-tx-message-v1");
+        hasher.update(b"trezoa-tx-message-v1");
         hasher.update(message_bytes);
-        let hash_bytes: [u8; solana_hash::HASH_BYTES] = hasher.finalize().into();
+        let hash_bytes: [u8; trezoa_hash::HASH_BYTES] = hasher.finalize().into();
         hash_bytes.into()
     }
 }
@@ -281,10 +281,10 @@ impl<'de> serde::Deserialize<'de> for VersionedMessage {
                         struct RemainingLegacyMessage {
                             pub num_readonly_signed_accounts: u8,
                             pub num_readonly_unsigned_accounts: u8,
-                            #[cfg_attr(feature = "serde", serde(with = "solana_short_vec"))]
+                            #[cfg_attr(feature = "serde", serde(with = "trezoa_short_vec"))]
                             pub account_keys: Vec<Address>,
                             pub recent_blockhash: Hash,
-                            #[cfg_attr(feature = "serde", serde(with = "solana_short_vec"))]
+                            #[cfg_attr(feature = "serde", serde(with = "trezoa_short_vec"))]
                             pub instructions: Vec<CompiledInstruction>,
                         }
 
@@ -419,7 +419,7 @@ mod tests {
     use {
         super::*,
         crate::v0::MessageAddressTableLookup,
-        solana_instruction::{AccountMeta, Instruction},
+        trezoa_instruction::{AccountMeta, Instruction},
     };
 
     #[test]

@@ -1,13 +1,13 @@
 //! Inlined nonce instruction information to avoid a dependency on bincode and
-//! solana-system-interface
+//! trezoa-system-interface
 use {
-    solana_address::Address,
-    solana_instruction::{AccountMeta, Instruction},
-    solana_sdk_ids::{system_program, sysvar},
+    trezoa_address::Address,
+    trezoa_instruction::{AccountMeta, Instruction},
+    trezoa_sdk_ids::{system_program, sysvar},
 };
 
 /// Inlined `SystemInstruction::AdvanceNonceAccount` instruction data to avoid
-/// solana_system_interface and bincode deps
+/// trezoa_system_interface and bincode deps
 const ADVANCE_NONCE_DATA: [u8; 4] = [4, 0, 0, 0];
 
 /// Check if the given instruction data is the same as
@@ -20,7 +20,7 @@ pub fn is_advance_nonce_instruction_data(data: &[u8]) -> bool {
 }
 
 /// Inlined `advance_nonce_account` instruction creator to avoid
-/// solana_system_interface and bincode deps
+/// trezoa_system_interface and bincode deps
 pub(crate) fn advance_nonce_account_instruction(
     nonce_pubkey: &Address,
     nonce_authority_pubkey: &Address,
@@ -41,7 +41,7 @@ pub(crate) fn advance_nonce_account_instruction(
 mod test {
     use {
         super::*,
-        solana_system_interface::instruction::{advance_nonce_account, SystemInstruction},
+        trezoa_system_interface::instruction::{advance_nonce_account, SystemInstruction},
     };
 
     #[test]

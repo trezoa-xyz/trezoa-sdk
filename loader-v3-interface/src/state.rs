@@ -1,7 +1,7 @@
-use solana_pubkey::Pubkey;
+use trezoa_pubkey::Pubkey;
 
 /// Upgradeable loader account states
-#[cfg_attr(feature = "frozen-abi", derive(solana_frozen_abi_macro::AbiExample))]
+#[cfg_attr(feature = "frozen-abi", derive(trezoa_frozen_abi_macro::AbiExample))]
 #[cfg_attr(
     feature = "serde",
     derive(serde_derive::Deserialize, serde_derive::Serialize)

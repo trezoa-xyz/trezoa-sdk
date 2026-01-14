@@ -2,8 +2,8 @@
 
 use {
     crate::state::{Data, DurableNonce, State},
-    solana_hash::Hash,
-    solana_pubkey::Pubkey,
+    trezoa_hash::Hash,
+    trezoa_pubkey::Pubkey,
     std::collections::HashSet,
 };
 
@@ -117,7 +117,7 @@ impl From<Versions> for State {
 #[cfg(test)]
 mod tests {
     use {
-        super::*, solana_fee_calculator::FeeCalculator, solana_pubkey::Pubkey,
+        super::*, trezoa_fee_calculator::FeeCalculator, trezoa_pubkey::Pubkey,
         std::iter::repeat_with,
     };
 

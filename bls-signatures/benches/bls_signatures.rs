@@ -1,6 +1,6 @@
 use {
     criterion::{criterion_group, criterion_main, Criterion},
-    solana_bls_signatures::{
+    trezoa_bls_signatures::{
         keypair::Keypair,
         pubkey::{Pubkey, PubkeyAffine, PubkeyProjective, VerifiablePubkey},
         signature::{Signature, SignatureAffine, SignatureProjective},

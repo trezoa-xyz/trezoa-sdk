@@ -18,22 +18,22 @@
 //! [`EpochRewards`] implements [`Sysvar::get`] and can be loaded efficiently without
 //! passing the sysvar account ID to the program.
 //!
-//! See also the Solana [documentation on the epoch rewards sysvar][sdoc].
+//! See also the Trezoa [documentation on the epoch rewards sysvar][sdoc].
 //!
-//! [sdoc]: https://docs.solanalabs.com/runtime/sysvars#epochrewards
+//! [sdoc]: https://docs.trezoalabs.com/runtime/sysvars#epochrewards
 //!
 //! # Examples
 //!
 //! Accessing via on-chain program directly:
 //!
 //! ```no_run
-//! # use solana_account_info::AccountInfo;
-//! # use solana_epoch_rewards::EpochRewards;
-//! # use solana_msg::msg;
-//! # use solana_program_error::{ProgramError, ProgramResult};
-//! # use solana_pubkey::Pubkey;
-//! # use solana_sysvar::Sysvar;
-//! # use solana_sdk_ids::sysvar::epoch_rewards;
+//! # use trezoa_account_info::AccountInfo;
+//! # use trezoa_epoch_rewards::EpochRewards;
+//! # use trezoa_msg::msg;
+//! # use trezoa_program_error::{ProgramError, ProgramResult};
+//! # use trezoa_pubkey::Pubkey;
+//! # use trezoa_sysvar::Sysvar;
+//! # use trezoa_sdk_ids::sysvar::epoch_rewards;
 //! fn process_instruction(
 //!     program_id: &Pubkey,
 //!     accounts: &[AccountInfo],
@@ -46,7 +46,7 @@
 //!     Ok(())
 //! }
 //! #
-//! # use solana_sysvar_id::SysvarId;
+//! # use trezoa_sysvar_id::SysvarId;
 //! # let p = EpochRewards::id();
 //! # let l = &mut 1559040;
 //! # let epoch_rewards = EpochRewards {
@@ -70,13 +70,13 @@
 //! Accessing via on-chain program's account parameters:
 //!
 //! ```
-//! # use solana_account_info::{AccountInfo, next_account_info};
-//! # use solana_epoch_rewards::EpochRewards;
-//! # use solana_msg::msg;
-//! # use solana_program_error::{ProgramError, ProgramResult};
-//! # use solana_pubkey::Pubkey;
-//! # use solana_sysvar::{Sysvar, SysvarSerialize};
-//! # use solana_sdk_ids::sysvar::epoch_rewards;
+//! # use trezoa_account_info::{AccountInfo, next_account_info};
+//! # use trezoa_epoch_rewards::EpochRewards;
+//! # use trezoa_msg::msg;
+//! # use trezoa_program_error::{ProgramError, ProgramResult};
+//! # use trezoa_pubkey::Pubkey;
+//! # use trezoa_sysvar::{Sysvar, SysvarSerialize};
+//! # use trezoa_sdk_ids::sysvar::epoch_rewards;
 //! #
 //! fn process_instruction(
 //!     program_id: &Pubkey,
@@ -94,7 +94,7 @@
 //!     Ok(())
 //! }
 //! #
-//! # use solana_sysvar_id::SysvarId;
+//! # use trezoa_sysvar_id::SysvarId;
 //! # let p = EpochRewards::id();
 //! # let l = &mut 1559040;
 //! # let epoch_rewards = EpochRewards {
@@ -118,12 +118,12 @@
 //! Accessing via the RPC client:
 //!
 //! ```
-//! # use solana_epoch_rewards::EpochRewards;
-//! # use solana_example_mocks::solana_account;
-//! # use solana_example_mocks::solana_rpc_client;
-//! # use solana_rpc_client::rpc_client::RpcClient;
-//! # use solana_account::Account;
-//! # use solana_sdk_ids::sysvar::epoch_rewards;
+//! # use trezoa_epoch_rewards::EpochRewards;
+//! # use trezoa_example_mocks::trezoa_account;
+//! # use trezoa_example_mocks::trezoa_rpc_client;
+//! # use trezoa_rpc_client::rpc_client::RpcClient;
+//! # use trezoa_account::Account;
+//! # use trezoa_sdk_ids::sysvar::epoch_rewards;
 //! # use anyhow::Result;
 //! #
 //! fn print_sysvar_epoch_rewards(client: &RpcClient) -> Result<()> {
@@ -138,7 +138,7 @@
 //! #   client.set_get_account_response(epoch_rewards::ID, Account {
 //! #       lamports: 1120560,
 //! #       data,
-//! #       owner: solana_sdk_ids::system_program::ID,
+//! #       owner: trezoa_sdk_ids::system_program::ID,
 //! #       executable: false,
 //! # });
 //! #
@@ -158,13 +158,13 @@
 use crate::SysvarSerialize;
 use crate::{impl_sysvar_get, Sysvar};
 pub use {
-    solana_epoch_rewards::EpochRewards,
-    solana_sdk_ids::sysvar::epoch_rewards::{check_id, id, ID},
+    trezoa_epoch_rewards::EpochRewards,
+    trezoa_sdk_ids::sysvar::epoch_rewards::{check_id, id, ID},
 };
 
 impl Sysvar for EpochRewards {
     // SAFETY: upstream invariant: the sysvar data is created exclusively
-    // by the Solana runtime and serializes bool as 0x00 or 0x01, so the final
+    // by the Trezoa runtime and serializes bool as 0x00 or 0x01, so the final
     // `bool` field of `EpochRewards` can be re-aligned with padding and read
     // directly without validation.
     impl_sysvar_get!(id(), 15);
@@ -184,7 +184,7 @@ mod tests {
         let expected = EpochRewards {
             distribution_starting_block_height: 42,
             num_partitions: 7,
-            parent_blockhash: solana_hash::Hash::new_unique(),
+            parent_blockhash: trezoa_hash::Hash::new_unique(),
             total_points: 1234567890,
             total_rewards: 100,
             distributed_rewards: 10,

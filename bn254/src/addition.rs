@@ -2,9 +2,9 @@ use crate::{
     consts::{ALT_BN128_G1_POINT_SIZE, ALT_BN128_G2_POINT_SIZE},
     AltBn128Error, LE_FLAG,
 };
-#[cfg(target_os = "solana")]
-use solana_define_syscall::definitions as syscalls;
-#[cfg(not(target_os = "solana"))]
+#[cfg(target_os = "trezoa")]
+use trezoa_define_syscall::definitions as syscalls;
+#[cfg(not(target_os = "trezoa"))]
 use {
     crate::{
         consts::{ALT_BN128_FIELD_SIZE, ALT_BN128_FQ2_SIZE},
@@ -50,30 +50,30 @@ pub const ALT_BN128_G2_ADD_LE: u64 = ALT_BN128_G2_ADD_BE | LE_FLAG;
 pub const ALT_BN128_G2_SUB_LE: u64 = ALT_BN128_G2_SUB_BE | LE_FLAG;
 
 /// The version enum used to version changes to the `alt_bn128_g1_addition` syscall.
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 pub enum VersionedG1Addition {
     V0,
 }
 
 /// The version enum used to version changes to the `alt_bn128_g2_addition` syscall.
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 pub enum VersionedG2Addition {
     V0,
 }
 
 /// The syscall implementation for the `alt_bn128_g1_addition` syscall.
 ///
-/// This function is intended to be used by the Agave validator client and exists primarily
-/// for validator code. Solana programs or other downstream projects should use
+/// This function is intended to be used by the Trezoa-team validator client and exists primarily
+/// for validator code. Trezoa programs or other downstream projects should use
 /// `alt_bn128_g1_addition_be` or `alt_bn128_g1_addition_le` instead.
 ///
 /// # Warning
 ///
 /// Developers should be extremely careful when modifying this function, as a breaking change
-/// can result in a fork in the Solana cluster. Any such change requires an
-/// approved Solana SIMD. Subsequently, a new `VersionedG1Addition` variant must be added,
+/// can result in a fork in the Trezoa cluster. Any such change requires an
+/// approved Trezoa SIMD. Subsequently, a new `VersionedG1Addition` variant must be added,
 /// and the new logic must be scoped to that variant.
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 pub fn alt_bn128_versioned_g1_addition(
     _version: VersionedG1Addition,
     input: &[u8],
@@ -141,11 +141,11 @@ pub fn alt_bn128_versioned_g1_addition(
 
 #[inline(always)]
 pub fn alt_bn128_g1_addition_be(input: &[u8]) -> Result<Vec<u8>, AltBn128Error> {
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "trezoa"))]
     {
         alt_bn128_versioned_g1_addition(VersionedG1Addition::V0, input, Endianness::BE)
     }
-    #[cfg(target_os = "solana")]
+    #[cfg(target_os = "trezoa")]
     {
         if input.len() > ALT_BN128_G1_ADDITION_INPUT_SIZE {
             return Err(AltBn128Error::InvalidInputData);
@@ -183,11 +183,11 @@ pub fn alt_bn128_addition(input: &[u8]) -> Result<Vec<u8>, AltBn128Error> {
 pub fn alt_bn128_g1_addition_le(
     input: &[u8; ALT_BN128_G1_ADDITION_INPUT_SIZE],
 ) -> Result<Vec<u8>, AltBn128Error> {
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "trezoa"))]
     {
         alt_bn128_versioned_g1_addition(VersionedG1Addition::V0, input, Endianness::LE)
     }
-    #[cfg(target_os = "solana")]
+    #[cfg(target_os = "trezoa")]
     {
         // SAFETY: This is sound as sol_alt_bn128_group_op addition always fills all 64 bytes of our buffer
         let mut result_buffer = Vec::with_capacity(ALT_BN128_G1_POINT_SIZE);
@@ -211,17 +211,17 @@ pub fn alt_bn128_g1_addition_le(
 
 /// The syscall implementation for the `alt_bn128_g2_addition` syscall.
 ///
-/// This function is intended to be used by the Agave validator client and exists primarily
-/// for validator code. Solana programs or other downstream projects should use
+/// This function is intended to be used by the Trezoa-team validator client and exists primarily
+/// for validator code. Trezoa programs or other downstream projects should use
 /// `alt_bn128_g2_addition_be` or `alt_bn128_g2_addition_le` instead.
 ///
 /// # Warning
 ///
 /// Developers should be extremely careful when modifying this function, as a breaking change
-/// can result in a fork in the Solana cluster. Any such change requires an
-/// approved Solana SIMD. Subsequently, a new `VersionedG2Addition` variant must be added,
+/// can result in a fork in the Trezoa cluster. Any such change requires an
+/// approved Trezoa SIMD. Subsequently, a new `VersionedG2Addition` variant must be added,
 /// and the new logic must be scoped to that variant.
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 pub fn alt_bn128_versioned_g2_addition(
     _version: VersionedG2Addition,
     input: &[u8],
@@ -276,11 +276,11 @@ pub fn alt_bn128_versioned_g2_addition(
 pub fn alt_bn128_g2_addition_be(
     input: &[u8; ALT_BN128_G2_ADDITION_INPUT_SIZE],
 ) -> Result<Vec<u8>, AltBn128Error> {
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "trezoa"))]
     {
         alt_bn128_versioned_g2_addition(VersionedG2Addition::V0, input, Endianness::BE)
     }
-    #[cfg(target_os = "solana")]
+    #[cfg(target_os = "trezoa")]
     {
         // SAFETY: This is sound as sol_alt_bn128_group_op addition always fills all 128 bytes of our buffer
         let mut result_buffer = Vec::with_capacity(ALT_BN128_G2_POINT_SIZE);
@@ -306,11 +306,11 @@ pub fn alt_bn128_g2_addition_be(
 pub fn alt_bn128_g2_addition_le(
     input: &[u8; ALT_BN128_G2_ADDITION_INPUT_SIZE],
 ) -> Result<Vec<u8>, AltBn128Error> {
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "trezoa"))]
     {
         alt_bn128_versioned_g2_addition(VersionedG2Addition::V0, input, Endianness::LE)
     }
-    #[cfg(target_os = "solana")]
+    #[cfg(target_os = "trezoa")]
     {
         // SAFETY: This is sound as sol_alt_bn128_group_op addition always fills all 128 bytes of our buffer
         let mut result_buffer = Vec::with_capacity(ALT_BN128_G2_POINT_SIZE);

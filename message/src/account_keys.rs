@@ -1,7 +1,7 @@
 use {
     crate::{compiled_instruction::CompiledInstruction, v0::LoadedAddresses, CompileError},
-    solana_address::Address,
-    solana_instruction::Instruction,
+    trezoa_address::Address,
+    trezoa_instruction::Instruction,
     std::{collections::BTreeMap, iter::zip, ops::Index},
 };
 
@@ -150,7 +150,7 @@ impl PartialEq for AccountKeys<'_> {
 
 #[cfg(test)]
 mod tests {
-    use {super::*, solana_instruction::AccountMeta};
+    use {super::*, trezoa_instruction::AccountMeta};
 
     fn test_account_keys() -> [Address; 6] {
         let key0 = Address::new_unique();

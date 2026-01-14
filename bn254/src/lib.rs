@@ -6,7 +6,7 @@ pub(crate) mod pairing;
 
 /// This module contains the versioned syscall implementations and is intended for use
 /// primarily by validator code.
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 pub mod versioned {
     pub use crate::{
         addition::{
@@ -43,10 +43,10 @@ pub mod versioned {
     };
 }
 
-/// This module should be used by Solana programs or other downstream projects.
+/// This module should be used by Trezoa programs or other downstream projects.
 pub mod prelude {
     #[allow(deprecated)]
-    #[cfg(not(target_os = "solana"))]
+    #[cfg(not(target_os = "trezoa"))]
     pub use crate::multiplication::alt_bn128_multiplication_128; // to be removed in v4.0
     #[allow(deprecated)]
     pub use crate::{
@@ -88,7 +88,7 @@ pub mod prelude {
     };
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 use bytemuck::{Pod, Zeroable};
 use thiserror::Error;
 
@@ -155,7 +155,7 @@ impl From<AltBn128Error> for u64 {
     }
 }
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 use consts::{
     ALT_BN128_FIELD_SIZE as FIELD_SIZE, ALT_BN128_FQ2_SIZE as FQ2_SIZE,
     ALT_BN128_G1_POINT_SIZE as G1_POINT_SIZE, ALT_BN128_G2_POINT_SIZE as G2_POINT_SIZE,
@@ -175,7 +175,7 @@ pub(crate) const LE_FLAG: u64 = 0x80;
 /// `PodG1` can be constructed from both big-endian (EIP-197) and little-endian
 /// (ark-bn254) encodings using `from_be_bytes` and `from_le_bytes` methods,
 /// respectively.
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Pod, Zeroable)]
 #[repr(transparent)]
 pub struct PodG1(pub [u8; G1_POINT_SIZE]);
@@ -196,12 +196,12 @@ pub struct PodG1(pub [u8; G1_POINT_SIZE]);
 /// `PodG2` can be constructed from both big-endian (EIP-197) and little-endian
 /// (ark-bn254) encodings using `from_be_bytes` and `from_le_bytes` methods,
 /// respectively.
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 #[derive(Clone, Copy, Debug, PartialEq, Eq, Pod, Zeroable)]
 #[repr(transparent)]
 pub struct PodG2(pub [u8; G2_POINT_SIZE]);
 
-#[cfg(not(target_os = "solana"))]
+#[cfg(not(target_os = "trezoa"))]
 mod target_arch {
     use {
         super::*,
