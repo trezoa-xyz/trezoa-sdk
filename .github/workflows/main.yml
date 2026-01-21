@@ -355,16 +355,16 @@ jobs:
           cargo-cache-key: cargo-sbf-build
           cargo-cache-fallback-key: cargo-sbf
 
-      - name: Determine Solana CLI version
+      - name: Determine trezoa CLI version
         run: |
           source "./scripts/read-cargo-variable.sh"
           trezoa_version=$(readCargoVariable trezoa "./Cargo.toml")
-          echo "SOLANA_VERSION=$trezoa_version" >> $GITHUB_ENV
+          echo "trezoa_VERSION=$trezoa_version" >> $GITHUB_ENV
 
-      - name: Install Solana CLI
+      - name: Install trezoa CLI
         uses: trezoa-program/actions/install-trezoa@v1
         with:
-          version: ${{ env.SOLANA_VERSION }}
+          version: ${{ env.trezoa_VERSION }}
           cache: true
 
       - name: Install cargo-hack

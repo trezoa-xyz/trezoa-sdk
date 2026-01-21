@@ -64,8 +64,8 @@ use trezoa_program_log::log;
 
 let lamports = 1_000_000_000;
 log!("transfer amount: {}", lamports);
-// Logs the transfer amount in SOL (lamports with 9 decimal digits)
-log!("transfer amount (SOL): {:.9}", lamports);
+// Logs the transfer amount in TRZ (lamports with 9 decimal digits)
+log!("transfer amount (TRZ): {:.9}", lamports);
 ```
 
 Since the formatting routine does not perform additional allocations, the `Logger` type has a fixed size specified on its creation. When using the `log!` macro, it is also possible to specify the size of the logger buffer:
@@ -95,7 +95,7 @@ use trezoa_program_log::{Attribute, Logger};
 
 let lamports = 1_000_000_000;
 let mut logger = Logger::<100>::default();
-logger.append("SOL: ");
+logger.append("TRZ: ");
 logger.append_with_args(amount, &[Argument::Precision(9)]);
 logger.log();
 ```
@@ -105,7 +105,7 @@ or a formatting string on the `log!` macro:
 use trezoa_program_log::log;
 
 let lamports = 1_000_000_000;
-log!("transfer amount (SOL: {:.9}", lamports);
+log!("transfer amount (TRZ: {:.9}", lamports);
 ```
 
 For `&str` types, it is possible to specify a maximum length and a truncation strategy using one of the `Argument::Truncate*` variants:

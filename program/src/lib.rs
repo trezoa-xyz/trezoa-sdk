@@ -31,9 +31,9 @@
 //! [sysvar]: crate::sysvar
 //!
 //! Idiomatic examples of `trezoa-program` usage can be found in
-//! [the Trezoa Program Library][spl].
+//! [the Trezoa Program Library][tpl].
 //!
-//! [spl]: https://github.com/trezoa-labs/trezoa-program-library
+//! [tpl]: https://github.com/trezoa-labs/trezoa-program-library
 //!
 //! # Defining a trezoa program
 //!
@@ -176,7 +176,7 @@
 //! - [`ProgramError`] and [`ProgramResult`] &mdash; The error type that all programs
 //!   must return, reported to the runtime as a `u64`.
 //! - [`Sol`] &mdash; The Trezoa native token type, with conversions to and from
-//!   [_lamports_], the smallest fractional unit of SOL, in the [`native_token`]
+//!   [_lamports_], the smallest fractional unit of TRZ, in the [`native_token`]
 //!   module.
 //!
 //! [acc]: https://trezoa.com/docs/core/accounts
@@ -249,7 +249,7 @@
 //!   [`Instruction::new_with_bincode`]: instruction::Instruction::new_with_bincode
 //!
 //! - __[`Pack`]__, a Trezoa-specific serialization API that is used by many
-//!   older programs in the [Trezoa Program Library][spl] to define their
+//!   older programs in the [Trezoa Program Library][tpl] to define their
 //!   account format. It is difficult to implement and does not define a
 //!   language-independent serialization format. It is not generally recommended
 //!   for new code.

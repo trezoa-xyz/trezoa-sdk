@@ -14,7 +14,7 @@ use {
 pub enum SystemError {
     /// An account with the same address already exists.
     AccountAlreadyInUse,
-    /// Account does not have enough SOL to perform the operation.
+    /// Account does not have enough TRZ to perform the operation.
     ResultWithNegativeLamports,
     /// Cannot assign account to this program id.
     InvalidProgramId,
@@ -91,7 +91,7 @@ impl ToStr for SystemError {
         match self {
             SystemError::AccountAlreadyInUse => "an account with the same address already exists",
             SystemError::ResultWithNegativeLamports => {
-                "account does not have enough SOL to perform the operation"
+                "account does not have enough TRZ to perform the operation"
             }
             SystemError::InvalidProgramId => "cannot assign account to this program id",
             SystemError::InvalidAccountDataLength => "cannot allocate account data of this length",

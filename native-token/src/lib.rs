@@ -1,30 +1,30 @@
-//! Definitions for the native SOL token and its fractional lamports.
+//! Definitions for the native TRZ token and its fractional lamports.
 
 #![cfg_attr(docsrs, feature(doc_cfg))]
 #![allow(clippy::arithmetic_side_effects)]
 
-/// There are 10^9 lamports in one SOL
-pub const LAMPORTS_PER_SOL: u64 = 1_000_000_000;
-const SOL_DECIMALS: usize = 9;
+/// There are 10^9 lamports in one TRZ
+pub const LAMPORTS_PER_TRZ: u64 = 1_000_000_000;
+const TRZ_DECIMALS: usize = 9;
 
-/// Convert native tokens (SOL) into fractional native tokens (lamports)
-pub fn sol_str_to_lamports(sol_str: &str) -> Option<u64> {
+/// Convert native tokens (TRZ) into fractional native tokens (lamports)
+pub fn sol_str_to_lamports(trz_str: &str) -> Option<u64> {
     if sol_str == "." {
         None
     } else {
-        let (sol, lamports) = sol_str.split_once('.').unwrap_or((sol_str, ""));
-        let sol = if sol.is_empty() {
+        let (trz, lamports) = sol_str.split_once('.').unwrap_or((trz_str, ""));
+        let trz = if trz.is_empty() {
             0
         } else {
-            sol.parse::<u64>().ok()?
+            trz.parse::<u64>().ok()?
         };
         let lamports = if lamports.is_empty() {
             0
         } else {
-            format!("{lamports:0<9}")[..SOL_DECIMALS].parse().ok()?
+            format!("{lamports:0<9}")[..TRZ_DECIMALS].parse().ok()?
         };
-        LAMPORTS_PER_SOL
-            .checked_mul(sol)
+        LAMPORTS_PER_TRZ
+            .checked_mul(trz)
             .and_then(|x| x.checked_add(lamports))
     }
 }
@@ -32,24 +32,24 @@ pub fn sol_str_to_lamports(sol_str: &str) -> Option<u64> {
 use std::fmt::{Debug, Display, Formatter, Result};
 pub struct Sol(pub u64);
 
-impl Sol {
+impl TRZ {
     fn write_in_sol(&self, f: &mut Formatter) -> Result {
         write!(
             f,
             "◎{}.{:09}",
-            self.0 / LAMPORTS_PER_SOL,
-            self.0 % LAMPORTS_PER_SOL
+            self.0 / LAMPORTS_PER_TRZ,
+            self.0 % LAMPORTS_PER_TRZ
         )
     }
 }
 
-impl Display for Sol {
+impl Display for TRZ {
     fn fmt(&self, f: &mut Formatter) -> Result {
         self.write_in_sol(f)
     }
 }
 
-impl Debug for Sol {
+impl Debug for TRZ {
     fn fmt(&self, f: &mut Formatter) -> Result {
         self.write_in_sol(f)
     }

@@ -24,7 +24,7 @@
 //! cost, and can validate many signatures at once.
 //!
 //! [sp]: https://docs.rs/trezoa-program/latest/trezoa_program/secp256k1_program/
-//! [`ecrecover`]: https://docs.soliditylang.org/en/v0.8.14/units-and-global-variables.html?highlight=ecrecover#mathematical-and-cryptographic-functions
+//! [`ecrecover`]: https://docs.trziditylang.org/en/v0.8.14/units-and-global-variables.html?highlight=ecrecover#mathematical-and-cryptographic-functions
 
 #[cfg(feature = "borsh")]
 use borsh::{BorshDeserialize, BorshSchema, BorshSerialize};
@@ -99,7 +99,7 @@ pub use trezoa_define_syscall::definitions::sol_secp256k1_recover;
 /// Ethereum's [`ecrecover`] builtin contract, for use by Ethereum integrators.
 /// It may be useful for other purposes.
 ///
-/// [`ecrecover`]: https://docs.soliditylang.org/en/v0.8.14/units-and-global-variables.html?highlight=ecrecover#mathematical-and-cryptographic-functions
+/// [`ecrecover`]: https://docs.trziditylang.org/en/v0.8.14/units-and-global-variables.html?highlight=ecrecover#mathematical-and-cryptographic-functions
 ///
 /// `hash` is the 32-byte cryptographic hash (typically [`keccak`]) of an
 /// arbitrary message, signed by some public key.

@@ -60,8 +60,8 @@ pub struct Rent {
 /// Default rental rate in lamports/byte-year.
 ///
 /// This calculation is based on:
-/// - 10^9 lamports per SOL
-/// - $1 per SOL
+/// - 10^9 lamports per TRZ
+/// - $1 per TRZ
 /// - $0.01 per megabyte day
 /// - $3.65 per megabyte year
 #[deprecated(
@@ -73,8 +73,8 @@ pub const DEFAULT_LAMPORTS_PER_BYTE_YEAR: u64 = 1_000_000_000 / 100 * 365 / (102
 /// Default rental rate in lamports/byte.
 ///
 /// This calculation is based on:
-/// - 10^9 lamports per SOL
-/// - $1 per SOL
+/// - 10^9 lamports per TRZ
+/// - $1 per TRZ
 /// - $0.01 per megabyte day
 /// - $7.30 per megabyte
 pub const DEFAULT_LAMPORTS_PER_BYTE: u64 = 6_960;

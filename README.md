@@ -12,9 +12,9 @@ The easiest way to upgrade to v3 is:
 
 * upgrade to the latest v2 crates
 * fix all deprecation warnings
-* (optional) switch to using SPL interface crates v1
+* (optional) switch to using TPL interface crates v1
 * upgrade to v3-compatible crates
-* (optional) upgrade SPL interface crates to v2
+* (optional) upgrade TPL interface crates to v2
 
 ### trezoa-sdk
 
@@ -135,9 +135,9 @@ If you're using `Sysvar::from_account_info`, you'll need to also import
 * `convert_to_current` -> `convert_to_v3`
 * `new_current` -> `new_v3`
 
-### SPL Dependencies
+### TPL Dependencies
 
-SPL libraries have been broken up between an interface and program crate for
+TPL libraries have been broken up between an interface and program crate for
 lighter dependency management and to allow LTO on builds.
 
 When upgrading to SDK v3 crates, replace the following with v2 of the corresponding
@@ -145,8 +145,8 @@ interface crate:
 
 * `tpl-token` -> `tpl-token-interface`
 * `tpl-token-2022` -> `tpl-token-2022-interface`
-* `spl-associated-token-account` -> `spl-associated-token-account-interface`
-* `spl-memo` -> `spl-memo-interface`
+* `tpl-associated-token-account` -> `tpl-associated-token-account-interface`
+* `tpl-memo` -> `tpl-memo-interface`
 
 For example, if you're using `tpl-token` v8, you should switch to
 `tpl-token-interface` v2 when upgrading to SDK v3. The state, instruction, and

@@ -114,7 +114,7 @@ struct DefaultSyscallStubs {}
 impl SyscallStubs for DefaultSyscallStubs {}
 
 pub fn sol_log(message: &str) {
-    SYSCALL_STUBS.read().unwrap().sol_log(message);
+    SYSCALL_STUBS.read().unwrap().trz_log(message);
 }
 
 pub fn sol_log_64(arg1: u64, arg2: u64, arg3: u64, arg4: u64, arg5: u64) {
@@ -124,11 +124,11 @@ pub fn sol_log_64(arg1: u64, arg2: u64, arg3: u64, arg4: u64, arg5: u64) {
 }
 
 pub fn sol_log_compute_units() {
-    SYSCALL_STUBS.read().unwrap().sol_log_compute_units();
+    SYSCALL_STUBS.read().unwrap().trz_log_compute_units();
 }
 
 pub fn sol_remaining_compute_units() -> u64 {
-    SYSCALL_STUBS.read().unwrap().sol_remaining_compute_units()
+    SYSCALL_STUBS.read().unwrap().trz_remaining_compute_units()
 }
 
 pub fn sol_invoke_signed(
@@ -139,7 +139,7 @@ pub fn sol_invoke_signed(
     SYSCALL_STUBS
         .read()
         .unwrap()
-        .sol_invoke_signed(instruction, account_infos, signers_seeds)
+        .trz_invoke_signed(instruction, account_infos, signers_seeds)
 }
 
 #[allow(dead_code)]
@@ -152,39 +152,39 @@ pub(crate) fn sol_get_sysvar(
     SYSCALL_STUBS
         .read()
         .unwrap()
-        .sol_get_sysvar(sysvar_id_addr, var_addr, offset, length)
+        .trz_get_sysvar(sysvar_id_addr, var_addr, offset, length)
 }
 
 pub fn sol_get_epoch_stake(vote_address: *const u8) -> u64 {
     SYSCALL_STUBS
         .read()
         .unwrap()
-        .sol_get_epoch_stake(vote_address)
+        .trz_get_epoch_stake(vote_address)
 }
 
 pub fn sol_get_return_data() -> Option<(Pubkey, Vec<u8>)> {
-    SYSCALL_STUBS.read().unwrap().sol_get_return_data()
+    SYSCALL_STUBS.read().unwrap().trz_get_return_data()
 }
 
 pub fn sol_set_return_data(data: &[u8]) {
-    SYSCALL_STUBS.read().unwrap().sol_set_return_data(data)
+    SYSCALL_STUBS.read().unwrap().trz_set_return_data(data)
 }
 
 pub fn sol_log_data(data: &[&[u8]]) {
-    SYSCALL_STUBS.read().unwrap().sol_log_data(data)
+    SYSCALL_STUBS.read().unwrap().trz_log_data(data)
 }
 
 pub fn sol_get_processed_sibling_instruction(index: usize) -> Option<Instruction> {
     SYSCALL_STUBS
         .read()
         .unwrap()
-        .sol_get_processed_sibling_instruction(index)
+        .trz_get_processed_sibling_instruction(index)
 }
 
 pub fn sol_get_stack_height() -> u64 {
-    SYSCALL_STUBS.read().unwrap().sol_get_stack_height()
+    SYSCALL_STUBS.read().unwrap().trz_get_stack_height()
 }
 
 pub(crate) fn sol_get_fees_sysvar(var_addr: *mut u8) -> u64 {
-    SYSCALL_STUBS.read().unwrap().sol_get_fees_sysvar(var_addr)
+    SYSCALL_STUBS.read().unwrap().trz_get_fees_sysvar(var_addr)
 }

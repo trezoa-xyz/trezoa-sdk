@@ -46,7 +46,7 @@ It is possible to include a precision formatting for numeric values:
 use trezoa_program_log::log;
 
 let lamports = 1_000_000_000;
-log!("transfer amount (SOL: {:.9}", lamports);
+log!("transfer amount (TRZ: {:.9}", lamports);
 ```
 
 For `&str` types, it is possible to specify a maximum length and a truncation strategy:

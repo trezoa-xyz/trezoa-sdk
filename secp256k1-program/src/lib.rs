@@ -30,7 +30,7 @@
 //! [secp256k1]: https://en.bitcoin.it/wiki/Secp256k1
 //! [`secp256k1_program`]: https://docs.rs/trezoa-program/latest/trezoa_program/secp256k1_program/index.html
 //! [`secp256k1_recover`]: https://docs.rs/trezoa-secp256k1-recover
-//! [`ecrecover`]: https://docs.soliditylang.org/en/v0.8.14/units-and-global-variables.html?highlight=ecrecover#mathematical-and-cryptographic-functions
+//! [`ecrecover`]: https://docs.trziditylang.org/en/v0.8.14/units-and-global-variables.html?highlight=ecrecover#mathematical-and-cryptographic-functions
 //!
 //! Use cases for the secp256k1 instruction include:
 //!

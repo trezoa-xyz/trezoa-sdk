@@ -1,6 +1,6 @@
 [package]
 name = "trezoa-native-token"
-description = "Definitions for the native SOL token and its fractional lamports."
+description = "Definitions for the native TRZ token and its fractional lamports."
 documentation = "https://docs.rs/trezoa-native-token"
 version = "3.0.0"
 authors = { workspace = true }
