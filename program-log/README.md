@@ -35,7 +35,7 @@ Below is a sample of the improvements observed when formatting log messages, mea
 ## Features
 
 * Zero dependencies and `no_std` crate
-* Independent of SDK (i.e., works with `pinocchio`, `trezoa-program` or `anchor`)
+* Independent of SDK (i.e., works with `pinocchio`, `trezoa-program` or `trezoaanchor`)
 * Support for `&str`, unsigned and signed integer types
 * `log!` macro to facilitate log message formatting
 
