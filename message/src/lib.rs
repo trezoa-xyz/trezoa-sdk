@@ -32,7 +32,7 @@
 //! more account keys into a transaction than the legacy format. The
 //! [`VersionedMessage`] type is a thin wrapper around either message version.
 //!
-//! [future message format]: https://docs.trezoalabs.com/proposals/versioned-transactions
+//! [future message format]: https://docs.trezoateam.com/proposals/versioned-transactions
 //!
 //! Despite living in the `trezoa-program` crate, there is no way to access the
 //! runtime's messages from within a Trezoa program, and only the legacy message
@@ -107,7 +107,7 @@ pub const MESSAGE_HEADER_LENGTH: usize = 3;
 /// may process them in parallel, in a single [PoH] entry. Transactions that
 /// access the same read-write accounts are processed sequentially.
 ///
-/// [PoH]: https://docs.trezoalabs.com/consensus/synchronization
+/// [PoH]: https://docs.trezoateam.com/consensus/synchronization
 #[cfg_attr(feature = "frozen-abi", derive(AbiExample))]
 #[cfg_attr(
     feature = "serde",

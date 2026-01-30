@@ -7,7 +7,7 @@
 //!
 //! [`legacy`]: crate::legacy
 //! [`v0`]: crate::v0
-//! [future message format]: https://docs.trezoalabs.com/proposals/versioned-transactions
+//! [future message format]: https://docs.trezoateam.com/proposals/versioned-transactions
 
 pub use loaded::*;
 #[cfg(feature = "serde")]

@@ -1,7 +1,7 @@
 #![cfg_attr(docsrs, feature(doc_cfg))]
 //! Instructions for the [secp256k1 native program][np].
 //!
-//! [np]: https://docs.trezoalabs.com/runtime/programs#secp256k1-program
+//! [np]: https://docs.trezoateam.com/runtime/programs#secp256k1-program
 //!
 //! _This module provides low-level cryptographic building blocks that must be
 //! used carefully to ensure proper security. Read this documentation and

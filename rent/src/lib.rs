@@ -1,6 +1,6 @@
 //! Configuration for network [rent].
 //!
-//! [rent]: https://docs.trezoalabs.com/implemented-proposals/rent
+//! [rent]: https://docs.trezoateam.com/implemented-proposals/rent
 
 #![allow(clippy::arithmetic_side_effects)]
 #![no_std]

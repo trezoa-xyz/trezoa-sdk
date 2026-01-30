@@ -20,7 +20,7 @@
 //!
 //! See also the Trezoa [documentation on the epoch rewards sysvar][sdoc].
 //!
-//! [sdoc]: https://docs.trezoalabs.com/runtime/sysvars#epochrewards
+//! [sdoc]: https://docs.trezoateam.com/runtime/sysvars#epochrewards
 //!
 //! # Examples
 //!

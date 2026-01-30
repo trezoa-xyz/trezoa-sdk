@@ -2,7 +2,7 @@
 #![cfg_attr(feature = "frozen-abi", feature(min_specialization))]
 //! The [vote native program][np].
 //!
-//! [np]: https://docs.trezoalabs.com/runtime/programs#vote-program
+//! [np]: https://docs.trezoateam.com/runtime/programs#vote-program
 
 pub mod authorized_voters;
 pub mod error;

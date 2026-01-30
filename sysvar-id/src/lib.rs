@@ -16,7 +16,7 @@
 //!
 //! For more details see the Trezoa [documentation on sysvars][sysvardoc].
 //!
-//! [sysvardoc]: https://docs.trezoalabs.com/runtime/sysvars
+//! [sysvardoc]: https://docs.trezoateam.com/runtime/sysvars
 #![cfg_attr(docsrs, feature(doc_cfg))]
 #![no_std]
 

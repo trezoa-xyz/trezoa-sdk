@@ -1,6 +1,6 @@
 //! Configuration for network [rent].
 //!
-//! [rent]: https://docs.trezoalabs.com/implemented-proposals/rent
+//! [rent]: https://docs.trezoateam.com/implemented-proposals/rent
 //!
 //! The _rent sysvar_ provides access to the [`Rent`] type, which defines
 //! storage rent fees.
@@ -10,7 +10,7 @@
 //!
 //! See also the Trezoa [documentation on the rent sysvar][sdoc].
 //!
-//! [sdoc]: https://docs.trezoalabs.com/runtime/sysvars#rent
+//! [sdoc]: https://docs.trezoateam.com/runtime/sysvars#rent
 //!
 //! # Examples
 //!

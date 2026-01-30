@@ -12,7 +12,7 @@ The System program can be used to create new accounts, allocate account data, as
 
 ## Getting Started
 
-From your project folder:
+From your trezoa folder:
 
 ```bash
 cargo add trezoa-system-interface --features bincode

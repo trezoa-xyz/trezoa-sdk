@@ -75,7 +75,7 @@
 //!
 //! For more details see the Trezoa [documentation on sysvars][sysvardoc].
 //!
-//! [sysvardoc]: https://docs.trezoalabs.com/runtime/sysvars
+//! [sysvardoc]: https://docs.trezoateam.com/runtime/sysvars
 
 // hidden re-exports to make macros work
 pub mod __private {

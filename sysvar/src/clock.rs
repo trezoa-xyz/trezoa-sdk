@@ -9,7 +9,7 @@
 //!
 //! See also the Trezoa [documentation on the clock sysvar][sdoc].
 //!
-//! [sdoc]: https://docs.trezoalabs.com/runtime/sysvars#clock
+//! [sdoc]: https://docs.trezoateam.com/runtime/sysvars#clock
 //!
 //! # Examples
 //!

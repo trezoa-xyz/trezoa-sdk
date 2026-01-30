@@ -38,7 +38,7 @@ fi
 # Github Issues should be used to track outstanding work items instead of
 # marking up the code
 #
-# Ref: https://github.com/trezoa-labs/trezoa/issues/6474
+# Ref: https://github.com/trezoa-team/trezoa/issues/6474
 #
 # shellcheck disable=1001
 declare useGithubIssueInsteadOf=(

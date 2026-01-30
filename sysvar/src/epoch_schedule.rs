@@ -9,7 +9,7 @@
 //!
 //! See also the Trezoa [documentation on the epoch schedule sysvar][sdoc].
 //!
-//! [sdoc]: https://docs.trezoalabs.com/runtime/sysvars#epochschedule
+//! [sdoc]: https://docs.trezoateam.com/runtime/sysvars#epochschedule
 //!
 //! # Examples
 //!

@@ -4,7 +4,7 @@
 //! recommended for new code since it does not define a language-independent
 //! serialization format.
 //!
-//! [tpl]: https://github.com/trezoa-labs/trezoa-program-library
+//! [tpl]: https://github.com/trezoa-team/trezoa-program-library
 #![no_std]
 #![cfg_attr(docsrs, feature(doc_cfg))]
 

@@ -1,6 +1,6 @@
 //! Instructions for the [ed25519 native program][np].
 //!
-//! [np]: https://docs.trezoalabs.com/runtime/programs#ed25519-program
+//! [np]: https://docs.trezoateam.com/runtime/programs#ed25519-program
 #![cfg_attr(docsrs, feature(doc_cfg))]
 
 use {

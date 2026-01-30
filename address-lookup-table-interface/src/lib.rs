@@ -2,7 +2,7 @@
 #![cfg_attr(docsrs, feature(doc_cfg))]
 //! The [address lookup table program][np].
 //!
-//! [np]: https://docs.trezoalabs.com/runtime/programs#address-lookup-table-program
+//! [np]: https://docs.trezoateam.com/runtime/programs#address-lookup-table-program
 
 pub mod error;
 pub mod instruction;

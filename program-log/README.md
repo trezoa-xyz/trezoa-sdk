@@ -41,7 +41,7 @@ Below is a sample of the improvements observed when formatting log messages, mea
 
 ## Getting Started
 
-From your project folder:
+From your trezoa folder:
 ```bash
 cargo add trezoa-program-log
 ```

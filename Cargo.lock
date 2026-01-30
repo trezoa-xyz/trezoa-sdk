@@ -361,7 +361,7 @@ dependencies = [
  "flate2",
  "futures-core",
  "memchr",
- "pin-project-lite",
+ "pin-trezoa-lite",
  "tokio",
 ]
 
@@ -1385,7 +1385,7 @@ dependencies = [
  "futures-sink",
  "futures-task",
  "memchr",
- "pin-project-lite",
+ "pin-trezoa-lite",
  "pin-utils",
  "slab",
 ]
@@ -1556,7 +1556,7 @@ checksum = "7ceab25649e9960c0311ea418d17bee82c0dcec1bd053b5f9a66e265a693bed2"
 dependencies = [
  "bytes",
  "http",
- "pin-project-lite",
+ "pin-trezoa-lite",
 ]
 
 [[package]]
@@ -1587,7 +1587,7 @@ dependencies = [
  "httparse",
  "httpdate",
  "itoa",
- "pin-project-lite",
+ "pin-trezoa-lite",
  "socket2",
  "tokio",
  "tower-service",
@@ -2199,7 +2199,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e3148f5046208a5d56bcfc03053e3ca6334e51da8dfb19b6cdc8b306fae3283e"
 
 [[package]]
-name = "pin-project-lite"
+name = "pin-trezoa-lite"
 version = "0.2.16"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3b3cff922bd51709b605d9ead9aa71031d81447142d828eb4a6eba76fe619f9b"
@@ -2520,7 +2520,7 @@ dependencies = [
  "mime",
  "once_cell",
  "percent-encoding",
- "pin-project-lite",
+ "pin-trezoa-lite",
  "rustls",
  "rustls-pemfile",
  "serde",
@@ -4662,7 +4662,7 @@ dependencies = [
  "bytes",
  "libc",
  "mio",
- "pin-project-lite",
+ "pin-trezoa-lite",
  "socket2",
  "windows-sys 0.52.0",
 ]
@@ -4686,7 +4686,7 @@ dependencies = [
  "bytes",
  "futures-core",
  "futures-sink",
- "pin-project-lite",
+ "pin-trezoa-lite",
  "tokio",
 ]
 
@@ -4743,7 +4743,7 @@ version = "0.1.41"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "784e0ac535deb450455cbfa28a6f0df145ea1bb7ae51b821cf5e7927fdcfbdd0"
 dependencies = [
- "pin-project-lite",
+ "pin-trezoa-lite",
  "tracing-core",
 ]
 

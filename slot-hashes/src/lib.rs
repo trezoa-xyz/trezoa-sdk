@@ -1,6 +1,6 @@
 //! A type to hold data for the [`SlotHashes` sysvar][sv].
 //!
-//! [sv]: https://docs.trezoalabs.com/runtime/sysvars#slothashes
+//! [sv]: https://docs.trezoateam.com/runtime/sysvars#slothashes
 //!
 //! The sysvar ID is declared in [`trezoa_program::sysvar::slot_hashes`].
 //!

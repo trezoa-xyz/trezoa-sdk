@@ -1,6 +1,6 @@
 //! A type to hold data for the [`SlotHistory` sysvar][sv].
 //!
-//! [sv]: https://docs.trezoalabs.com/runtime/sysvars#slothistory
+//! [sv]: https://docs.trezoateam.com/runtime/sysvars#slothistory
 //!
 //! The sysvar ID is declared in [`sysvar::slot_history`].
 //!

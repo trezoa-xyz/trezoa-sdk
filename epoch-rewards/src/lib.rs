@@ -1,6 +1,6 @@
 //! A type to hold data for the [`EpochRewards` sysvar][sv].
 //!
-//! [sv]: https://docs.trezoalabs.com/runtime/sysvars#epochrewards
+//! [sv]: https://docs.trezoateam.com/runtime/sysvars#epochrewards
 //!
 //! The sysvar ID is declared in [`sysvar`].
 //!

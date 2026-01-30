@@ -681,7 +681,7 @@ pub fn set_return_data(data: &[u8]) {
 ///
 /// For more about return data see the [documentation for the return data proposal][rdp].
 ///
-/// [rdp]: https://docs.trezoalabs.com/proposals/return-data
+/// [rdp]: https://docs.trezoateam.com/proposals/return-data
 #[inline]
 pub fn get_return_data() -> Option<ReturnData> {
     #[cfg(any(target_os = "trezoa", target_arch = "bpf"))]

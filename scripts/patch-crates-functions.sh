@@ -105,11 +105,11 @@ all_crate_dirs=(
 )
 
 update_trezoa_sdk_dependencies() {
-  declare project_root="$1"
+  declare trezoa_root="$1"
   declare trezoa_sdk_dir="$2"
   declare crate_dir="$3"
   declare tomls=()
-  while IFS='' read -r line; do tomls+=("$line"); done < <(find "$project_root" -name Cargo.toml)
+  while IFS='' read -r line; do tomls+=("$line"); done < <(find "$trezoa_root" -name Cargo.toml)
 
   set -x
   crate_dirs=("${all_crate_dirs[@]}")

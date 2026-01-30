@@ -33,7 +33,7 @@
 //! Idiomatic examples of `trezoa-program` usage can be found in
 //! [the Trezoa Program Library][tpl].
 //!
-//! [tpl]: https://github.com/trezoa-labs/trezoa-program-library
+//! [tpl]: https://github.com/trezoa-team/trezoa-program-library
 //!
 //! # Defining a trezoa program
 //!
@@ -108,7 +108,7 @@
 //!
 //! Prefer writing a separate package if it is supposed to be used as a library for other Trezoa
 //! programs (i.e. a "rlib" only crate). This would be normally the case for defining account
-//! types and helpers that are used by both clients and program. When creating a Rust project
+//! types and helpers that are used by both clients and program. When creating a Rust trezoa
 //! intended to be a program ready for deployment, use only the "cdylib" crate type.
 //!
 //! # On-chain vs. off-chain compilation targets
@@ -122,7 +122,7 @@
 //! example from the `trezoa-program` codebase that logs a message via a
 //! syscall when run on-chain, and via a library call when offchain:
 //!
-//! [rbpf]: https://github.com/trezoa-labs/rbpf
+//! [rbpf]: https://github.com/trezoa-team/rbpf
 //! [eBPF]: https://ebpf.io/
 //! [cc]: https://doc.rust-lang.org/reference/conditional-compilation.html
 //!
@@ -211,7 +211,7 @@
 //! The three serialization formats in use in Trezoa are:
 //!
 //! - __[Borsh]__, a compact and well-specified format developed by the [NEAR]
-//!   project, suitable for use in protocol definitions and for archival storage.
+//!   trezoa, suitable for use in protocol definitions and for archival storage.
 //!   It has a [Rust implementation][brust] and a [JavaScript implementation][bjs]
 //!   and is recommended for all purposes.
 //!
@@ -391,7 +391,7 @@
 //! Some trezoa programs are [_native programs_][np2], running native machine
 //! code that is distributed with the runtime, with well-known program IDs.
 //!
-//! [np2]: https://docs.trezoalabs.com/runtime/programs
+//! [np2]: https://docs.trezoateam.com/runtime/programs
 //!
 //! Some native programs can be [invoked][cpi] by other programs, but some can
 //! only be executed as "top-level" instructions included by off-chain clients
@@ -461,7 +461,7 @@
 //!   - Instruction: [`trezoa_loader_v2_interface::instruction`](https://docs.rs/trezoa-loader-v2-interface/latest/trezoa_loader_v2_interface/instruction/index.html)
 //!   - Invokable by programs? yes
 //!
-//! [lut]: https://docs.trezoalabs.com/proposals/versioned-transactions
+//! [lut]: https://docs.trezoateam.com/proposals/versioned-transactions
 
 #![allow(incomplete_features)]
 #![cfg_attr(feature = "frozen-abi", feature(specialization))]
@@ -535,7 +535,7 @@ pub use {
 };
 /// The [config native program][np].
 ///
-/// [np]: https://docs.trezoalabs.com/runtime/programs#config-program
+/// [np]: https://docs.trezoateam.com/runtime/programs#config-program
 pub mod config {
     pub mod program {
         pub use trezoa_sdk_ids::config::{check_id, id, ID};

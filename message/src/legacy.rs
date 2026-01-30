@@ -7,7 +7,7 @@
 //!
 //! [`legacy`]: crate::legacy
 //! [`v0`]: crate::v0
-//! [future message format]: https://docs.trezoalabs.com/proposals/versioned-transactions
+//! [future message format]: https://docs.trezoateam.com/proposals/versioned-transactions
 
 #![allow(clippy::arithmetic_side_effects)]
 
@@ -302,7 +302,7 @@ impl Message {
 
     /// Create a new message for a [nonced transaction].
     ///
-    /// [nonced transaction]: https://docs.trezoalabs.com/implemented-proposals/durable-tx-nonces
+    /// [nonced transaction]: https://docs.trezoateam.com/implemented-proposals/durable-tx-nonces
     ///
     /// In this type of transaction, the blockhash is replaced with a _durable
     /// transaction nonce_, allowing for extended time to pass between the

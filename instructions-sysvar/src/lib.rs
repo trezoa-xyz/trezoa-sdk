@@ -5,7 +5,7 @@
 //! introspection][in], which is required for correctly interoperating with
 //! native programs like the [secp256k1] and [ed25519] programs.
 //!
-//! [in]: https://docs.trezoalabs.com/implemented-proposals/instruction_introspection
+//! [in]: https://docs.trezoateam.com/implemented-proposals/instruction_introspection
 //! [secp256k1]: https://docs.rs/trezoa-secp256k1-program/latest/trezoa_secp256k1_program/
 //! [ed25519]: https://docs.rs/trezoa-ed25519-program/latest/trezoa_ed25519_program/
 //!
@@ -18,7 +18,7 @@
 //!
 //! See also the Trezoa [documentation on the instructions sysvar][sdoc].
 //!
-//! [sdoc]: https://docs.trezoalabs.com/runtime/sysvars#instructions
+//! [sdoc]: https://docs.trezoateam.com/runtime/sysvars#instructions
 //!
 //! # Examples
 //!

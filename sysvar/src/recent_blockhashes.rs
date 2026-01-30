@@ -10,11 +10,11 @@
 //! see the [Comprehensive Compute Fees proposal][ccf].
 //!
 //! [`getFeeForMessage`]: https://trezoa.com/docs/rpc/http/getfeeformessage
-//! [ccf]: https://docs.trezoalabs.com/proposals/comprehensive-compute-fees
+//! [ccf]: https://docs.trezoateam.com/proposals/comprehensive-compute-fees
 //!
 //! See also the Trezoa [documentation on the recent blockhashes sysvar][sdoc].
 //!
-//! [sdoc]: https://docs.trezoalabs.com/runtime/sysvars#recentblockhashes
+//! [sdoc]: https://docs.trezoateam.com/runtime/sysvars#recentblockhashes
 
 #![allow(deprecated)]
 #![allow(clippy::arithmetic_side_effects)]
