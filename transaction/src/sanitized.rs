@@ -17,7 +17,7 @@ use {crate::Transaction, trezoa_sanitize::Sanitize};
 
 /// Maximum number of accounts that a transaction may lock.
 /// 128 was chosen because it is the minimum number of accounts
-/// needed for the Neon EVM implementation.
+/// needed for the Trezoaneon EVM implementation.
 pub const MAX_TX_ACCOUNT_LOCKS: usize = 128;
 
 /// Sanitized transaction and the hash of its message
